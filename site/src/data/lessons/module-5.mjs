@@ -67,7 +67,7 @@ export default [
       {
         file: 'functional/02_closures.py',
         focus: [
-          { function: 'make_counter', note: 'Независимый счётчик на each вызов.' },
+          { function: 'make_counter', note: 'Независимый счётчик на каждый вызов.' },
           { function: 'make_multiplier', note: 'Фабрика функций с параметром.' },
           { function: 'make_accumulator', note: 'Захваченный изменяемый список.' }
         ]

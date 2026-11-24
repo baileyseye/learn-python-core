@@ -28,7 +28,7 @@ function findPython() {
 }
 
 const python = findPython();
-if (!python) fail('Не найден Python. Установите Python 3.10+ и добавьте его в PATH.');
+if (!python) fail('Не найден Python. Установите Python 3.11+ и добавьте его в PATH.');
 
 function runPython(args, options = {}) {
   return spawnSync(python, args, {

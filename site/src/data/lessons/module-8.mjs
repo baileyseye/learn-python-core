@@ -228,13 +228,13 @@ export default [
     practice: {
       task:
         'Напиши `async def fetch_user(user_id)`, которая ждёт `asyncio.sleep(0)` и возвращает словарь `{"id": user_id, "name": f"user-{user_id}"}`.',
-      hint: 'Не забудь `await asyncio.sleep(0)`. Проверка запустит корутину через `asyncio.run`.',
+      hint: 'Не забудь `await asyncio.sleep(0)`. Проверка выполнит корутину через `await` в асинхронной среде.',
       starter: 'import asyncio\n\n\nasync def fetch_user(user_id):\n    pass\n',
       solution:
         'import asyncio\n\n\nasync def fetch_user(user_id):\n    await asyncio.sleep(0)\n    return {"id": user_id, "name": f"user-{user_id}"}',
       tests: [
-        'import asyncio\nassert asyncio.run(fetch_user(1)) == {"id": 1, "name": "user-1"}',
-        'import asyncio\nassert asyncio.run(fetch_user(7))["id"] == 7'
+        'result = await fetch_user(1)\nassert result == {"id": 1, "name": "user-1"}',
+        'result = await fetch_user(7)\nassert result["id"] == 7'
       ]
     },
     quiz: [

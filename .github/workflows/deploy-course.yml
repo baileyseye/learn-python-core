@@ -26,6 +26,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Install Python dependencies for examples
+        run: python -m pip install fastapi pydantic uvicorn
       - run: npm ci
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3

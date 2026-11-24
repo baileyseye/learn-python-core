@@ -180,16 +180,22 @@ const PYODIDE_VERSION = '0.27.7';
 const PYODIDE_INDEX = `https://cdn.jsdelivr.net/pyodide/v${PYODIDE_VERSION}/full/`;
 
 const PYTHON_RUNNER = `
-import io, json, traceback, contextlib
+import io, json, traceback, contextlib, ast, inspect
 
-def __run(code, tests_json):
+async def __exec(code, namespace, filename):
+    compiled = compile(code, filename, "exec", flags=ast.PyCF_ALLOW_TOP_LEVEL_AWAIT)
+    result = eval(compiled, namespace)
+    if inspect.isawaitable(result):
+        await result
+
+async def __run(code, tests_json):
     tests = json.loads(tests_json)
     namespace = {"__name__": "__main__"}
     buffer = io.StringIO()
     error = None
     try:
         with contextlib.redirect_stdout(buffer):
-            exec(compile(code, "<practice>", "exec"), namespace)
+            await __exec(code, namespace, "<practice>")
     except BaseException:
         error = traceback.format_exc()
     output = buffer.getvalue()
@@ -199,7 +205,7 @@ def __run(code, tests_json):
     if error is None:
         for test in tests:
             try:
-                exec(compile(test, "<test>", "exec"), namespace)
+                await __exec(test, namespace, "<test>")
                 results.append({"ok": True, "test": test, "message": ""})
             except AssertionError as exc:
                 results.append({"ok": False, "test": test, "message": str(exc) or "assert не прошёл"})
@@ -207,7 +213,7 @@ def __run(code, tests_json):
                 results.append({"ok": False, "test": test, "message": type(exc).__name__ + ": " + str(exc)})
     return json.dumps({"output": output, "error": error, "results": results}, ensure_ascii=False)
 
-__run(__user_code, __tests_json)
+await __run(__user_code, __tests_json)
 `;
 
 const WORKER_SOURCE = `
@@ -223,7 +229,7 @@ self.onmessage = async (event) => {
     }
     self.pyodide.globals.set('__user_code', code);
     self.pyodide.globals.set('__tests_json', JSON.stringify(tests));
-    const raw = self.pyodide.runPython(RUNNER);
+    const raw = await self.pyodide.runPythonAsync(RUNNER);
     self.postMessage({ id, type: 'result', payload: JSON.parse(raw) });
   } catch (error) {
     self.postMessage({
@@ -533,7 +539,6 @@ async function initCard(card) {
         highlightActiveLine(),
         highlightSelectionMatches(),
         python(),
-        EditorView.lineWrapping,
         practiceTheme,
         // Клик по коду должен сразу начинать выделение, а не попадать
         // в открытый попап автодополнения.

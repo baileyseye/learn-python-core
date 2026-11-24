@@ -17,7 +17,7 @@ async def fetch_all(ids: list[int]) -> list[dict[str, object]]:
 async def with_timeout(coro, seconds: float):
     try:
         return await asyncio.wait_for(coro, timeout=seconds)
-    except TimeoutError:
+    except asyncio.TimeoutError:
         return {"error": "timeout"}
 
 

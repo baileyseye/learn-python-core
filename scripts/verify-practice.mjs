@@ -21,39 +21,49 @@ function findPython() {
 
 const python = findPython();
 if (!python) {
-  console.error('✖ Не найден Python. Установите Python 3.10+.');
+  console.error('✖ Не найден Python. Установите Python 3.11+.');
   process.exit(1);
 }
 
 const runner = `
-import io, json, contextlib, traceback
+import asyncio, io, json, contextlib, traceback, ast, inspect
 
 solution = __SOLUTION__
 tests = __TESTS__
-namespace = {"__name__": "__main__"}
-buffer = io.StringIO()
-error = None
 
-try:
-    with contextlib.redirect_stdout(buffer):
-        exec(compile(solution, "<solution>", "exec"), namespace)
-except BaseException:
-    error = traceback.format_exc()
+async def __exec(code, namespace, filename):
+    compiled = compile(code, filename, "exec", flags=ast.PyCF_ALLOW_TOP_LEVEL_AWAIT)
+    result = eval(compiled, namespace)
+    if inspect.isawaitable(result):
+        await result
 
-stdout = buffer.getvalue()
-namespace["stdout"] = stdout
-namespace["__stdout__"] = stdout
+async def __run():
+    namespace = {"__name__": "__main__"}
+    buffer = io.StringIO()
+    error = None
 
-results = []
-if error is None:
-    for index, test in enumerate(tests):
-        try:
-            exec(compile(test, "<test>", "exec"), namespace)
-            results.append([index, True, ""])
-        except BaseException as exc:
-            results.append([index, False, type(exc).__name__ + ": " + str(exc)])
+    try:
+        with contextlib.redirect_stdout(buffer):
+            await __exec(solution, namespace, "<solution>")
+    except BaseException:
+        error = traceback.format_exc()
 
-print(json.dumps({"error": error, "output": stdout, "results": results}, ensure_ascii=False))
+    stdout = buffer.getvalue()
+    namespace["stdout"] = stdout
+    namespace["__stdout__"] = stdout
+
+    results = []
+    if error is None:
+        for index, test in enumerate(tests):
+            try:
+                await __exec(test, namespace, "<test>")
+                results.append([index, True, ""])
+            except BaseException as exc:
+                results.append([index, False, type(exc).__name__ + ": " + str(exc)])
+
+    print(json.dumps({"error": error, "output": stdout, "results": results}, ensure_ascii=False))
+
+asyncio.run(__run())
 `;
 
 const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'lpc-practice-'));

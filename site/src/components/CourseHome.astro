@@ -9,11 +9,18 @@ import { url } from '../utils/url.js';
 
 const lessonIds = lessons.map((lesson) => lesson.id);
 const number = new Intl.NumberFormat('ru-RU');
-const heroSnippet = `def greet(name: str) -> str:
-    return f"Привет, {name}!"
-
-print(greet("мир"))
-# Привет, мир!`;
+const helloFile = generated.files['basics/01_hello.py'];
+const helloLines = helloFile.code.split('\n');
+const greetMethod = helloFile.methods.find((method) => method.name === 'greet');
+const mainMethod = helloFile.methods.find((method) => method.name === 'main');
+if (!greetMethod || !mainMethod) {
+  throw new Error('CourseHome: не найдены greet/main в basics/01_hello.py');
+}
+const heroSnippet = [
+  ...helloLines.slice(greetMethod.start - 1, greetMethod.end),
+  '',
+  ...helloLines.slice(mainMethod.start - 1, mainMethod.end)
+].join('\n');
 const interactiveCount = lessons.filter((lesson) => lesson.practice?.tests?.length).length;
 ---
 

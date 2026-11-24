@@ -19,8 +19,8 @@ def describe_environment() -> None:
     print("текущая папка:", Path.cwd().name)
 
 
-def check_version(minimum: tuple[int, int] = (3, 10)) -> bool:
-    """Курс рассчитан на Python 3.10+."""
+def check_version(minimum: tuple[int, int] = (3, 11)) -> bool:
+    """Курс рассчитан на Python 3.11+."""
     return sys.version_info[:2] >= minimum
 
 
@@ -28,7 +28,7 @@ def main() -> None:
     describe_interpreter()
     describe_environment()
     if not check_version():
-        print("Обновите Python: нужен 3.10 или новее")
+        print("Обновите Python: нужен 3.11 или новее")
     else:
         print("версия подходит для курса")
 

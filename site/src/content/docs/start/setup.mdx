@@ -6,7 +6,7 @@ description: "Как установить Python, открыть репозит�
 import { Aside, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
 
 <Aside type="note" title="Короткая версия">
-  Установите Python 3.12+, откройте папку репозитория в VS Code, откройте
+  Установите Python 3.11+ (рекомендуется 3.12+), откройте папку репозитория в VS Code, откройте
   `src/python/basics/01_hello.py` и нажмите **Run Python File**. Или выполните
   `py src/python/basics/01_hello.py` в терминале.
 </Aside>
@@ -21,7 +21,7 @@ import { Aside, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
 py --version
 ```
 
-Должна отображаться версия 3.10 или новее. Если команда `py` недоступна, попробуйте:
+Должна отображаться версия 3.11 или новее. Если команда `py` недоступна, попробуйте:
 
 ```bash
 python --version
@@ -41,7 +41,7 @@ python --version
 
 1. Установите **PyCharm Community Edition**.
 2. Выберите **Open** и укажите папку репозитория.
-3. В `Settings → Project → Python Interpreter` выберите установленный Python 3.10+.
+3. В `Settings → Project → Python Interpreter` выберите установленный Python 3.11+.
 4. Откройте файл и нажмите зелёную стрелку рядом с `if __name__ == "__main__":`.
 
 ### Только терминал
@@ -63,7 +63,7 @@ Python читается почти как обычный текст.
 
 ## 3. Создайте виртуальное окружение
 
-Для курса это не обязательно: все примеры используют только стандартную библиотеку. Но для реальных проектов привычка нужна сразу.
+Для большинства уроков это не обязательно: примеры модулей 1–6 используют только стандартную библиотеку. Для модулей 7–8 нужны `pytest`, `fastapi` и `pydantic`; для реальных проектов виртуальное окружение нужно сразу.
 
 ```bash
 py -m venv .venv
@@ -117,7 +117,7 @@ npm run dev
 
 <Tabs>
   <TabItem label="Требования">
-    Node.js 20+ и Python 3.10+. Для production-сборки используется `npm run build`.
+    Node.js 20+ и Python 3.11+. Для production-сборки используется `npm run build`.
   </TabItem>
   <TabItem label="Только чтение">
     Если сайт не нужен, читайте уроки прямо в репозитории: `site/src/data/lessons/` и `src/python/`.
@@ -130,7 +130,7 @@ npm run dev
 | --- | --- |
 | `py` не найден | Переустановите Python с галочкой PATH или используйте `python` |
 | `ModuleNotFoundError` | Запускайте из корня репозитория или проверьте venv |
-| Крашится вывод с кириллицей | Установите `PYTHONUTF8=1` или используйте Python 3.12+ |
+| Крашится вывод с кириллицей | Установите `PYTHONUTF8=1` и обновите Python до 3.11+ |
 | VS Code не видит интерпретатор | `Ctrl+Shift+P → Python: Select Interpreter` |
 | Сайт не собирается | Проверьте Node.js 20+ и выполните `npm install` заново |
 

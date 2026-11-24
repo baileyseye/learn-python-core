@@ -186,6 +186,7 @@ header.header div:has(> select) {
   padding: 0.1em 0.35em;
   font-size: 0.86em;
   font-weight: 500;
+  overflow-wrap: anywhere;
 }
 
 .content-panel {
@@ -332,6 +333,7 @@ header.header div:has(> select) {
   gap: clamp(2rem, 4vw, 4.5rem);
   align-items: center;
   padding: clamp(3rem, 7vw, 6rem) 0 clamp(2.5rem, 5vw, 4rem);
+  overflow: clip;
 }
 
 .course-hero::before {
@@ -473,15 +475,48 @@ header.header div:has(> select) {
 .hero-code-dots,
 .practice-editor-dots {
   display: inline-flex;
+  align-items: center;
   gap: 0.32rem;
+  line-height: 1;
 }
 
 .hero-code-dots i,
 .practice-editor-dots i {
+  display: block;
+  flex: 0 0 auto;
   width: 0.5rem;
   height: 0.5rem;
+  margin: 0 !important;
   border-radius: 999px;
   background: #ff5f57;
+}
+
+/*
+ * Starlight добавляет margin-top соседним элементам внутри .sl-markdown-content.
+ * Внутри flex/grid-контейнеров это сдвигает кнопки, точки и карточки
+ * относительно друг друга. Для собственных сеток курса margin не нужен.
+ */
+.hero-actions > *,
+.hero-badges > *,
+.hero-code-caption > *,
+.lesson-actions > *,
+.lesson-nav > *,
+.module-nav > *,
+.quiz-actions > *,
+.progress-buttons > *,
+.practice-actions > *,
+.practice-header > *,
+.lesson-source-head > *,
+.source-toc > *,
+.module-grid > *,
+.lesson-loop > *,
+.home-principles > *,
+.lesson-list > *,
+.start-cards > *,
+.inventory-stats > *,
+.practice-details-grid > * {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
 }
 
 .hero-code-dots i:nth-child(2),
@@ -1388,8 +1423,10 @@ header.header div:has(> select) {
 .progress-toggle {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
-  padding: 0.55rem 0.85rem;
+  min-height: 2.65rem;
+  padding: 0.55rem 0.95rem;
   border: 1px solid var(--course-border);
   border-radius: 999px;
   background: var(--course-card);
@@ -1706,8 +1743,9 @@ header.header div:has(> select) {
 }
 
 /*
- * CodeMirror считает высоту gutter-элементов по дефолтной высоте 14px,
- * а строки кода у нас 1.65em. Выравниваем номера по той же высоте.
+ * Перенос строк отключён: длинные строки скроллятся по горизонтали, поэтому
+ * каждая логическая строка занимает ровно 1.65em. Выравниваем по этой высоте
+ * и gutter — иначе CodeMirror использует дефолтные 14px и номера уезжают.
  */
 .practice-codemirror .cm-lineNumbers .cm-gutterElement:not([style*='visibility: hidden']) {
   height: 1.65em !important;
@@ -2011,6 +2049,12 @@ header.header div:has(> select) {
 
 .quiz-option:hover {
   border-color: color-mix(in srgb, var(--course-accent) 35%, var(--course-border));
+}
+
+.quiz-option:has(input:focus-visible) {
+  outline: 2px solid var(--course-accent);
+  outline-offset: 2px;
+  border-color: var(--course-accent);
 }
 
 .quiz-option input {
@@ -2552,6 +2596,32 @@ header.header div:has(> select) {
   .practice-codemirror .cm-editor {
     height: 15rem;
     font-size: 0.78rem;
+  }
+
+  .lesson-actions {
+    align-items: stretch;
+  }
+
+  .lesson-actions > * {
+    flex: 1 1 100%;
+  }
+
+  /* На узком экране оставляем только файл и привязку к уроку. */
+  .inventory-table th:nth-child(2),
+  .inventory-table td:nth-child(2),
+  .inventory-table th:nth-child(3),
+  .inventory-table td:nth-child(3),
+  .inventory-table th:nth-child(4),
+  .inventory-table td:nth-child(4) {
+    display: none;
+  }
+
+  .inventory-table th:nth-child(1) {
+    width: 44%;
+  }
+
+  .inventory-table th:nth-child(5) {
+    width: 56%;
   }
 
   .hero-actions .course-btn {

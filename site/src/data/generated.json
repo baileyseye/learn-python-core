@@ -2982,7 +2982,7 @@
     "testing/01_environment.py": {
       "path": "testing/01_environment.py",
       "lines": 38,
-      "code": "\"\"\"Окружение Python: версия, интерпретатор и виртуальное окружение.\"\"\"\n\nimport os\nimport sys\nfrom pathlib import Path\n\n\ndef describe_interpreter() -> None:\n    print(\"версия:\", sys.version.split()[0])\n    print(\"реализация:\", sys.implementation.name)\n    major, minor, micro = sys.version_info[:3]\n    print(\"version_info:\", major, minor, micro)\n\n\ndef describe_environment() -> None:\n    in_venv = sys.prefix != getattr(sys, \"base_prefix\", sys.prefix)\n    print(\"в виртуальном окружении:\", in_venv)\n    print(\"PYTHONPATH задан:\", \"PYTHONPATH\" in os.environ)\n    print(\"текущая папка:\", Path.cwd().name)\n\n\ndef check_version(minimum: tuple[int, int] = (3, 10)) -> bool:\n    \"\"\"Курс рассчитан на Python 3.10+.\"\"\"\n    return sys.version_info[:2] >= minimum\n\n\ndef main() -> None:\n    describe_interpreter()\n    describe_environment()\n    if not check_version():\n        print(\"Обновите Python: нужен 3.10 или новее\")\n    else:\n        print(\"версия подходит для курса\")\n\n\nif __name__ == \"__main__\":\n    main()",
+      "code": "\"\"\"Окружение Python: версия, интерпретатор и виртуальное окружение.\"\"\"\n\nimport os\nimport sys\nfrom pathlib import Path\n\n\ndef describe_interpreter() -> None:\n    print(\"версия:\", sys.version.split()[0])\n    print(\"реализация:\", sys.implementation.name)\n    major, minor, micro = sys.version_info[:3]\n    print(\"version_info:\", major, minor, micro)\n\n\ndef describe_environment() -> None:\n    in_venv = sys.prefix != getattr(sys, \"base_prefix\", sys.prefix)\n    print(\"в виртуальном окружении:\", in_venv)\n    print(\"PYTHONPATH задан:\", \"PYTHONPATH\" in os.environ)\n    print(\"текущая папка:\", Path.cwd().name)\n\n\ndef check_version(minimum: tuple[int, int] = (3, 11)) -> bool:\n    \"\"\"Курс рассчитан на Python 3.11+.\"\"\"\n    return sys.version_info[:2] >= minimum\n\n\ndef main() -> None:\n    describe_interpreter()\n    describe_environment()\n    if not check_version():\n        print(\"Обновите Python: нужен 3.11 или новее\")\n    else:\n        print(\"версия подходит для курса\")\n\n\nif __name__ == \"__main__\":\n    main()",
       "methods": [
         {
           "name": "describe_interpreter",
@@ -3003,7 +3003,7 @@
           "kind": "function",
           "start": 22,
           "end": 24,
-          "signature": "def check_version(minimum: tuple[int, int] = (3, 10)) -> bool:"
+          "signature": "def check_version(minimum: tuple[int, int] = (3, 11)) -> bool:"
         },
         {
           "name": "main",
@@ -3034,7 +3034,7 @@
           "kind": "function",
           "start": 22,
           "end": 24,
-          "signature": "def check_version(minimum: tuple[int, int] = (3, 10)) -> bool:"
+          "signature": "def check_version(minimum: tuple[int, int] = (3, 11)) -> bool:"
         },
         {
           "name": "main",
@@ -3536,7 +3536,7 @@
         }
       ],
       "has_main": true,
-      "output": "FastAPI установлен: False\nPydantic установлен: False\nКод приложения готов, но зависимости не установлены.\nВыполните: pip install fastapi uvicorn\nМаршруты: GET /health, GET /items, POST /items, GET /items/{id}",
+      "output": "FastAPI установлен: True\nPydantic установлен: True\nмаршруты: ['/openapi.json', '/docs', '/docs/oauth2-redirect', '/redoc', '/health', '/items', '/items', '/items/{item_id}']",
       "ok": true,
       "error": ""
     },
@@ -3621,7 +3621,7 @@
         }
       ],
       "has_main": true,
-      "output": "UserCreate(email='anna@example.com', age=27, name='Анна')\nошибка: email должен содержать @\nошибка: возраст должен быть от 1 до 149\nPydantic не установлен — ручная валидация выше всё равно работает",
+      "output": "UserCreate(email='anna@example.com', age=27, name='Анна')\nошибка: email должен содержать @\nошибка: возраст должен быть от 1 до 149\nPydantic: {'email': 'ANNA@EXAMPLE.COM', 'age': 27, 'name': 'Анна'}\nPydantic нашёл ошибок: 1",
       "ok": true,
       "error": ""
     },
@@ -3712,7 +3712,7 @@
     "web/05_async.py": {
       "path": "web/05_async.py",
       "lines": 41,
-      "code": "\"\"\"async/await: конкурентные операции ввода-вывода.\"\"\"\n\nimport asyncio\n\n\nasync def fetch_user(user_id: int) -> dict[str, object]:\n    await asyncio.sleep(0.01)  # имитация сетевого запроса\n    return {\"id\": user_id, \"name\": f\"user-{user_id}\"}\n\n\nasync def fetch_all(ids: list[int]) -> list[dict[str, object]]:\n    \"\"\"gather запускает задачи конкурентно, а не по очереди.\"\"\"\n    tasks = [fetch_user(user_id) for user_id in ids]\n    return await asyncio.gather(*tasks)\n\n\nasync def with_timeout(coro, seconds: float):\n    try:\n        return await asyncio.wait_for(coro, timeout=seconds)\n    except TimeoutError:\n        return {\"error\": \"timeout\"}\n\n\nasync def slow_operation() -> str:\n    await asyncio.sleep(1)\n    return \"готово\"\n\n\nasync def main_async() -> None:\n    users = await fetch_all([1, 2, 3])\n    print(\"пользователи:\", users)\n    print(\"timeout:\", await with_timeout(slow_operation(), 0.01))\n\n\ndef main() -> None:\n    asyncio.run(main_async())\n\n\nif __name__ == \"__main__\":\n    main()",
+      "code": "\"\"\"async/await: конкурентные операции ввода-вывода.\"\"\"\n\nimport asyncio\n\n\nasync def fetch_user(user_id: int) -> dict[str, object]:\n    await asyncio.sleep(0.01)  # имитация сетевого запроса\n    return {\"id\": user_id, \"name\": f\"user-{user_id}\"}\n\n\nasync def fetch_all(ids: list[int]) -> list[dict[str, object]]:\n    \"\"\"gather запускает задачи конкурентно, а не по очереди.\"\"\"\n    tasks = [fetch_user(user_id) for user_id in ids]\n    return await asyncio.gather(*tasks)\n\n\nasync def with_timeout(coro, seconds: float):\n    try:\n        return await asyncio.wait_for(coro, timeout=seconds)\n    except asyncio.TimeoutError:\n        return {\"error\": \"timeout\"}\n\n\nasync def slow_operation() -> str:\n    await asyncio.sleep(1)\n    return \"готово\"\n\n\nasync def main_async() -> None:\n    users = await fetch_all([1, 2, 3])\n    print(\"пользователи:\", users)\n    print(\"timeout:\", await with_timeout(slow_operation(), 0.01))\n\n\ndef main() -> None:\n    asyncio.run(main_async())\n\n\nif __name__ == \"__main__\":\n    main()",
       "methods": [
         {
           "name": "fetch_user",
