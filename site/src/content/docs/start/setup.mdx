@@ -1,0 +1,141 @@
+---
+title: Установка и запуск
+description: "Как установить Python, открыть репозиторий в VS Code или PyCharm и запустить первый файл."
+---
+
+import { Aside, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
+
+<Aside type="note" title="Короткая версия">
+  Установите Python 3.12+, откройте папку репозитория в VS Code, откройте
+  `src/python/basics/01_hello.py` и нажмите **Run Python File**. Или выполните
+  `py src/python/basics/01_hello.py` в терминале.
+</Aside>
+
+## 1. Установите Python
+
+Скачайте установщик с [python.org](https://www.python.org/downloads/) или установите через Microsoft Store. На Windows удобно использовать лаунчер `py`.
+
+При установке с python.org включите **Add python.exe to PATH**. После установки проверьте в терминале:
+
+```bash
+py --version
+```
+
+Должна отображаться версия 3.10 или новее. Если команда `py` недоступна, попробуйте:
+
+```bash
+python --version
+```
+
+## 2. Откройте репозиторий
+
+### VS Code (рекомендуется, если нет PyCharm)
+
+1. Установите [VS Code](https://code.visualstudio.com/).
+2. Установите расширение **Python** от Microsoft.
+3. Выберите **File → Open Folder** и укажите папку `learn-python-core`.
+4. Откройте `src/python/basics/01_hello.py`.
+5. Нажмите **Run Python File** (треугольник в правом верхнем углу) или `Ctrl+F5`.
+
+### PyCharm Community
+
+1. Установите **PyCharm Community Edition**.
+2. Выберите **Open** и укажите папку репозитория.
+3. В `Settings → Project → Python Interpreter` выберите установленный Python 3.10+.
+4. Откройте файл и нажмите зелёную стрелку рядом с `if __name__ == "__main__":`.
+
+### Только терминал
+
+Из корня репозитория:
+
+```bash
+py src/python/basics/01_hello.py
+```
+
+В выводе должно появиться:
+
+```text
+Hello, Python!
+Привет, мир!
+Привет, Анна!
+Python читается почти как обычный текст.
+```
+
+## 3. Создайте виртуальное окружение
+
+Для курса это не обязательно: все примеры используют только стандартную библиотеку. Но для реальных проектов привычка нужна сразу.
+
+```bash
+py -m venv .venv
+```
+
+Активация:
+
+```bash
+# Windows PowerShell
+.venv\Scripts\Activate.ps1
+
+# Windows cmd
+.venv\Scripts\activate.bat
+
+# macOS / Linux
+source .venv/bin/activate
+```
+
+После активации в приглашении появится `(.venv)`, а `python` будет указывать на окружение проекта.
+
+## 4. Запустите тесты курса
+
+В репозитории есть файл с тестами в стиле pytest:
+
+```bash
+py -m pytest src/python/testing/02_pytest_demo.py
+```
+
+Если pytest не установлен:
+
+```bash
+py -m pip install pytest
+```
+
+Можно запустить и без pytest — файл сам проверяет свои функции:
+
+```bash
+py src/python/testing/02_pytest_demo.py
+```
+
+## 5. Запустите сайт курса
+
+Сайт — это отдельный фронтенд на Astro. Он нужен, если вы хотите читать уроки локально или менять их.
+
+```bash
+npm install
+npm run dev
+```
+
+Адрес появится в консоли: `http://localhost:4321/learn-python-core/`.
+
+<Tabs>
+  <TabItem label="Требования">
+    Node.js 20+ и Python 3.10+. Для production-сборки используется `npm run build`.
+  </TabItem>
+  <TabItem label="Только чтение">
+    Если сайт не нужен, читайте уроки прямо в репозитории: `site/src/data/lessons/` и `src/python/`.
+  </TabItem>
+</Tabs>
+
+## Если что-то не работает
+
+| Симптом | Что проверить |
+| --- | --- |
+| `py` не найден | Переустановите Python с галочкой PATH или используйте `python` |
+| `ModuleNotFoundError` | Запускайте из корня репозитория или проверьте venv |
+| Крашится вывод с кириллицей | Установите `PYTHONUTF8=1` или используйте Python 3.12+ |
+| VS Code не видит интерпретатор | `Ctrl+Shift+P → Python: Select Interpreter` |
+| Сайт не собирается | Проверьте Node.js 20+ и выполните `npm install` заново |
+
+<Aside type="tip" title="Полезные горячие клавиши VS Code">
+  `Ctrl+`` — терминал, `Ctrl+Shift+P` — командная палитра, `F5` — запуск с отладчиком,
+  `Shift+Alt+F` — форматирование, `F12` — переход к определению. В практике на сайте
+  `Ctrl+Enter` запускает проверку, а `Ctrl+Space` открывает подсказки.
+</Aside>

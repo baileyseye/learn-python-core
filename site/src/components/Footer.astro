@@ -1,0 +1,22 @@
+---
+import { url } from '../utils/url.js';
+---
+
+<footer class="course-footer">
+  <div class="course-footer-inner">
+    <div>
+      <p class="course-footer-brand"><span aria-hidden="true">🐍</span> Learn Python Core</p>
+      <p class="course-footer-note">Курс по реальным исходникам из репозитория. Прогресс хранится только в браузере.</p>
+    </div>
+    <nav class="course-footer-links" aria-label="Ссылки курса">
+      <a href={url('/start/')}>Как учиться</a>
+      <a href={url('/start/setup/')}>Установка</a>
+      <a href={url('/progress/')}>Прогресс</a>
+      <a href="https://github.com/baileyseye/learn-python-core" target="_blank" rel="noreferrer">GitHub ↗</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+  import '../scripts/progress.js';
+</script>

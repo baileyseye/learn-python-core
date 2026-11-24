@@ -1,0 +1,115 @@
+---
+title: Как устроен курс
+description: "Архитектура репозитория: Python-исходники как источник правды, генерация данных, Astro Starlight и Pyodide."
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+Курс специально устроен так, чтобы сайт и код не расходились. Исходники Python лежат в репозитории и являются единственным источником правды.
+
+## Структура
+
+```text
+learn-python-core/
+├── src/python/                 # учебные файлы, по папке на модуль
+│   ├── basics/
+│   ├── collections/
+│   ├── errors/
+│   ├── oop/
+│   ├── functional/
+│   ├── stdlib/
+│   ├── testing/
+│   └── web/
+├── site/src/
+│   ├── data/
+│   │   ├── modules.mjs
+│   │   ├── lessons/module-*.mjs
+│   │   ├── course.mjs
+│   │   ├── sidebar.mjs
+│   │   └── generated.json      # генерируется
+│   ├── components/
+│   ├── pages/
+│   ├── content/docs/
+│   ├── scripts/
+│   └── styles/custom.css
+├── scripts/
+│   ├── extract-sources.py
+│   └── sync-course-data.mjs
+├── astro.config.mjs
+└── package.json
+```
+
+## Как данные попадают на сайт
+
+<Steps>
+
+1. **Python-файлы** содержат функции и `main()`, который демонстрирует тему.
+2. **`scripts/extract-sources.py`** читает AST и достаёт функции, классы, методы и диапазоны строк.
+3. **`scripts/sync-course-data.mjs`** запускает каждый файл и сохраняет реальный stdout в `generated.json`.
+4. **Уроки** ссылаются на файл и имя функции. Скрипт проверяет, что такая функция существует.
+5. **Astro** собирает статические страницы. Код в уроке — это срез настоящего файла по номерам строк.
+
+</Steps>
+
+## Команды
+
+```bash
+npm run dev          # синхронизация + локальный сайт
+npm run sync         # пересобрать generated.json из Python-исходников
+npm run check:data   # проверить, что generated.json не устарел
+npm run build        # production-сборка в dist/
+npm run preview      # посмотреть собранный сайт
+```
+
+## Как добавить урок
+
+1. Создайте или измените файл в `src/python/<модуль>/`.
+2. Добавьте функцию с осмысленным именем и вызовом из `main()`.
+3. В `site/src/data/lessons/module-N.mjs` добавьте объект урока:
+   - `id`, `title`, `summary`, `minutes`;
+   - `goal`, `ideas`;
+   - `sources: [{ file, focus: [{ function, note }] }]`;
+   - `practice` с `starter`, `solution`, `hint`, `tests`;
+   - `quiz` из 2–3 вопросов.
+4. Выполните `npm run sync`. Скрипт упадёт, если функция не найдена или файл не запускается.
+5. Проверьте страницу через `npm run dev`.
+
+<Aside type="caution" title="Тесты практики">
+  `tests` — массив Python-выражений. После выполнения кода они запускаются в том же пространстве имён.
+  В тестах доступна переменная `stdout` с захваченным выводом. Каждый тест должен завершиться
+  без исключения; `assert` — основной способ проверки.
+</Aside>
+
+## Интерактивная практика
+
+Редактор построен на CodeMirror 6 с языком Python. При проверке:
+
+1. Код отправляется в Web Worker.
+2. Worker загружает Pyodide с CDN (около 10 МБ, один раз на вкладку).
+3. Код выполняется через `exec`, stdout перехватывается.
+4. Тесты выполняются в том же namespace; результаты возвращаются в UI.
+5. Если Pyodide недоступен, включается структурная проверка без выполнения.
+
+Код не отправляется на сервер: всё происходит в браузере.
+
+## Деплой
+
+Workflow `.github/workflows/deploy-course.yml` собирает сайт и публикует `dist` на GitHub Pages. В настройках репозитория выберите **Settings → Pages → Source: GitHub Actions**.
+
+<Aside type="note" title="Base path">
+  Сайт настроен на `/learn-python-core`. Если репозиторий называется иначе, измените `base`
+  в `astro.config.mjs` и ссылки в `site/src/utils/url.js`.
+</Aside>
+
+## Стек
+
+- **Astro + Starlight** — статический сайт и навигация.
+- **CodeMirror 6** — редактор кода с подсветкой Python.
+- **Pyodide** — Python в WebAssembly для реального запуска практики.
+- **Astro Expressive Code** — блоки кода с номерами строк.
+- **Pagefind** (встроен в Starlight) — поиск по сайту.
+
+## Для автора
+
+- [Инвентарь файлов](../contributors/inventory/) — все исходники и их использование.
+- [Карта маршрута](../contributors/route/) — модули, уроки и время.

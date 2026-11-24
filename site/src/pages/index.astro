@@ -1,0 +1,18 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import CourseHome from '../components/CourseHome.astro';
+import { courseStats } from '../data/course.mjs';
+
+const description = `Пошаговый курс по Python из ${courseStats.lessons} уроков в ${courseStats.modules} модулях: реальные исходники из репозитория, запуск кода в браузере, упражнения и самопроверка.`;
+---
+
+<StarlightPage
+  frontmatter={{
+    title: 'Курс Python Core',
+    description,
+    template: 'splash'
+  }}
+  hasSidebar={false}
+>
+  <CourseHome />
+</StarlightPage>

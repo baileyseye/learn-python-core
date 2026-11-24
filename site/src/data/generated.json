@@ -1,0 +1,3811 @@
+{
+  "stats": {
+    "files": 45,
+    "lines": 2204,
+    "methods": 248,
+    "classes": 27,
+    "outputs": 45,
+    "lessons": 45,
+    "usedFiles": 45
+  },
+  "files": {
+    "basics/01_hello.py": {
+      "path": "basics/01_hello.py",
+      "lines": 22,
+      "code": "\"\"\"Первая программа: вывод в консоль и функция.\n\nЗапуск:\n    python src/python/basics/01_hello.py\n\"\"\"\n\n\ndef greet(name: str = \"мир\") -> str:\n    \"\"\"Возвращает приветствие для имени.\"\"\"\n    return f\"Привет, {name}!\"\n\n\ndef main() -> None:\n    print(\"Hello, Python!\")\n    print(greet())\n    print(greet(\"Анна\"))\n    print(\"Python читается почти как обычный текст.\")\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "greet",
+          "kind": "function",
+          "start": 8,
+          "end": 10,
+          "signature": "def greet(name: str = \"мир\") -> str:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 13,
+          "end": 17,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "greet",
+          "kind": "function",
+          "start": 8,
+          "end": 10,
+          "signature": "def greet(name: str = \"мир\") -> str:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 13,
+          "end": 17,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "Hello, Python!\nПривет, мир!\nПривет, Анна!\nPython читается почти как обычный текст.",
+      "ok": true,
+      "error": ""
+    },
+    "basics/02_variables.py": {
+      "path": "basics/02_variables.py",
+      "lines": 56,
+      "code": "\"\"\"Переменные и динамическая типизация.\n\nPython не требует объявлять тип переменной: тип принадлежит значению,\nа не имени. При этом Python остаётся строго типизированным языком.\n\"\"\"\n\n\ndef demonstrate_assignment() -> None:\n    name = \"Анна\"\n    age = 27\n    height = 1.72\n    is_student = False\n\n    print(name, type(name).__name__)\n    print(age, type(age).__name__)\n    print(height, type(height).__name__)\n    print(is_student, type(is_student).__name__)\n\n\ndef demonstrate_reassignment() -> None:\n    value = 10\n    print(\"сначала:\", value, type(value).__name__)\n\n    value = \"теперь строка\"\n    print(\"потом:\", value, type(value).__name__)\n\n\ndef demonstrate_unpacking() -> None:\n    x, y = 3, 7\n    x, y = y, x\n    print(\"после обмена:\", x, y)\n\n    first, *middle, last = [1, 2, 3, 4, 5]\n    print(\"first:\", first, \"middle:\", middle, \"last:\", last)\n\n\ndef check_type(value: object) -> str:\n    \"\"\"isinstance умеет проверять несколько типов сразу.\"\"\"\n    if isinstance(value, (int, float)):\n        return \"число\"\n    if isinstance(value, str):\n        return \"строка\"\n    return \"другое\"\n\n\ndef main() -> None:\n    demonstrate_assignment()\n    demonstrate_reassignment()\n    demonstrate_unpacking()\n    print(\"42 —\", check_type(42))\n    print(\"'42' —\", check_type(\"42\"))\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "demonstrate_assignment",
+          "kind": "function",
+          "start": 8,
+          "end": 17,
+          "signature": "def demonstrate_assignment() -> None:"
+        },
+        {
+          "name": "demonstrate_reassignment",
+          "kind": "function",
+          "start": 20,
+          "end": 25,
+          "signature": "def demonstrate_reassignment() -> None:"
+        },
+        {
+          "name": "demonstrate_unpacking",
+          "kind": "function",
+          "start": 28,
+          "end": 34,
+          "signature": "def demonstrate_unpacking() -> None:"
+        },
+        {
+          "name": "check_type",
+          "kind": "function",
+          "start": 37,
+          "end": 43,
+          "signature": "def check_type(value: object) -> str:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 46,
+          "end": 51,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "demonstrate_assignment",
+          "kind": "function",
+          "start": 8,
+          "end": 17,
+          "signature": "def demonstrate_assignment() -> None:"
+        },
+        {
+          "name": "demonstrate_reassignment",
+          "kind": "function",
+          "start": 20,
+          "end": 25,
+          "signature": "def demonstrate_reassignment() -> None:"
+        },
+        {
+          "name": "demonstrate_unpacking",
+          "kind": "function",
+          "start": 28,
+          "end": 34,
+          "signature": "def demonstrate_unpacking() -> None:"
+        },
+        {
+          "name": "check_type",
+          "kind": "function",
+          "start": 37,
+          "end": 43,
+          "signature": "def check_type(value: object) -> str:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 46,
+          "end": 51,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "Анна str\n27 int\n1.72 float\nFalse bool\nсначала: 10 int\nпотом: теперь строка str\nпосле обмена: 7 3\nfirst: 1 middle: [2, 3, 4] last: 5\n42 — число\n'42' — строка",
+      "ok": true,
+      "error": ""
+    },
+    "basics/03_numbers.py": {
+      "path": "basics/03_numbers.py",
+      "lines": 44,
+      "code": "\"\"\"Числа и операторы.\n\nint в Python не переполняется, а float хранит двоичное приближение.\nДля денег и точных десятичных расчётов используют Decimal.\n\"\"\"\n\nfrom decimal import Decimal\n\n\ndef demonstrate_integers() -> None:\n    big = 2**100\n    print(\"2**100 =\", big)\n    print(\"деление нацело:\", 17 // 5)\n    print(\"остаток:\", 17 % 5)\n    print(\"степень:\", 2**10)\n    print(\"знак минус:\", -7 // 2, -7 % 2)\n\n\ndef demonstrate_floats() -> None:\n    print(\"0.1 + 0.2 =\", 0.1 + 0.2)\n    print(\"округление:\", round(2.675, 2))\n    print(\"Decimal:\", Decimal(\"0.1\") + Decimal(\"0.2\"))\n\n\ndef calculate(a: int, b: int) -> dict[str, int]:\n    \"\"\"Возвращает результаты пяти арифметических операций.\"\"\"\n    return {\n        \"sum\": a + b,\n        \"difference\": a - b,\n        \"product\": a * b,\n        \"quotient\": a // b,\n        \"remainder\": a % b,\n    }\n\n\ndef main() -> None:\n    demonstrate_integers()\n    demonstrate_floats()\n    print(calculate(10, 3))\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "demonstrate_integers",
+          "kind": "function",
+          "start": 10,
+          "end": 16,
+          "signature": "def demonstrate_integers() -> None:"
+        },
+        {
+          "name": "demonstrate_floats",
+          "kind": "function",
+          "start": 19,
+          "end": 22,
+          "signature": "def demonstrate_floats() -> None:"
+        },
+        {
+          "name": "calculate",
+          "kind": "function",
+          "start": 25,
+          "end": 33,
+          "signature": "def calculate(a: int, b: int) -> dict[str, int]:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 36,
+          "end": 39,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "demonstrate_integers",
+          "kind": "function",
+          "start": 10,
+          "end": 16,
+          "signature": "def demonstrate_integers() -> None:"
+        },
+        {
+          "name": "demonstrate_floats",
+          "kind": "function",
+          "start": 19,
+          "end": 22,
+          "signature": "def demonstrate_floats() -> None:"
+        },
+        {
+          "name": "calculate",
+          "kind": "function",
+          "start": 25,
+          "end": 33,
+          "signature": "def calculate(a: int, b: int) -> dict[str, int]:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 36,
+          "end": 39,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "2**100 = 1267650600228229401496703205376\nделение нацело: 3\nостаток: 2\nстепень: 1024\nзнак минус: -4 1\n0.1 + 0.2 = 0.30000000000000004\nокругление: 2.67\nDecimal: 0.3\n{'sum': 13, 'difference': 7, 'product': 30, 'quotient': 3, 'remainder': 1}",
+      "ok": true,
+      "error": ""
+    },
+    "basics/04_strings.py": {
+      "path": "basics/04_strings.py",
+      "lines": 50,
+      "code": "\"\"\"Строки: неизменяемость, f-строки и полезные методы.\"\"\"\n\n\ndef demonstrate_creation() -> None:\n    single = 'Python'\n    double = \"Python\"\n    multiline = \"\"\"Первая строка\nВторая строка\"\"\"\n    raw = r\"C:\\Users\\student\"\n    print(single == double)\n    print(multiline)\n    print(raw)\n\n\ndef demonstrate_methods() -> None:\n    text = \"  Learn Python Core  \"\n    print(\"strip:\", repr(text.strip()))\n    print(\"lower:\", text.strip().lower())\n    print(\"replace:\", text.strip().replace(\"Python\", \"FastAPI\"))\n    print(\"split:\", \"яблоко,банан,вишня\".split(\",\"))\n    print(\"join:\", \" → \".join([\"учить\", \"писать\", \"запускать\"]))\n    print(\"startswith:\", \"test_api.py\".startswith(\"test_\"))\n\n\ndef demonstrate_formatting() -> None:\n    name = \"Анна\"\n    score = 92.456\n    print(f\"{name}: {score:.1f}%\")\n    print(f\"{name!r} в поле шириной 10: |{name:>10}|\")\n    print(f\"{255:b} {255:o} {255:x}\")\n\n\ndef demonstrate_immutability() -> None:\n    original = \"python\"\n    changed = original.upper()\n    print(\"original:\", original)\n    print(\"changed:\", changed)\n    print(\"первый символ:\", original[0], \"последний:\", original[-1])\n\n\ndef main() -> None:\n    demonstrate_creation()\n    demonstrate_methods()\n    demonstrate_formatting()\n    demonstrate_immutability()\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "demonstrate_creation",
+          "kind": "function",
+          "start": 4,
+          "end": 12,
+          "signature": "def demonstrate_creation() -> None:"
+        },
+        {
+          "name": "demonstrate_methods",
+          "kind": "function",
+          "start": 15,
+          "end": 22,
+          "signature": "def demonstrate_methods() -> None:"
+        },
+        {
+          "name": "demonstrate_formatting",
+          "kind": "function",
+          "start": 25,
+          "end": 30,
+          "signature": "def demonstrate_formatting() -> None:"
+        },
+        {
+          "name": "demonstrate_immutability",
+          "kind": "function",
+          "start": 33,
+          "end": 38,
+          "signature": "def demonstrate_immutability() -> None:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 41,
+          "end": 45,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "demonstrate_creation",
+          "kind": "function",
+          "start": 4,
+          "end": 12,
+          "signature": "def demonstrate_creation() -> None:"
+        },
+        {
+          "name": "demonstrate_methods",
+          "kind": "function",
+          "start": 15,
+          "end": 22,
+          "signature": "def demonstrate_methods() -> None:"
+        },
+        {
+          "name": "demonstrate_formatting",
+          "kind": "function",
+          "start": 25,
+          "end": 30,
+          "signature": "def demonstrate_formatting() -> None:"
+        },
+        {
+          "name": "demonstrate_immutability",
+          "kind": "function",
+          "start": 33,
+          "end": 38,
+          "signature": "def demonstrate_immutability() -> None:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 41,
+          "end": 45,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "True\nПервая строка\nВторая строка\nC:\\Users\\student\nstrip: 'Learn Python Core'\nlower: learn python core\nreplace: Learn FastAPI Core\nsplit: ['яблоко', 'банан', 'вишня']\njoin: учить → писать → запускать\nstartswith: True\nАнна: 92.5%\n'Анна' в поле шириной 10: |      Анна|\n11111111 377 ff\noriginal: python\nchanged: PYTHON\nпервый символ: p последний: n",
+      "ok": true,
+      "error": ""
+    },
+    "basics/05_conditions.py": {
+      "path": "basics/05_conditions.py",
+      "lines": 41,
+      "code": "\"\"\"Условия, truthiness и match/case.\"\"\"\n\n\ndef classify_score(score: int) -> str:\n    \"\"\"Возвращает словесную оценку по баллам.\"\"\"\n    if score >= 90:\n        return \"отлично\"\n    if score >= 75:\n        return \"хорошо\"\n    if score >= 60:\n        return \"зачёт\"\n    return \"нужно повторить\"\n\n\ndef describe_truthiness() -> None:\n    values = [0, 1, \"\", \"текст\", [], [0], None, False, True]\n    for value in values:\n        print(repr(value), \"→\", bool(value))\n\n\ndef describe_day(day: str) -> str:\n    match day.lower():\n        case \"пн\" | \"вт\" | \"ср\" | \"чт\" | \"пт\":\n            return \"рабочий день\"\n        case \"сб\" | \"вс\":\n            return \"выходной\"\n        case _:\n            return \"неизвестный день\"\n\n\ndef main() -> None:\n    for score in (95, 80, 61, 40):\n        print(score, classify_score(score))\n    describe_truthiness()\n    for day in (\"ср\", \"сб\", \"луна\"):\n        print(day, \"—\", describe_day(day))\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "classify_score",
+          "kind": "function",
+          "start": 4,
+          "end": 12,
+          "signature": "def classify_score(score: int) -> str:"
+        },
+        {
+          "name": "describe_truthiness",
+          "kind": "function",
+          "start": 15,
+          "end": 18,
+          "signature": "def describe_truthiness() -> None:"
+        },
+        {
+          "name": "describe_day",
+          "kind": "function",
+          "start": 21,
+          "end": 28,
+          "signature": "def describe_day(day: str) -> str:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 31,
+          "end": 36,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "classify_score",
+          "kind": "function",
+          "start": 4,
+          "end": 12,
+          "signature": "def classify_score(score: int) -> str:"
+        },
+        {
+          "name": "describe_truthiness",
+          "kind": "function",
+          "start": 15,
+          "end": 18,
+          "signature": "def describe_truthiness() -> None:"
+        },
+        {
+          "name": "describe_day",
+          "kind": "function",
+          "start": 21,
+          "end": 28,
+          "signature": "def describe_day(day: str) -> str:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 31,
+          "end": 36,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "95 отлично\n80 хорошо\n61 зачёт\n40 нужно повторить\n0 → False\n1 → True\n'' → False\n'текст' → True\n[] → False\n[0] → True\nNone → False\nFalse → False\nTrue → True\nср — рабочий день\nсб — выходной\nлуна — неизвестный день",
+      "ok": true,
+      "error": ""
+    },
+    "basics/06_loops.py": {
+      "path": "basics/06_loops.py",
+      "lines": 42,
+      "code": "\"\"\"Циклы for и while, range, enumerate, zip и else.\"\"\"\n\n\ndef multiplication_table(size: int = 3) -> list[list[int]]:\n    \"\"\"Вложенные циклы: таблица умножения.\"\"\"\n    return [[row * col for col in range(1, size + 1)] for row in range(1, size + 1)]\n\n\ndef find_first_even(numbers: list[int]) -> int | None:\n    \"\"\"for/else: else выполняется, только если не было break.\"\"\"\n    for number in numbers:\n        if number % 2 == 0:\n            print(\"нашли:\", number)\n            break\n    else:\n        print(\"чётных нет\")\n        return None\n    return number\n\n\ndef countdown(start: int) -> None:\n    while start > 0:\n        print(start, end=\" \")\n        start -= 1\n    print(\"старт!\")\n\n\ndef main() -> None:\n    print(\"range:\", list(range(1, 6)))\n    print(\"enumerate:\")\n    for index, letter in enumerate(\"Python\", start=1):\n        print(f\"  {index}: {letter}\")\n    print(\"zip:\", list(zip([\"a\", \"b\", \"c\"], [1, 2, 3])))\n    print(\"таблица:\", multiplication_table())\n    find_first_even([1, 3, 8, 10])\n    find_first_even([1, 3, 5])\n    countdown(3)\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "multiplication_table",
+          "kind": "function",
+          "start": 4,
+          "end": 6,
+          "signature": "def multiplication_table(size: int = 3) -> list[list[int]]:"
+        },
+        {
+          "name": "find_first_even",
+          "kind": "function",
+          "start": 9,
+          "end": 18,
+          "signature": "def find_first_even(numbers: list[int]) -> int | None:"
+        },
+        {
+          "name": "countdown",
+          "kind": "function",
+          "start": 21,
+          "end": 25,
+          "signature": "def countdown(start: int) -> None:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 28,
+          "end": 37,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "multiplication_table",
+          "kind": "function",
+          "start": 4,
+          "end": 6,
+          "signature": "def multiplication_table(size: int = 3) -> list[list[int]]:"
+        },
+        {
+          "name": "find_first_even",
+          "kind": "function",
+          "start": 9,
+          "end": 18,
+          "signature": "def find_first_even(numbers: list[int]) -> int | None:"
+        },
+        {
+          "name": "countdown",
+          "kind": "function",
+          "start": 21,
+          "end": 25,
+          "signature": "def countdown(start: int) -> None:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 28,
+          "end": 37,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "range: [1, 2, 3, 4, 5]\nenumerate:\n  1: P\n  2: y\n  3: t\n  4: h\n  5: o\n  6: n\nzip: [('a', 1), ('b', 2), ('c', 3)]\nтаблица: [[1, 2, 3], [2, 4, 6], [3, 6, 9]]\nнашли: 8\nчётных нет\n3 2 1 старт!",
+      "ok": true,
+      "error": ""
+    },
+    "basics/07_functions.py": {
+      "path": "basics/07_functions.py",
+      "lines": 35,
+      "code": "\"\"\"Функции: параметры, значения по умолчанию, аннотации и область видимости.\"\"\"\n\n\ndef add(a: int, b: int) -> int:\n    \"\"\"Складывает два числа.\"\"\"\n    return a + b\n\n\ndef greet(name: str, greeting: str = \"Привет\") -> str:\n    \"\"\"Параметр со значением по умолчанию идёт последним.\"\"\"\n    return f\"{greeting}, {name}!\"\n\n\ndef min_max(numbers: list[int]) -> tuple[int, int]:\n    \"\"\"Функция может вернуть несколько значений через кортеж.\"\"\"\n    return min(numbers), max(numbers)\n\n\ndef apply_twice(function, value):\n    \"\"\"Функция — такой же объект, её можно передать аргументом.\"\"\"\n    return function(function(value))\n\n\ndef main() -> None:\n    print(add(2, 3))\n    print(greet(\"Анна\"))\n    print(greet(\"Ли\", greeting=\"Добрый день\"))\n    print(min_max([4, 1, 9, 2]))\n    print(\"apply_twice:\", apply_twice(lambda x: x * 2, 5))\n    print(\"docstring:\", add.__doc__)\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "add",
+          "kind": "function",
+          "start": 4,
+          "end": 6,
+          "signature": "def add(a: int, b: int) -> int:"
+        },
+        {
+          "name": "greet",
+          "kind": "function",
+          "start": 9,
+          "end": 11,
+          "signature": "def greet(name: str, greeting: str = \"Привет\") -> str:"
+        },
+        {
+          "name": "min_max",
+          "kind": "function",
+          "start": 14,
+          "end": 16,
+          "signature": "def min_max(numbers: list[int]) -> tuple[int, int]:"
+        },
+        {
+          "name": "apply_twice",
+          "kind": "function",
+          "start": 19,
+          "end": 21,
+          "signature": "def apply_twice(function, value):"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 24,
+          "end": 30,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "add",
+          "kind": "function",
+          "start": 4,
+          "end": 6,
+          "signature": "def add(a: int, b: int) -> int:"
+        },
+        {
+          "name": "greet",
+          "kind": "function",
+          "start": 9,
+          "end": 11,
+          "signature": "def greet(name: str, greeting: str = \"Привет\") -> str:"
+        },
+        {
+          "name": "min_max",
+          "kind": "function",
+          "start": 14,
+          "end": 16,
+          "signature": "def min_max(numbers: list[int]) -> tuple[int, int]:"
+        },
+        {
+          "name": "apply_twice",
+          "kind": "function",
+          "start": 19,
+          "end": 21,
+          "signature": "def apply_twice(function, value):"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 24,
+          "end": 30,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "5\nПривет, Анна!\nДобрый день, Ли!\n(1, 9)\napply_twice: 20\ndocstring: Складывает два числа.",
+      "ok": true,
+      "error": ""
+    },
+    "basics/08_io.py": {
+      "path": "basics/08_io.py",
+      "lines": 42,
+      "code": "\"\"\"Ввод и вывод: print, f-строки и чтение из потока.\n\nНастоящий input() в демонстрации не вызывается, иначе программа ждала бы\nпользователя. Вместо этого функция принимает любой поток с методом readline.\n\"\"\"\n\nimport io\n\n\ndef ask_name(stream) -> str:\n    \"\"\"Читает имя из потока. В реальной программе сюда передают sys.stdin.\"\"\"\n    print(\"Как тебя зовут? \", end=\"\")\n    name = stream.readline().strip()\n    return name or \"друг\"\n\n\ndef format_receipt(items: list[tuple[str, int]]) -> str:\n    \"\"\"Выравнивание текста и чисел через f-строки.\"\"\"\n    lines = [\"Товар            Цена\"]\n    lines.append(\"-\" * 22)\n    for title, price in items:\n        lines.append(f\"{title:<16}{price:>6}\")\n    lines.append(\"-\" * 22)\n    lines.append(f\"{'Итого':<16}{sum(price for _, price in items):>6}\")\n    return \"\\n\".join(lines)\n\n\ndef main() -> None:\n    fake_input = io.StringIO(\"Анна\\n\")\n    name = ask_name(fake_input)\n    print(f\"Привет, {name}!\")\n\n    print(\"a\", \"b\", \"c\", sep=\" | \")\n    print(\"без перевода строки\", end=\"\")\n    print(\" — и продолжаем\")\n\n    print(format_receipt([(\"Книга\", 1200), (\"Курс\", 4900), (\"Кофе\", 250)]))\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "ask_name",
+          "kind": "function",
+          "start": 10,
+          "end": 14,
+          "signature": "def ask_name(stream) -> str:"
+        },
+        {
+          "name": "format_receipt",
+          "kind": "function",
+          "start": 17,
+          "end": 25,
+          "signature": "def format_receipt(items: list[tuple[str, int]]) -> str:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 28,
+          "end": 37,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "ask_name",
+          "kind": "function",
+          "start": 10,
+          "end": 14,
+          "signature": "def ask_name(stream) -> str:"
+        },
+        {
+          "name": "format_receipt",
+          "kind": "function",
+          "start": 17,
+          "end": 25,
+          "signature": "def format_receipt(items: list[tuple[str, int]]) -> str:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 28,
+          "end": 37,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "Как тебя зовут? Привет, Анна!\na | b | c\nбез перевода строки — и продолжаем\nТовар            Цена\n----------------------\nКнига             1200\nКурс              4900\nКофе               250\n----------------------\nИтого             6350",
+      "ok": true,
+      "error": ""
+    },
+    "collections/01_lists.py": {
+      "path": "collections/01_lists.py",
+      "lines": 44,
+      "code": "\"\"\"Списки: изменяемая последовательность.\"\"\"\n\n\ndef demonstrate_methods() -> None:\n    fruits = [\"яблоко\", \"банан\"]\n    fruits.append(\"вишня\")\n    fruits.insert(1, \"груша\")\n    fruits.extend([\"киви\", \"манго\"])\n    print(\"список:\", fruits)\n    print(\"pop:\", fruits.pop(), \"→\", fruits)\n    fruits.remove(\"груша\")\n    print(\"remove:\", fruits)\n    print(\"index:\", fruits.index(\"вишня\"))\n\n\ndef demonstrate_copy_pitfall() -> None:\n    original = [1, 2, 3]\n    alias = original\n    copy = original.copy()\n\n    alias.append(4)\n    copy.append(99)\n\n    print(\"original:\", original)\n    print(\"alias:\", alias)\n    print(\"copy:\", copy)\n\n\ndef demonstrate_nested() -> None:\n    matrix = [[1, 2], [3, 4]]\n    matrix[0][1] = 20\n    print(\"matrix:\", matrix)\n    print(\"сумма строк:\", [sum(row) for row in matrix])\n\n\ndef main() -> None:\n    demonstrate_methods()\n    demonstrate_copy_pitfall()\n    demonstrate_nested()\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "demonstrate_methods",
+          "kind": "function",
+          "start": 4,
+          "end": 13,
+          "signature": "def demonstrate_methods() -> None:"
+        },
+        {
+          "name": "demonstrate_copy_pitfall",
+          "kind": "function",
+          "start": 16,
+          "end": 26,
+          "signature": "def demonstrate_copy_pitfall() -> None:"
+        },
+        {
+          "name": "demonstrate_nested",
+          "kind": "function",
+          "start": 29,
+          "end": 33,
+          "signature": "def demonstrate_nested() -> None:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 36,
+          "end": 39,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "demonstrate_methods",
+          "kind": "function",
+          "start": 4,
+          "end": 13,
+          "signature": "def demonstrate_methods() -> None:"
+        },
+        {
+          "name": "demonstrate_copy_pitfall",
+          "kind": "function",
+          "start": 16,
+          "end": 26,
+          "signature": "def demonstrate_copy_pitfall() -> None:"
+        },
+        {
+          "name": "demonstrate_nested",
+          "kind": "function",
+          "start": 29,
+          "end": 33,
+          "signature": "def demonstrate_nested() -> None:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 36,
+          "end": 39,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "список: ['яблоко', 'груша', 'банан', 'вишня', 'киви', 'манго']\npop: манго → ['яблоко', 'груша', 'банан', 'вишня', 'киви']\nremove: ['яблоко', 'банан', 'вишня', 'киви']\nindex: 2\noriginal: [1, 2, 3, 4]\nalias: [1, 2, 3, 4]\ncopy: [1, 2, 3, 99]\nmatrix: [[1, 20], [3, 4]]\nсумма строк: [21, 7]",
+      "ok": true,
+      "error": ""
+    },
+    "collections/02_tuples.py": {
+      "path": "collections/02_tuples.py",
+      "lines": 42,
+      "code": "\"\"\"Кортежи: неизменяемые последовательности и распаковка.\"\"\"\n\nfrom collections import namedtuple\n\n\ndef demonstrate_basics() -> None:\n    point = (3, 7)\n    x, y = point\n    print(\"point:\", point)\n    print(\"x, y:\", x, y)\n    print(\"срез:\", point[::-1])\n\n\ndef demonstrate_single_element() -> None:\n    not_tuple = (\"Python\")\n    one_item = (\"Python\",)\n    print(type(not_tuple).__name__, type(one_item).__name__)\n\n\ndef split_name(full_name: str) -> tuple[str, str]:\n    \"\"\"Кортеж — удобный способ вернуть несколько значений.\"\"\"\n    first, last = full_name.split(maxsplit=1)\n    return first, last\n\n\ndef demonstrate_namedtuple() -> None:\n    User = namedtuple(\"User\", \"name role\")\n    user = User(\"Анна\", \"admin\")\n    print(user)\n    print(user.name, user.role)\n\n\ndef main() -> None:\n    demonstrate_basics()\n    demonstrate_single_element()\n    print(split_name(\"Анна Петрова\"))\n    demonstrate_namedtuple()\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "demonstrate_basics",
+          "kind": "function",
+          "start": 6,
+          "end": 11,
+          "signature": "def demonstrate_basics() -> None:"
+        },
+        {
+          "name": "demonstrate_single_element",
+          "kind": "function",
+          "start": 14,
+          "end": 17,
+          "signature": "def demonstrate_single_element() -> None:"
+        },
+        {
+          "name": "split_name",
+          "kind": "function",
+          "start": 20,
+          "end": 23,
+          "signature": "def split_name(full_name: str) -> tuple[str, str]:"
+        },
+        {
+          "name": "demonstrate_namedtuple",
+          "kind": "function",
+          "start": 26,
+          "end": 30,
+          "signature": "def demonstrate_namedtuple() -> None:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 33,
+          "end": 37,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "demonstrate_basics",
+          "kind": "function",
+          "start": 6,
+          "end": 11,
+          "signature": "def demonstrate_basics() -> None:"
+        },
+        {
+          "name": "demonstrate_single_element",
+          "kind": "function",
+          "start": 14,
+          "end": 17,
+          "signature": "def demonstrate_single_element() -> None:"
+        },
+        {
+          "name": "split_name",
+          "kind": "function",
+          "start": 20,
+          "end": 23,
+          "signature": "def split_name(full_name: str) -> tuple[str, str]:"
+        },
+        {
+          "name": "demonstrate_namedtuple",
+          "kind": "function",
+          "start": 26,
+          "end": 30,
+          "signature": "def demonstrate_namedtuple() -> None:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 33,
+          "end": 37,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "point: (3, 7)\nx, y: 3 7\nсрез: (7, 3)\nstr tuple\n('Анна', 'Петрова')\nUser(name='Анна', role='admin')\nАнна admin",
+      "ok": true,
+      "error": ""
+    },
+    "collections/03_dicts.py": {
+      "path": "collections/03_dicts.py",
+      "lines": 43,
+      "code": "\"\"\"Словари: ключ → значение.\"\"\"\n\n\ndef demonstrate_basics() -> None:\n    user = {\"name\": \"Анна\", \"age\": 27}\n    user[\"city\"] = \"Москва\"\n    user[\"age\"] = 28\n\n    print(\"name:\", user[\"name\"])\n    print(\"email:\", user.get(\"email\", \"не указан\"))\n    print(\"keys:\", list(user.keys()))\n    print(\"values:\", list(user.values()))\n\n\ndef count_words(text: str) -> dict[str, int]:\n    \"\"\"Подсчёт частот — классическая задача для словаря.\"\"\"\n    counts: dict[str, int] = {}\n    for word in text.lower().split():\n        counts[word] = counts.get(word, 0) + 1\n    return counts\n\n\ndef merge_profiles(base: dict, extra: dict) -> dict:\n    \"\"\"Оператор | объединяет словари, не меняя исходные.\"\"\"\n    return base | extra\n\n\ndef demonstrate_iteration() -> None:\n    prices = {\"книга\": 1200, \"курс\": 4900}\n    for title, price in prices.items():\n        print(f\"{title}: {price} ₽\")\n\n\ndef main() -> None:\n    demonstrate_basics()\n    print(count_words(\"кот пёс кот кот\"))\n    print(merge_profiles({\"lang\": \"Python\"}, {\"level\": \"core\"}))\n    demonstrate_iteration()\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "demonstrate_basics",
+          "kind": "function",
+          "start": 4,
+          "end": 12,
+          "signature": "def demonstrate_basics() -> None:"
+        },
+        {
+          "name": "count_words",
+          "kind": "function",
+          "start": 15,
+          "end": 20,
+          "signature": "def count_words(text: str) -> dict[str, int]:"
+        },
+        {
+          "name": "merge_profiles",
+          "kind": "function",
+          "start": 23,
+          "end": 25,
+          "signature": "def merge_profiles(base: dict, extra: dict) -> dict:"
+        },
+        {
+          "name": "demonstrate_iteration",
+          "kind": "function",
+          "start": 28,
+          "end": 31,
+          "signature": "def demonstrate_iteration() -> None:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 34,
+          "end": 38,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "demonstrate_basics",
+          "kind": "function",
+          "start": 4,
+          "end": 12,
+          "signature": "def demonstrate_basics() -> None:"
+        },
+        {
+          "name": "count_words",
+          "kind": "function",
+          "start": 15,
+          "end": 20,
+          "signature": "def count_words(text: str) -> dict[str, int]:"
+        },
+        {
+          "name": "merge_profiles",
+          "kind": "function",
+          "start": 23,
+          "end": 25,
+          "signature": "def merge_profiles(base: dict, extra: dict) -> dict:"
+        },
+        {
+          "name": "demonstrate_iteration",
+          "kind": "function",
+          "start": 28,
+          "end": 31,
+          "signature": "def demonstrate_iteration() -> None:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 34,
+          "end": 38,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "name: Анна\nemail: не указан\nkeys: ['name', 'age', 'city']\nvalues: ['Анна', 28, 'Москва']\n{'кот': 3, 'пёс': 1}\n{'lang': 'Python', 'level': 'core'}\nкнига: 1200 ₽\nкурс: 4900 ₽",
+      "ok": true,
+      "error": ""
+    },
+    "collections/04_sets.py": {
+      "path": "collections/04_sets.py",
+      "lines": 39,
+      "code": "\"\"\"Множества: уникальность и операции над множествами.\"\"\"\n\n\ndef unique_preserve_order(items: list[str]) -> list[str]:\n    \"\"\"set убирает дубликаты, но не сохраняет порядок — сохраняем сами.\"\"\"\n    seen: set[str] = set()\n    result: list[str] = []\n    for item in items:\n        if item not in seen:\n            seen.add(item)\n            result.append(item)\n    return result\n\n\ndef demonstrate_operations() -> None:\n    python = {\"Анна\", \"Борис\", \"Вера\"}\n    java = {\"Борис\", \"Глеб\"}\n\n    print(\"объединение:\", sorted(python | java))\n    print(\"пересечение:\", sorted(python & java))\n    print(\"разность:\", sorted(python - java))\n    print(\"симметричная разность:\", sorted(python ^ java))\n\n\ndef demonstrate_membership_speed() -> None:\n    numbers = set(range(1_000_000))\n    print(\"999999 в set:\", 999_999 in numbers)\n    print(\"добавление:\", numbers.add(2_000_000))\n\n\ndef main() -> None:\n    print(unique_preserve_order([\"b\", \"a\", \"b\", \"c\", \"a\"]))\n    demonstrate_operations()\n    demonstrate_membership_speed()\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "unique_preserve_order",
+          "kind": "function",
+          "start": 4,
+          "end": 12,
+          "signature": "def unique_preserve_order(items: list[str]) -> list[str]:"
+        },
+        {
+          "name": "demonstrate_operations",
+          "kind": "function",
+          "start": 15,
+          "end": 22,
+          "signature": "def demonstrate_operations() -> None:"
+        },
+        {
+          "name": "demonstrate_membership_speed",
+          "kind": "function",
+          "start": 25,
+          "end": 28,
+          "signature": "def demonstrate_membership_speed() -> None:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 31,
+          "end": 34,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "unique_preserve_order",
+          "kind": "function",
+          "start": 4,
+          "end": 12,
+          "signature": "def unique_preserve_order(items: list[str]) -> list[str]:"
+        },
+        {
+          "name": "demonstrate_operations",
+          "kind": "function",
+          "start": 15,
+          "end": 22,
+          "signature": "def demonstrate_operations() -> None:"
+        },
+        {
+          "name": "demonstrate_membership_speed",
+          "kind": "function",
+          "start": 25,
+          "end": 28,
+          "signature": "def demonstrate_membership_speed() -> None:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 31,
+          "end": 34,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "['b', 'a', 'c']\nобъединение: ['Анна', 'Борис', 'Вера', 'Глеб']\nпересечение: ['Борис']\nразность: ['Анна', 'Вера']\nсимметричная разность: ['Анна', 'Вера', 'Глеб']\n999999 в set: True\nдобавление: None",
+      "ok": true,
+      "error": ""
+    },
+    "collections/05_comprehensions.py": {
+      "path": "collections/05_comprehensions.py",
+      "lines": 35,
+      "code": "\"\"\"Comprehensions: короткая запись преобразований и фильтрации.\"\"\"\n\n\ndef squares(numbers: list[int]) -> list[int]:\n    return [number**2 for number in numbers]\n\n\ndef even_squares(numbers: list[int]) -> list[int]:\n    return [number**2 for number in numbers if number % 2 == 0]\n\n\ndef lengths(words: list[str]) -> dict[str, int]:\n    return {word: len(word) for word in words}\n\n\ndef unique_initials(names: list[str]) -> set[str]:\n    return {name[0].upper() for name in names}\n\n\ndef flatten(matrix: list[list[int]]) -> list[int]:\n    \"\"\"Два for в одном comprehension читаются слева направо.\"\"\"\n    return [value for row in matrix for value in row]\n\n\ndef main() -> None:\n    print(\"squares:\", squares([1, 2, 3, 4]))\n    print(\"even squares:\", even_squares([1, 2, 3, 4, 5, 6]))\n    print(\"lengths:\", lengths([\"python\", \"core\", \"ok\"]))\n    print(\"initials:\", unique_initials([\"анна\", \"борис\", \"алла\"]))\n    print(\"flatten:\", flatten([[1, 2], [3], [4, 5]]))\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "squares",
+          "kind": "function",
+          "start": 4,
+          "end": 5,
+          "signature": "def squares(numbers: list[int]) -> list[int]:"
+        },
+        {
+          "name": "even_squares",
+          "kind": "function",
+          "start": 8,
+          "end": 9,
+          "signature": "def even_squares(numbers: list[int]) -> list[int]:"
+        },
+        {
+          "name": "lengths",
+          "kind": "function",
+          "start": 12,
+          "end": 13,
+          "signature": "def lengths(words: list[str]) -> dict[str, int]:"
+        },
+        {
+          "name": "unique_initials",
+          "kind": "function",
+          "start": 16,
+          "end": 17,
+          "signature": "def unique_initials(names: list[str]) -> set[str]:"
+        },
+        {
+          "name": "flatten",
+          "kind": "function",
+          "start": 20,
+          "end": 22,
+          "signature": "def flatten(matrix: list[list[int]]) -> list[int]:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 25,
+          "end": 30,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "squares",
+          "kind": "function",
+          "start": 4,
+          "end": 5,
+          "signature": "def squares(numbers: list[int]) -> list[int]:"
+        },
+        {
+          "name": "even_squares",
+          "kind": "function",
+          "start": 8,
+          "end": 9,
+          "signature": "def even_squares(numbers: list[int]) -> list[int]:"
+        },
+        {
+          "name": "lengths",
+          "kind": "function",
+          "start": 12,
+          "end": 13,
+          "signature": "def lengths(words: list[str]) -> dict[str, int]:"
+        },
+        {
+          "name": "unique_initials",
+          "kind": "function",
+          "start": 16,
+          "end": 17,
+          "signature": "def unique_initials(names: list[str]) -> set[str]:"
+        },
+        {
+          "name": "flatten",
+          "kind": "function",
+          "start": 20,
+          "end": 22,
+          "signature": "def flatten(matrix: list[list[int]]) -> list[int]:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 25,
+          "end": 30,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "squares: [1, 4, 9, 16]\neven squares: [4, 16, 36]\nlengths: {'python': 6, 'core': 4, 'ok': 2}\ninitials: {'Б', 'А'}\nflatten: [1, 2, 3, 4, 5]",
+      "ok": true,
+      "error": ""
+    },
+    "collections/06_sorting.py": {
+      "path": "collections/06_sorting.py",
+      "lines": 41,
+      "code": "\"\"\"Сортировка: key, reverse и стабильность.\"\"\"\n\nfrom dataclasses import dataclass\nfrom operator import itemgetter\n\n\n@dataclass\nclass Student:\n    name: str\n    grade: int\n\n\ndef sort_numbers() -> None:\n    numbers = [5, 1, 9, 3]\n    print(\"sorted:\", sorted(numbers))\n    print(\"по убыванию:\", sorted(numbers, reverse=True))\n    print(\"исходный список:\", numbers)\n\n\ndef sort_words_by_length(words: list[str]) -> list[str]:\n    return sorted(words, key=len)\n\n\ndef sort_students(students: list[Student]) -> list[Student]:\n    \"\"\"Сортировка по двум полям: сначала grade, потом name.\"\"\"\n    return sorted(students, key=lambda student: (-student.grade, student.name))\n\n\ndef main() -> None:\n    sort_numbers()\n    print(sort_words_by_length([\"python\", \"c\", \"java\", \"go\"]))\n    print(\"по второму элементу:\", sorted([(\"a\", 3), (\"b\", 1)], key=itemgetter(1)))\n\n    students = [Student(\"Анна\", 90), Student(\"Борис\", 90), Student(\"Вера\", 95)]\n    for student in sort_students(students):\n        print(student)\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "Student",
+          "kind": "class",
+          "start": 7,
+          "end": 10,
+          "signature": "class Student:"
+        },
+        {
+          "name": "sort_numbers",
+          "kind": "function",
+          "start": 13,
+          "end": 17,
+          "signature": "def sort_numbers() -> None:"
+        },
+        {
+          "name": "sort_words_by_length",
+          "kind": "function",
+          "start": 20,
+          "end": 21,
+          "signature": "def sort_words_by_length(words: list[str]) -> list[str]:"
+        },
+        {
+          "name": "sort_students",
+          "kind": "function",
+          "start": 24,
+          "end": 26,
+          "signature": "def sort_students(students: list[Student]) -> list[Student]:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 29,
+          "end": 36,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [
+        {
+          "name": "Student",
+          "kind": "class",
+          "start": 7,
+          "end": 10,
+          "signature": "class Student:"
+        }
+      ],
+      "functions": [
+        {
+          "name": "sort_numbers",
+          "kind": "function",
+          "start": 13,
+          "end": 17,
+          "signature": "def sort_numbers() -> None:"
+        },
+        {
+          "name": "sort_words_by_length",
+          "kind": "function",
+          "start": 20,
+          "end": 21,
+          "signature": "def sort_words_by_length(words: list[str]) -> list[str]:"
+        },
+        {
+          "name": "sort_students",
+          "kind": "function",
+          "start": 24,
+          "end": 26,
+          "signature": "def sort_students(students: list[Student]) -> list[Student]:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 29,
+          "end": 36,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "sorted: [1, 3, 5, 9]\nпо убыванию: [9, 5, 3, 1]\nисходный список: [5, 1, 9, 3]\n['c', 'go', 'java', 'python']\nпо второму элементу: [('b', 1), ('a', 3)]\nStudent(name='Вера', grade=95)\nStudent(name='Анна', grade=90)\nStudent(name='Борис', grade=90)",
+      "ok": true,
+      "error": ""
+    },
+    "errors/01_exceptions.py": {
+      "path": "errors/01_exceptions.py",
+      "lines": 53,
+      "code": "\"\"\"Исключения: try / except / else / finally.\"\"\"\n\n\ndef safe_divide(a: float, b: float) -> float | None:\n    try:\n        result = a / b\n    except ZeroDivisionError:\n        print(\"на ноль делить нельзя\")\n        return None\n    else:\n        print(\"деление прошло успешно\")\n        return result\n    finally:\n        print(\"finally выполняется всегда\")\n\n\ndef parse_age(raw: str) -> int:\n    \"\"\"Ловим конкретное исключение, а не всё подряд.\"\"\"\n    try:\n        age = int(raw)\n    except ValueError:\n        print(f\"{raw!r} — это не число\")\n        return -1\n    if age < 0:\n        raise ValueError(\"возраст не может быть отрицательным\")\n    return age\n\n\ndef read_value(data: dict, key: str) -> str:\n    \"\"\"EAFP: проще попросить прощения, чем разрешения.\"\"\"\n    try:\n        return data[key]\n    except KeyError:\n        return \"ключа нет\"\n\n\ndef main() -> None:\n    print(safe_divide(10, 2))\n    print(safe_divide(10, 0))\n    print(parse_age(\"42\"))\n    print(parse_age(\"сорок\"))\n    print(read_value({\"name\": \"Анна\"}, \"name\"))\n    print(read_value({}, \"name\"))\n\n    try:\n        parse_age(\"-5\")\n    except ValueError as error:\n        print(\"поймали:\", error)\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "safe_divide",
+          "kind": "function",
+          "start": 4,
+          "end": 14,
+          "signature": "def safe_divide(a: float, b: float) -> float | None:"
+        },
+        {
+          "name": "parse_age",
+          "kind": "function",
+          "start": 17,
+          "end": 26,
+          "signature": "def parse_age(raw: str) -> int:"
+        },
+        {
+          "name": "read_value",
+          "kind": "function",
+          "start": 29,
+          "end": 34,
+          "signature": "def read_value(data: dict, key: str) -> str:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 37,
+          "end": 48,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "safe_divide",
+          "kind": "function",
+          "start": 4,
+          "end": 14,
+          "signature": "def safe_divide(a: float, b: float) -> float | None:"
+        },
+        {
+          "name": "parse_age",
+          "kind": "function",
+          "start": 17,
+          "end": 26,
+          "signature": "def parse_age(raw: str) -> int:"
+        },
+        {
+          "name": "read_value",
+          "kind": "function",
+          "start": 29,
+          "end": 34,
+          "signature": "def read_value(data: dict, key: str) -> str:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 37,
+          "end": 48,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "деление прошло успешно\nfinally выполняется всегда\n5.0\nна ноль делить нельзя\nfinally выполняется всегда\nNone\n42\n'сорок' — это не число\n-1\nАнна\nключа нет\nпоймали: возраст не может быть отрицательным",
+      "ok": true,
+      "error": ""
+    },
+    "errors/02_custom_exceptions.py": {
+      "path": "errors/02_custom_exceptions.py",
+      "lines": 49,
+      "code": "\"\"\"Свои исключения и цепочки причин.\"\"\"\n\n\nclass AppError(Exception):\n    \"\"\"Базовое исключение приложения.\"\"\"\n\n\nclass ValidationError(AppError):\n    \"\"\"Ошибка входных данных.\"\"\"\n\n\nclass UserNotFoundError(AppError):\n    def __init__(self, user_id: int):\n        self.user_id = user_id\n        super().__init__(f\"Пользователь {user_id} не найден\")\n\n\ndef validate_username(name: str) -> str:\n    if not name.strip():\n        raise ValidationError(\"имя не может быть пустым\")\n    if len(name) < 3:\n        raise ValidationError(\"имя короче трёх символов\")\n    return name.strip()\n\n\ndef find_user(users: dict[int, str], user_id: int) -> str:\n    try:\n        return users[user_id]\n    except KeyError as error:\n        raise UserNotFoundError(user_id) from error\n\n\ndef main() -> None:\n    for name in (\"Анна\", \"  \", \"Ли\"):\n        try:\n            print(\"ок:\", validate_username(name))\n        except ValidationError as error:\n            print(\"ошибка:\", error)\n\n    try:\n        find_user({1: \"Анна\"}, 99)\n    except AppError as error:\n        print(type(error).__name__, \"—\", error)\n        print(\"причина:\", type(error.__cause__).__name__)\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "AppError",
+          "kind": "class",
+          "start": 4,
+          "end": 5,
+          "signature": "class AppError(Exception):"
+        },
+        {
+          "name": "ValidationError",
+          "kind": "class",
+          "start": 8,
+          "end": 9,
+          "signature": "class ValidationError(AppError):"
+        },
+        {
+          "name": "UserNotFoundError",
+          "kind": "class",
+          "start": 12,
+          "end": 15,
+          "signature": "class UserNotFoundError(AppError):"
+        },
+        {
+          "name": "UserNotFoundError.__init__",
+          "kind": "method",
+          "start": 13,
+          "end": 15,
+          "signature": "def __init__(self, user_id: int):"
+        },
+        {
+          "name": "validate_username",
+          "kind": "function",
+          "start": 18,
+          "end": 23,
+          "signature": "def validate_username(name: str) -> str:"
+        },
+        {
+          "name": "find_user",
+          "kind": "function",
+          "start": 26,
+          "end": 30,
+          "signature": "def find_user(users: dict[int, str], user_id: int) -> str:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 33,
+          "end": 44,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [
+        {
+          "name": "AppError",
+          "kind": "class",
+          "start": 4,
+          "end": 5,
+          "signature": "class AppError(Exception):"
+        },
+        {
+          "name": "ValidationError",
+          "kind": "class",
+          "start": 8,
+          "end": 9,
+          "signature": "class ValidationError(AppError):"
+        },
+        {
+          "name": "UserNotFoundError",
+          "kind": "class",
+          "start": 12,
+          "end": 15,
+          "signature": "class UserNotFoundError(AppError):"
+        }
+      ],
+      "functions": [
+        {
+          "name": "validate_username",
+          "kind": "function",
+          "start": 18,
+          "end": 23,
+          "signature": "def validate_username(name: str) -> str:"
+        },
+        {
+          "name": "find_user",
+          "kind": "function",
+          "start": 26,
+          "end": 30,
+          "signature": "def find_user(users: dict[int, str], user_id: int) -> str:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 33,
+          "end": 44,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "ок: Анна\nошибка: имя не может быть пустым\nошибка: имя короче трёх символов\nUserNotFoundError — Пользователь 99 не найден\nпричина: KeyError",
+      "ok": true,
+      "error": ""
+    },
+    "errors/03_files.py": {
+      "path": "errors/03_files.py",
+      "lines": 38,
+      "code": "\"\"\"Работа с файлами: open, with и кодировки.\"\"\"\n\nimport tempfile\nfrom pathlib import Path\n\n\ndef write_and_read(folder: Path) -> None:\n    path = folder / \"notes.txt\"\n    path.write_text(\"первая строка\\nвторая строка\\n\", encoding=\"utf-8\")\n\n    with path.open(encoding=\"utf-8\") as file:\n        for number, line in enumerate(file, start=1):\n            print(number, line.rstrip())\n\n\ndef append_line(folder: Path) -> None:\n    path = folder / \"notes.txt\"\n    with path.open(\"a\", encoding=\"utf-8\") as file:\n        file.write(\"третья строка\\n\")\n    print(\"строк теперь:\", len(path.read_text(encoding=\"utf-8\").splitlines()))\n\n\ndef count_words(path: Path) -> int:\n    with path.open(encoding=\"utf-8\") as file:\n        return sum(len(line.split()) for line in file)\n\n\ndef main() -> None:\n    with tempfile.TemporaryDirectory() as temp:\n        folder = Path(temp)\n        write_and_read(folder)\n        append_line(folder)\n        print(\"слов:\", count_words(folder / \"notes.txt\"))\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "write_and_read",
+          "kind": "function",
+          "start": 7,
+          "end": 13,
+          "signature": "def write_and_read(folder: Path) -> None:"
+        },
+        {
+          "name": "append_line",
+          "kind": "function",
+          "start": 16,
+          "end": 20,
+          "signature": "def append_line(folder: Path) -> None:"
+        },
+        {
+          "name": "count_words",
+          "kind": "function",
+          "start": 23,
+          "end": 25,
+          "signature": "def count_words(path: Path) -> int:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 28,
+          "end": 33,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "write_and_read",
+          "kind": "function",
+          "start": 7,
+          "end": 13,
+          "signature": "def write_and_read(folder: Path) -> None:"
+        },
+        {
+          "name": "append_line",
+          "kind": "function",
+          "start": 16,
+          "end": 20,
+          "signature": "def append_line(folder: Path) -> None:"
+        },
+        {
+          "name": "count_words",
+          "kind": "function",
+          "start": 23,
+          "end": 25,
+          "signature": "def count_words(path: Path) -> int:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 28,
+          "end": 33,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "1 первая строка\n2 вторая строка\nстрок теперь: 3\nслов: 6",
+      "ok": true,
+      "error": ""
+    },
+    "errors/04_json_csv.py": {
+      "path": "errors/04_json_csv.py",
+      "lines": 45,
+      "code": "\"\"\"JSON и CSV: обмен данными с другими программами.\"\"\"\n\nimport csv\nimport io\nimport json\n\n\ndef demonstrate_json() -> None:\n    user = {\"name\": \"Анна\", \"roles\": [\"admin\", \"author\"], \"active\": True}\n    text = json.dumps(user, ensure_ascii=False, indent=2)\n    print(text)\n    restored = json.loads(text)\n    print(\"roles:\", restored[\"roles\"])\n\n\ndef demonstrate_csv() -> None:\n    rows = [\n        {\"name\": \"Анна\", \"score\": \"92\"},\n        {\"name\": \"Борис\", \"score\": \"75\"},\n    ]\n    buffer = io.StringIO()\n    writer = csv.DictWriter(buffer, fieldnames=[\"name\", \"score\"])\n    writer.writeheader()\n    writer.writerows(rows)\n    print(buffer.getvalue().strip())\n\n    reader = csv.DictReader(io.StringIO(buffer.getvalue()))\n    total = sum(int(row[\"score\"]) for row in reader)\n    print(\"сумма баллов:\", total)\n\n\ndef to_json_line(**fields: object) -> str:\n    \"\"\"JSON Lines: одна строка — один объект.\"\"\"\n    return json.dumps(fields, ensure_ascii=False)\n\n\ndef main() -> None:\n    demonstrate_json()\n    demonstrate_csv()\n    print(to_json_line(event=\"login\", user=\"anna\", ok=True))\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "demonstrate_json",
+          "kind": "function",
+          "start": 8,
+          "end": 13,
+          "signature": "def demonstrate_json() -> None:"
+        },
+        {
+          "name": "demonstrate_csv",
+          "kind": "function",
+          "start": 16,
+          "end": 29,
+          "signature": "def demonstrate_csv() -> None:"
+        },
+        {
+          "name": "to_json_line",
+          "kind": "function",
+          "start": 32,
+          "end": 34,
+          "signature": "def to_json_line(**fields: object) -> str:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 37,
+          "end": 40,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "demonstrate_json",
+          "kind": "function",
+          "start": 8,
+          "end": 13,
+          "signature": "def demonstrate_json() -> None:"
+        },
+        {
+          "name": "demonstrate_csv",
+          "kind": "function",
+          "start": 16,
+          "end": 29,
+          "signature": "def demonstrate_csv() -> None:"
+        },
+        {
+          "name": "to_json_line",
+          "kind": "function",
+          "start": 32,
+          "end": 34,
+          "signature": "def to_json_line(**fields: object) -> str:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 37,
+          "end": 40,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "{\n  \"name\": \"Анна\",\n  \"roles\": [\n    \"admin\",\n    \"author\"\n  ],\n  \"active\": true\n}\nroles: ['admin', 'author']\nname,score\r\nАнна,92\r\nБорис,75\nсумма баллов: 167\n{\"event\": \"login\", \"user\": \"anna\", \"ok\": true}",
+      "ok": true,
+      "error": ""
+    },
+    "errors/05_context_managers.py": {
+      "path": "errors/05_context_managers.py",
+      "lines": 46,
+      "code": "\"\"\"Контекстные менеджеры: with и contextlib.\"\"\"\n\nfrom contextlib import contextmanager\n\n\nclass Timer:\n    \"\"\"Класс с __enter__ и __exit__ — свой контекстный менеджер.\"\"\"\n\n    def __init__(self, label: str):\n        self.label = label\n\n    def __enter__(self):\n        print(f\"[{self.label}] начали\")\n        return self\n\n    def __exit__(self, exc_type, exc, traceback):\n        print(f\"[{self.label}] закончили\")\n        if exc_type is not None:\n            print(f\"[{self.label}] ошибка подавлена: {exc_type.__name__}\")\n        return True  # подавляем исключение внутри блока\n\n\n@contextmanager\ndef section(title: str):\n    print(f\"--- {title} ---\")\n    try:\n        yield title\n    finally:\n        print(f\"--- /{title} ---\")\n\n\ndef main() -> None:\n    with Timer(\"загрузка\"):\n        print(\"работаем\")\n\n    with Timer(\"риск\"):\n        raise RuntimeError(\"что-то пошло не так\")\n\n    with section(\"JSON\"):\n        print(\"читаем файл\")\n        print(\"пишем файл\")\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "Timer",
+          "kind": "class",
+          "start": 6,
+          "end": 20,
+          "signature": "class Timer:"
+        },
+        {
+          "name": "Timer.__init__",
+          "kind": "method",
+          "start": 9,
+          "end": 10,
+          "signature": "def __init__(self, label: str):"
+        },
+        {
+          "name": "Timer.__enter__",
+          "kind": "method",
+          "start": 12,
+          "end": 14,
+          "signature": "def __enter__(self):"
+        },
+        {
+          "name": "Timer.__exit__",
+          "kind": "method",
+          "start": 16,
+          "end": 20,
+          "signature": "def __exit__(self, exc_type, exc, traceback):"
+        },
+        {
+          "name": "section",
+          "kind": "function",
+          "start": 23,
+          "end": 29,
+          "signature": "def section(title: str):"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 32,
+          "end": 41,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [
+        {
+          "name": "Timer",
+          "kind": "class",
+          "start": 6,
+          "end": 20,
+          "signature": "class Timer:"
+        }
+      ],
+      "functions": [
+        {
+          "name": "section",
+          "kind": "function",
+          "start": 23,
+          "end": 29,
+          "signature": "def section(title: str):"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 32,
+          "end": 41,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "[загрузка] начали\nработаем\n[загрузка] закончили\n[риск] начали\n[риск] закончили\n[риск] ошибка подавлена: RuntimeError\n--- JSON ---\nчитаем файл\nпишем файл\n--- /JSON ---",
+      "ok": true,
+      "error": ""
+    },
+    "functional/01_args_kwargs.py": {
+      "path": "functional/01_args_kwargs.py",
+      "lines": 41,
+      "code": "\"\"\"*args, **kwargs и распаковка аргументов.\"\"\"\n\n\ndef total(*numbers: int) -> int:\n    \"\"\"*args собирает позиционные аргументы в кортеж.\"\"\"\n    return sum(numbers)\n\n\ndef build_profile(**fields: object) -> dict[str, object]:\n    \"\"\"**kwargs собирает именованные аргументы в словарь.\"\"\"\n    return {\"type\": \"profile\", **fields}\n\n\ndef log_call(message: str, *args: object, level: str = \"INFO\", **extra: object) -> None:\n    \"\"\"Порядок: обычные, *args, именованные, **kwargs.\"\"\"\n    print(f\"[{level}] {message}\", args or \"\", extra or \"\")\n\n\ndef forward(*args: object, **kwargs: object) -> None:\n    print(\"args:\", args)\n    print(\"kwargs:\", kwargs)\n\n\ndef main() -> None:\n    print(total(1, 2, 3, 4))\n    print(total())\n\n    print(build_profile(name=\"Анна\", role=\"admin\", active=True))\n\n    log_call(\"запуск\", 1, 2, level=\"DEBUG\", user=\"anna\")\n    log_call(\"старт\")\n\n    values = [10, 20, 30]\n    options = {\"level\": \"WARN\", \"service\": \"api\"}\n    log_call(\"распаковка\", *values, **options)\n    forward(*values, **options)\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "total",
+          "kind": "function",
+          "start": 4,
+          "end": 6,
+          "signature": "def total(*numbers: int) -> int:"
+        },
+        {
+          "name": "build_profile",
+          "kind": "function",
+          "start": 9,
+          "end": 11,
+          "signature": "def build_profile(**fields: object) -> dict[str, object]:"
+        },
+        {
+          "name": "log_call",
+          "kind": "function",
+          "start": 14,
+          "end": 16,
+          "signature": "def log_call(message: str, *args: object, level: str = \"INFO\", **extra: object) -> None:"
+        },
+        {
+          "name": "forward",
+          "kind": "function",
+          "start": 19,
+          "end": 21,
+          "signature": "def forward(*args: object, **kwargs: object) -> None:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 24,
+          "end": 36,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "total",
+          "kind": "function",
+          "start": 4,
+          "end": 6,
+          "signature": "def total(*numbers: int) -> int:"
+        },
+        {
+          "name": "build_profile",
+          "kind": "function",
+          "start": 9,
+          "end": 11,
+          "signature": "def build_profile(**fields: object) -> dict[str, object]:"
+        },
+        {
+          "name": "log_call",
+          "kind": "function",
+          "start": 14,
+          "end": 16,
+          "signature": "def log_call(message: str, *args: object, level: str = \"INFO\", **extra: object) -> None:"
+        },
+        {
+          "name": "forward",
+          "kind": "function",
+          "start": 19,
+          "end": 21,
+          "signature": "def forward(*args: object, **kwargs: object) -> None:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 24,
+          "end": 36,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "10\n0\n{'type': 'profile', 'name': 'Анна', 'role': 'admin', 'active': True}\n[DEBUG] запуск (1, 2) {'user': 'anna'}\n[INFO] старт  \n[WARN] распаковка (10, 20, 30) {'service': 'api'}\nargs: (10, 20, 30)\nkwargs: {'level': 'WARN', 'service': 'api'}",
+      "ok": true,
+      "error": ""
+    },
+    "functional/02_closures.py": {
+      "path": "functional/02_closures.py",
+      "lines": 55,
+      "code": "\"\"\"Замыкания: функция запоминает окружение.\"\"\"\n\n\ndef make_counter(start: int = 0):\n    \"\"\"Возвращает функцию со своим независимым состоянием.\"\"\"\n    count = start\n\n    def counter() -> int:\n        nonlocal count\n        count += 1\n        return count\n\n    return counter\n\n\ndef make_multiplier(factor: int):\n    def multiply(value: int) -> int:\n        return value * factor\n\n    return multiply\n\n\ndef make_accumulator():\n    values: list[int] = []\n\n    def add(value: int) -> list[int]:\n        values.append(value)\n        return values\n\n    return add\n\n\ndef main() -> None:\n    counter = make_counter()\n    print(counter(), counter(), counter())\n\n    second = make_counter(10)\n    print(second())\n\n    double = make_multiplier(2)\n    triple = make_multiplier(3)\n    print(double(5), triple(5))\n\n    add = make_accumulator()\n    add(1)\n    add(2)\n    print(add(3))\n\n    print(\"имя функции:\", counter.__name__)\n    print(\"замыкание:\", counter.__closure__[0].cell_contents)\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "make_counter",
+          "kind": "function",
+          "start": 4,
+          "end": 13,
+          "signature": "def make_counter(start: int = 0):"
+        },
+        {
+          "name": "make_multiplier",
+          "kind": "function",
+          "start": 16,
+          "end": 20,
+          "signature": "def make_multiplier(factor: int):"
+        },
+        {
+          "name": "make_accumulator",
+          "kind": "function",
+          "start": 23,
+          "end": 30,
+          "signature": "def make_accumulator():"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 33,
+          "end": 50,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "make_counter",
+          "kind": "function",
+          "start": 4,
+          "end": 13,
+          "signature": "def make_counter(start: int = 0):"
+        },
+        {
+          "name": "make_multiplier",
+          "kind": "function",
+          "start": 16,
+          "end": 20,
+          "signature": "def make_multiplier(factor: int):"
+        },
+        {
+          "name": "make_accumulator",
+          "kind": "function",
+          "start": 23,
+          "end": 30,
+          "signature": "def make_accumulator():"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 33,
+          "end": 50,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "1 2 3\n11\n10 15\n[1, 2, 3]\nимя функции: counter\nзамыкание: 3",
+      "ok": true,
+      "error": ""
+    },
+    "functional/03_decorators.py": {
+      "path": "functional/03_decorators.py",
+      "lines": 78,
+      "code": "\"\"\"Декораторы: обёртки, functools.wraps и параметры.\"\"\"\n\nimport functools\nimport time\n\n\ndef logged(function):\n    @functools.wraps(function)\n    def wrapper(*args, **kwargs):\n        print(f\"→ {function.__name__}{args}\")\n        result = function(*args, **kwargs)\n        print(f\"← {function.__name__}: {result!r}\")\n        return result\n\n    return wrapper\n\n\ndef retry(times: int = 2):\n    \"\"\"Декоратор с параметрами: нужен ещё один уровень вложенности.\"\"\"\n\n    def decorator(function):\n        @functools.wraps(function)\n        def wrapper(*args, **kwargs):\n            last_error = None\n            for attempt in range(1, times + 1):\n                try:\n                    return function(*args, **kwargs)\n                except ValueError as error:\n                    last_error = error\n                    print(f\"попытка {attempt}: {error}\")\n            raise last_error\n\n        return wrapper\n\n    return decorator\n\n\ndef timed(function):\n    @functools.wraps(function)\n    def wrapper(*args, **kwargs):\n        started = time.perf_counter()\n        result = function(*args, **kwargs)\n        elapsed = time.perf_counter() - started\n        print(f\"{function.__name__}: {elapsed:.4f} с\")\n        return result\n\n    return wrapper\n\n\n@logged\ndef add(a: int, b: int) -> int:\n    return a + b\n\n\n@retry(times=3)\ndef unstable(attempt: list[int]) -> str:\n    attempt[0] += 1\n    if attempt[0] < 3:\n        raise ValueError(\"пока не готово\")\n    return \"готово\"\n\n\n@timed\ndef work() -> int:\n    return sum(range(100_000))\n\n\ndef main() -> None:\n    add(2, 3)\n    print(logged.__name__, add.__name__)\n    print(unstable([0]))\n    # work() измеряет реальное время; в учебном выводе оно зависит от машины,\n    # поэтому декоратор показан в коде, но не вызывается в main.\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "logged",
+          "kind": "function",
+          "start": 7,
+          "end": 15,
+          "signature": "def logged(function):"
+        },
+        {
+          "name": "retry",
+          "kind": "function",
+          "start": 18,
+          "end": 35,
+          "signature": "def retry(times: int = 2):"
+        },
+        {
+          "name": "timed",
+          "kind": "function",
+          "start": 38,
+          "end": 47,
+          "signature": "def timed(function):"
+        },
+        {
+          "name": "add",
+          "kind": "function",
+          "start": 50,
+          "end": 52,
+          "signature": "def add(a: int, b: int) -> int:"
+        },
+        {
+          "name": "unstable",
+          "kind": "function",
+          "start": 55,
+          "end": 60,
+          "signature": "def unstable(attempt: list[int]) -> str:"
+        },
+        {
+          "name": "work",
+          "kind": "function",
+          "start": 63,
+          "end": 65,
+          "signature": "def work() -> int:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 68,
+          "end": 71,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "logged",
+          "kind": "function",
+          "start": 7,
+          "end": 15,
+          "signature": "def logged(function):"
+        },
+        {
+          "name": "retry",
+          "kind": "function",
+          "start": 18,
+          "end": 35,
+          "signature": "def retry(times: int = 2):"
+        },
+        {
+          "name": "timed",
+          "kind": "function",
+          "start": 38,
+          "end": 47,
+          "signature": "def timed(function):"
+        },
+        {
+          "name": "add",
+          "kind": "function",
+          "start": 50,
+          "end": 52,
+          "signature": "def add(a: int, b: int) -> int:"
+        },
+        {
+          "name": "unstable",
+          "kind": "function",
+          "start": 55,
+          "end": 60,
+          "signature": "def unstable(attempt: list[int]) -> str:"
+        },
+        {
+          "name": "work",
+          "kind": "function",
+          "start": 63,
+          "end": 65,
+          "signature": "def work() -> int:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 68,
+          "end": 71,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "→ add(2, 3)\n← add: 5\nlogged add\nпопытка 1: пока не готово\nпопытка 2: пока не готово\nготово",
+      "ok": true,
+      "error": ""
+    },
+    "functional/04_generators.py": {
+      "path": "functional/04_generators.py",
+      "lines": 44,
+      "code": "\"\"\"Генераторы: ленивые последовательности и yield.\"\"\"\n\n\ndef countdown(start: int):\n    \"\"\"Генератор не хранит всю последовательность в памяти.\"\"\"\n    while start > 0:\n        yield start\n        start -= 1\n\n\ndef fibonacci(limit: int):\n    a, b = 0, 1\n    while a < limit:\n        yield a\n        a, b = b, a + b\n\n\ndef read_lines(text: str):\n    for line in text.splitlines():\n        yield line.strip()\n\n\ndef pipeline(numbers):\n    \"\"\"Генераторные выражения можно соединять в цепочку.\"\"\"\n    evens = (number for number in numbers if number % 2 == 0)\n    squares = (number**2 for number in evens)\n    return sum(squares)\n\n\ndef main() -> None:\n    print(\"countdown:\", list(countdown(5)))\n    print(\"fibonacci:\", list(fibonacci(50)))\n\n    generator = fibonacci(100)\n    print(\"next:\", next(generator), next(generator))\n    print(\"остаток:\", list(generator))\n\n    print(\"строки:\", list(read_lines(\"  первая\\nвторая  \")))\n    print(\"pipeline:\", pipeline(range(10)))\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "countdown",
+          "kind": "function",
+          "start": 4,
+          "end": 8,
+          "signature": "def countdown(start: int):"
+        },
+        {
+          "name": "fibonacci",
+          "kind": "function",
+          "start": 11,
+          "end": 15,
+          "signature": "def fibonacci(limit: int):"
+        },
+        {
+          "name": "read_lines",
+          "kind": "function",
+          "start": 18,
+          "end": 20,
+          "signature": "def read_lines(text: str):"
+        },
+        {
+          "name": "pipeline",
+          "kind": "function",
+          "start": 23,
+          "end": 27,
+          "signature": "def pipeline(numbers):"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 30,
+          "end": 39,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "countdown",
+          "kind": "function",
+          "start": 4,
+          "end": 8,
+          "signature": "def countdown(start: int):"
+        },
+        {
+          "name": "fibonacci",
+          "kind": "function",
+          "start": 11,
+          "end": 15,
+          "signature": "def fibonacci(limit: int):"
+        },
+        {
+          "name": "read_lines",
+          "kind": "function",
+          "start": 18,
+          "end": 20,
+          "signature": "def read_lines(text: str):"
+        },
+        {
+          "name": "pipeline",
+          "kind": "function",
+          "start": 23,
+          "end": 27,
+          "signature": "def pipeline(numbers):"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 30,
+          "end": 39,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "countdown: [5, 4, 3, 2, 1]\nfibonacci: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]\nnext: 0 1\nостаток: [1, 2, 3, 5, 8, 13, 21, 34, 55, 89]\nстроки: ['первая', 'вторая']\npipeline: 120",
+      "ok": true,
+      "error": ""
+    },
+    "functional/05_functional.py": {
+      "path": "functional/05_functional.py",
+      "lines": 50,
+      "code": "\"\"\"Функциональные инструменты: lambda, map, filter, reduce, itertools.\"\"\"\n\nfrom functools import reduce\nfrom itertools import chain, groupby\n\n\ndef demonstrate_lambda() -> None:\n    pairs = [(\"Анна\", 92), (\"Борис\", 75), (\"Вера\", 92)]\n    pairs.sort(key=lambda pair: (-pair[1], pair[0]))\n    print(pairs)\n\n\ndef demonstrate_map_filter() -> None:\n    numbers = [1, 2, 3, 4, 5, 6]\n    doubled = list(map(lambda number: number * 2, numbers))\n    evens = list(filter(lambda number: number % 2 == 0, numbers))\n    print(\"map:\", doubled)\n    print(\"filter:\", evens)\n\n\ndef demonstrate_reduce() -> None:\n    numbers = [1, 2, 3, 4]\n    print(\"reduce:\", reduce(lambda acc, number: acc * number, numbers, 1))\n\n\ndef demonstrate_itertools() -> None:\n    print(\"chain:\", list(chain([1, 2], [3, 4])))\n    words = [\"apple\", \"avocado\", \"banana\", \"blueberry\", \"cherry\"]\n    grouped = {key: list(group) for key, group in groupby(words, key=lambda word: word[0])}\n    print(\"groupby:\", grouped)\n\n\ndef compose(*functions):\n    \"\"\"Композиция функций слева направо.\"\"\"\n    return lambda value: reduce(lambda acc, fn: fn(acc), functions, value)\n\n\ndef main() -> None:\n    demonstrate_lambda()\n    demonstrate_map_filter()\n    demonstrate_reduce()\n    demonstrate_itertools()\n\n    process = compose(str.strip, str.lower, lambda text: text.replace(\" \", \"-\"))\n    print(process(\"  Learn Python Core  \"))\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "demonstrate_lambda",
+          "kind": "function",
+          "start": 7,
+          "end": 10,
+          "signature": "def demonstrate_lambda() -> None:"
+        },
+        {
+          "name": "demonstrate_map_filter",
+          "kind": "function",
+          "start": 13,
+          "end": 18,
+          "signature": "def demonstrate_map_filter() -> None:"
+        },
+        {
+          "name": "demonstrate_reduce",
+          "kind": "function",
+          "start": 21,
+          "end": 23,
+          "signature": "def demonstrate_reduce() -> None:"
+        },
+        {
+          "name": "demonstrate_itertools",
+          "kind": "function",
+          "start": 26,
+          "end": 30,
+          "signature": "def demonstrate_itertools() -> None:"
+        },
+        {
+          "name": "compose",
+          "kind": "function",
+          "start": 33,
+          "end": 35,
+          "signature": "def compose(*functions):"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 38,
+          "end": 45,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "demonstrate_lambda",
+          "kind": "function",
+          "start": 7,
+          "end": 10,
+          "signature": "def demonstrate_lambda() -> None:"
+        },
+        {
+          "name": "demonstrate_map_filter",
+          "kind": "function",
+          "start": 13,
+          "end": 18,
+          "signature": "def demonstrate_map_filter() -> None:"
+        },
+        {
+          "name": "demonstrate_reduce",
+          "kind": "function",
+          "start": 21,
+          "end": 23,
+          "signature": "def demonstrate_reduce() -> None:"
+        },
+        {
+          "name": "demonstrate_itertools",
+          "kind": "function",
+          "start": 26,
+          "end": 30,
+          "signature": "def demonstrate_itertools() -> None:"
+        },
+        {
+          "name": "compose",
+          "kind": "function",
+          "start": 33,
+          "end": 35,
+          "signature": "def compose(*functions):"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 38,
+          "end": 45,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "[('Анна', 92), ('Вера', 92), ('Борис', 75)]\nmap: [2, 4, 6, 8, 10, 12]\nfilter: [2, 4, 6]\nreduce: 24\nchain: [1, 2, 3, 4]\ngroupby: {'a': ['apple', 'avocado'], 'b': ['banana', 'blueberry'], 'c': ['cherry']}\nlearn-python-core",
+      "ok": true,
+      "error": ""
+    },
+    "oop/01_classes.py": {
+      "path": "oop/01_classes.py",
+      "lines": 41,
+      "code": "\"\"\"Классы и объекты: поля, методы и состояние.\"\"\"\n\n\nclass BankAccount:\n    \"\"\"Простой банковский счёт.\"\"\"\n\n    bank_name = \"Python Bank\"  # атрибут класса, общий для всех\n\n    def __init__(self, owner: str, balance: int = 0):\n        self.owner = owner\n        self.balance = balance\n\n    def deposit(self, amount: int) -> None:\n        if amount <= 0:\n            raise ValueError(\"сумма должна быть положительной\")\n        self.balance += amount\n\n    def withdraw(self, amount: int) -> None:\n        if amount > self.balance:\n            raise ValueError(\"недостаточно средств\")\n        self.balance -= amount\n\n    def describe(self) -> str:\n        return f\"{self.owner}: {self.balance} ₽ в {self.bank_name}\"\n\n\ndef main() -> None:\n    account = BankAccount(\"Анна\", 1000)\n    account.deposit(500)\n    account.withdraw(300)\n    print(account.describe())\n\n    second = BankAccount(\"Борис\")\n    print(second.describe())\n    print(\"атрибут класса:\", BankAccount.bank_name)\n    print(\"атрибут объекта:\", account.owner)\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "BankAccount",
+          "kind": "class",
+          "start": 4,
+          "end": 24,
+          "signature": "class BankAccount:"
+        },
+        {
+          "name": "BankAccount.__init__",
+          "kind": "method",
+          "start": 9,
+          "end": 11,
+          "signature": "def __init__(self, owner: str, balance: int = 0):"
+        },
+        {
+          "name": "BankAccount.deposit",
+          "kind": "method",
+          "start": 13,
+          "end": 16,
+          "signature": "def deposit(self, amount: int) -> None:"
+        },
+        {
+          "name": "BankAccount.withdraw",
+          "kind": "method",
+          "start": 18,
+          "end": 21,
+          "signature": "def withdraw(self, amount: int) -> None:"
+        },
+        {
+          "name": "BankAccount.describe",
+          "kind": "method",
+          "start": 23,
+          "end": 24,
+          "signature": "def describe(self) -> str:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 27,
+          "end": 36,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [
+        {
+          "name": "BankAccount",
+          "kind": "class",
+          "start": 4,
+          "end": 24,
+          "signature": "class BankAccount:"
+        }
+      ],
+      "functions": [
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 27,
+          "end": 36,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "Анна: 1200 ₽ в Python Bank\nБорис: 0 ₽ в Python Bank\nатрибут класса: Python Bank\nатрибут объекта: Анна",
+      "ok": true,
+      "error": ""
+    },
+    "oop/02_dataclasses.py": {
+      "path": "oop/02_dataclasses.py",
+      "lines": 48,
+      "code": "\"\"\"dataclass: меньше шаблонного кода для данных.\"\"\"\n\nfrom dataclasses import asdict, dataclass, field\n\n\n@dataclass\nclass Task:\n    title: str\n    done: bool = False\n    tags: list[str] = field(default_factory=list)\n\n    def complete(self) -> None:\n        self.done = True\n\n\n@dataclass(frozen=True)\nclass Point:\n    x: int\n    y: int\n\n\n@dataclass(order=True)\nclass Version:\n    major: int\n    minor: int\n\n\ndef main() -> None:\n    task = Task(\"Выучить Python\")\n    task.tags.append(\"учёба\")\n    task.complete()\n    print(task)\n    print(asdict(task))\n\n    point = Point(2, 3)\n    print(point)\n    try:\n        point.x = 10\n    except Exception as error:\n        print(type(error).__name__, \"—\", error)\n\n    versions = sorted([Version(2, 1), Version(1, 9), Version(2, 0)])\n    print(versions)\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "Task",
+          "kind": "class",
+          "start": 6,
+          "end": 13,
+          "signature": "class Task:"
+        },
+        {
+          "name": "Task.complete",
+          "kind": "method",
+          "start": 12,
+          "end": 13,
+          "signature": "def complete(self) -> None:"
+        },
+        {
+          "name": "Point",
+          "kind": "class",
+          "start": 16,
+          "end": 19,
+          "signature": "class Point:"
+        },
+        {
+          "name": "Version",
+          "kind": "class",
+          "start": 22,
+          "end": 25,
+          "signature": "class Version:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 28,
+          "end": 43,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [
+        {
+          "name": "Task",
+          "kind": "class",
+          "start": 6,
+          "end": 13,
+          "signature": "class Task:"
+        },
+        {
+          "name": "Point",
+          "kind": "class",
+          "start": 16,
+          "end": 19,
+          "signature": "class Point:"
+        },
+        {
+          "name": "Version",
+          "kind": "class",
+          "start": 22,
+          "end": 25,
+          "signature": "class Version:"
+        }
+      ],
+      "functions": [
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 28,
+          "end": 43,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "Task(title='Выучить Python', done=True, tags=['учёба'])\n{'title': 'Выучить Python', 'done': True, 'tags': ['учёба']}\nPoint(x=2, y=3)\nFrozenInstanceError — cannot assign to field 'x'\n[Version(major=1, minor=9), Version(major=2, minor=0), Version(major=2, minor=1)]",
+      "ok": true,
+      "error": ""
+    },
+    "oop/03_properties.py": {
+      "path": "oop/03_properties.py",
+      "lines": 61,
+      "code": "\"\"\"Свойства: контролируемый доступ к атрибутам.\"\"\"\n\n\nclass Temperature:\n    def __init__(self, celsius: float = 0):\n        self._celsius = 0\n        self.celsius = celsius\n\n    @property\n    def celsius(self) -> float:\n        return self._celsius\n\n    @celsius.setter\n    def celsius(self, value: float) -> None:\n        if value < -273.15:\n            raise ValueError(\"ниже абсолютного нуля\")\n        self._celsius = value\n\n    @property\n    def fahrenheit(self) -> float:\n        return self._celsius * 9 / 5 + 32\n\n\nclass User:\n    def __init__(self, email: str):\n        self._email = \"\"\n        self.email = email\n\n    @property\n    def email(self) -> str:\n        return self._email\n\n    @email.setter\n    def email(self, value: str) -> None:\n        if \"@\" not in value:\n            raise ValueError(\"некорректный email\")\n        self._email = value.lower()\n\n\ndef main() -> None:\n    temperature = Temperature(25)\n    print(temperature.celsius, temperature.fahrenheit)\n    temperature.celsius = 100\n    print(temperature.celsius, temperature.fahrenheit)\n\n    try:\n        temperature.celsius = -300\n    except ValueError as error:\n        print(\"ошибка:\", error)\n\n    user = User(\"ANNA@EXAMPLE.COM\")\n    print(user.email)\n    try:\n        user.email = \"wrong\"\n    except ValueError as error:\n        print(\"ошибка:\", error)\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "Temperature",
+          "kind": "class",
+          "start": 4,
+          "end": 21,
+          "signature": "class Temperature:"
+        },
+        {
+          "name": "Temperature.__init__",
+          "kind": "method",
+          "start": 5,
+          "end": 7,
+          "signature": "def __init__(self, celsius: float = 0):"
+        },
+        {
+          "name": "Temperature.celsius",
+          "kind": "method",
+          "start": 9,
+          "end": 11,
+          "signature": "def celsius(self) -> float:"
+        },
+        {
+          "name": "Temperature.celsius",
+          "kind": "method",
+          "start": 13,
+          "end": 17,
+          "signature": "def celsius(self, value: float) -> None:"
+        },
+        {
+          "name": "Temperature.fahrenheit",
+          "kind": "method",
+          "start": 19,
+          "end": 21,
+          "signature": "def fahrenheit(self) -> float:"
+        },
+        {
+          "name": "User",
+          "kind": "class",
+          "start": 24,
+          "end": 37,
+          "signature": "class User:"
+        },
+        {
+          "name": "User.__init__",
+          "kind": "method",
+          "start": 25,
+          "end": 27,
+          "signature": "def __init__(self, email: str):"
+        },
+        {
+          "name": "User.email",
+          "kind": "method",
+          "start": 29,
+          "end": 31,
+          "signature": "def email(self) -> str:"
+        },
+        {
+          "name": "User.email",
+          "kind": "method",
+          "start": 33,
+          "end": 37,
+          "signature": "def email(self, value: str) -> None:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 40,
+          "end": 56,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [
+        {
+          "name": "Temperature",
+          "kind": "class",
+          "start": 4,
+          "end": 21,
+          "signature": "class Temperature:"
+        },
+        {
+          "name": "User",
+          "kind": "class",
+          "start": 24,
+          "end": 37,
+          "signature": "class User:"
+        }
+      ],
+      "functions": [
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 40,
+          "end": 56,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "25 77.0\n100 212.0\nошибка: ниже абсолютного нуля\nanna@example.com\nошибка: некорректный email",
+      "ok": true,
+      "error": ""
+    },
+    "oop/04_inheritance.py": {
+      "path": "oop/04_inheritance.py",
+      "lines": 50,
+      "code": "\"\"\"Наследование, super() и полиморфизм.\"\"\"\n\n\nclass Animal:\n    def __init__(self, name: str):\n        self.name = name\n\n    def speak(self) -> str:\n        return \"...\"\n\n    def introduce(self) -> str:\n        return f\"Я {self.name}, говорю: {self.speak()}\"\n\n\nclass Dog(Animal):\n    def speak(self) -> str:\n        return \"гав\"\n\n\nclass Cat(Animal):\n    def __init__(self, name: str, indoor: bool = True):\n        super().__init__(name)\n        self.indoor = indoor\n\n    def speak(self) -> str:\n        return \"мяу\"\n\n\nclass GuideDog(Dog):\n    def __init__(self, name: str, owner: str):\n        super().__init__(name)\n        self.owner = owner\n\n    def introduce(self) -> str:\n        return f\"{super().introduce()} Мой хозяин — {self.owner}.\"\n\n\ndef main() -> None:\n    animals: list[Animal] = [Dog(\"Рекс\"), Cat(\"Мурка\"), GuideDog(\"Джек\", \"Анна\")]\n    for animal in animals:\n        print(animal.introduce())\n\n    print(isinstance(animals[0], Animal))\n    print(isinstance(animals[0], Cat))\n    print(issubclass(GuideDog, Dog))\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "Animal",
+          "kind": "class",
+          "start": 4,
+          "end": 12,
+          "signature": "class Animal:"
+        },
+        {
+          "name": "Animal.__init__",
+          "kind": "method",
+          "start": 5,
+          "end": 6,
+          "signature": "def __init__(self, name: str):"
+        },
+        {
+          "name": "Animal.speak",
+          "kind": "method",
+          "start": 8,
+          "end": 9,
+          "signature": "def speak(self) -> str:"
+        },
+        {
+          "name": "Animal.introduce",
+          "kind": "method",
+          "start": 11,
+          "end": 12,
+          "signature": "def introduce(self) -> str:"
+        },
+        {
+          "name": "Dog",
+          "kind": "class",
+          "start": 15,
+          "end": 17,
+          "signature": "class Dog(Animal):"
+        },
+        {
+          "name": "Dog.speak",
+          "kind": "method",
+          "start": 16,
+          "end": 17,
+          "signature": "def speak(self) -> str:"
+        },
+        {
+          "name": "Cat",
+          "kind": "class",
+          "start": 20,
+          "end": 26,
+          "signature": "class Cat(Animal):"
+        },
+        {
+          "name": "Cat.__init__",
+          "kind": "method",
+          "start": 21,
+          "end": 23,
+          "signature": "def __init__(self, name: str, indoor: bool = True):"
+        },
+        {
+          "name": "Cat.speak",
+          "kind": "method",
+          "start": 25,
+          "end": 26,
+          "signature": "def speak(self) -> str:"
+        },
+        {
+          "name": "GuideDog",
+          "kind": "class",
+          "start": 29,
+          "end": 35,
+          "signature": "class GuideDog(Dog):"
+        },
+        {
+          "name": "GuideDog.__init__",
+          "kind": "method",
+          "start": 30,
+          "end": 32,
+          "signature": "def __init__(self, name: str, owner: str):"
+        },
+        {
+          "name": "GuideDog.introduce",
+          "kind": "method",
+          "start": 34,
+          "end": 35,
+          "signature": "def introduce(self) -> str:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 38,
+          "end": 45,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [
+        {
+          "name": "Animal",
+          "kind": "class",
+          "start": 4,
+          "end": 12,
+          "signature": "class Animal:"
+        },
+        {
+          "name": "Dog",
+          "kind": "class",
+          "start": 15,
+          "end": 17,
+          "signature": "class Dog(Animal):"
+        },
+        {
+          "name": "Cat",
+          "kind": "class",
+          "start": 20,
+          "end": 26,
+          "signature": "class Cat(Animal):"
+        },
+        {
+          "name": "GuideDog",
+          "kind": "class",
+          "start": 29,
+          "end": 35,
+          "signature": "class GuideDog(Dog):"
+        }
+      ],
+      "functions": [
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 38,
+          "end": 45,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "Я Рекс, говорю: гав\nЯ Мурка, говорю: мяу\nЯ Джек, говорю: гав Мой хозяин — Анна.\nTrue\nFalse\nTrue",
+      "ok": true,
+      "error": ""
+    },
+    "oop/05_dunder.py": {
+      "path": "oop/05_dunder.py",
+      "lines": 60,
+      "code": "\"\"\"Магические методы: как объект ведёт себя в Python.\"\"\"\n\n\nclass Vector:\n    def __init__(self, x: float, y: float):\n        self.x = x\n        self.y = y\n\n    def __repr__(self) -> str:\n        return f\"Vector({self.x!r}, {self.y!r})\"\n\n    def __str__(self) -> str:\n        return f\"({self.x}; {self.y})\"\n\n    def __eq__(self, other: object) -> bool:\n        if not isinstance(other, Vector):\n            return NotImplemented\n        return self.x == other.x and self.y == other.y\n\n    def __add__(self, other: \"Vector\") -> \"Vector\":\n        return Vector(self.x + other.x, self.y + other.y)\n\n    def __len__(self) -> int:\n        return 2\n\n    def __iter__(self):\n        yield self.x\n        yield self.y\n\n\nclass Playlist:\n    def __init__(self, songs: list[str]):\n        self.songs = songs\n\n    def __len__(self) -> int:\n        return len(self.songs)\n\n    def __getitem__(self, index: int) -> str:\n        return self.songs[index]\n\n    def __contains__(self, song: object) -> bool:\n        return song in self.songs\n\n\ndef main() -> None:\n    first = Vector(1, 2)\n    second = Vector(3, 4)\n    print(\"str:\", str(first))\n    print(\"repr:\", repr(first))\n    print(\"add:\", first + second)\n    print(\"eq:\", first == Vector(1, 2))\n    print(\"len:\", len(first), \"распаковка:\", list(first))\n\n    playlist = Playlist([\"Intro\", \"Core\", \"Outro\"])\n    print(len(playlist), playlist[1], \"Core\" in playlist)\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "Vector",
+          "kind": "class",
+          "start": 4,
+          "end": 28,
+          "signature": "class Vector:"
+        },
+        {
+          "name": "Vector.__init__",
+          "kind": "method",
+          "start": 5,
+          "end": 7,
+          "signature": "def __init__(self, x: float, y: float):"
+        },
+        {
+          "name": "Vector.__repr__",
+          "kind": "method",
+          "start": 9,
+          "end": 10,
+          "signature": "def __repr__(self) -> str:"
+        },
+        {
+          "name": "Vector.__str__",
+          "kind": "method",
+          "start": 12,
+          "end": 13,
+          "signature": "def __str__(self) -> str:"
+        },
+        {
+          "name": "Vector.__eq__",
+          "kind": "method",
+          "start": 15,
+          "end": 18,
+          "signature": "def __eq__(self, other: object) -> bool:"
+        },
+        {
+          "name": "Vector.__add__",
+          "kind": "method",
+          "start": 20,
+          "end": 21,
+          "signature": "def __add__(self, other: \"Vector\") -> \"Vector\":"
+        },
+        {
+          "name": "Vector.__len__",
+          "kind": "method",
+          "start": 23,
+          "end": 24,
+          "signature": "def __len__(self) -> int:"
+        },
+        {
+          "name": "Vector.__iter__",
+          "kind": "method",
+          "start": 26,
+          "end": 28,
+          "signature": "def __iter__(self):"
+        },
+        {
+          "name": "Playlist",
+          "kind": "class",
+          "start": 31,
+          "end": 42,
+          "signature": "class Playlist:"
+        },
+        {
+          "name": "Playlist.__init__",
+          "kind": "method",
+          "start": 32,
+          "end": 33,
+          "signature": "def __init__(self, songs: list[str]):"
+        },
+        {
+          "name": "Playlist.__len__",
+          "kind": "method",
+          "start": 35,
+          "end": 36,
+          "signature": "def __len__(self) -> int:"
+        },
+        {
+          "name": "Playlist.__getitem__",
+          "kind": "method",
+          "start": 38,
+          "end": 39,
+          "signature": "def __getitem__(self, index: int) -> str:"
+        },
+        {
+          "name": "Playlist.__contains__",
+          "kind": "method",
+          "start": 41,
+          "end": 42,
+          "signature": "def __contains__(self, song: object) -> bool:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 45,
+          "end": 55,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [
+        {
+          "name": "Vector",
+          "kind": "class",
+          "start": 4,
+          "end": 28,
+          "signature": "class Vector:"
+        },
+        {
+          "name": "Playlist",
+          "kind": "class",
+          "start": 31,
+          "end": 42,
+          "signature": "class Playlist:"
+        }
+      ],
+      "functions": [
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 45,
+          "end": 55,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "str: (1; 2)\nrepr: Vector(1, 2)\nadd: (4; 6)\neq: True\nlen: 2 распаковка: [1, 2]\n3 Core True",
+      "ok": true,
+      "error": ""
+    },
+    "oop/06_protocols.py": {
+      "path": "oop/06_protocols.py",
+      "lines": 63,
+      "code": "\"\"\"Протоколы, ABC и утиная типизация.\"\"\"\n\nfrom abc import ABC, abstractmethod\nfrom typing import Protocol\n\n\nclass PaymentProvider(Protocol):\n    \"\"\"Структурный тип: достаточно иметь метод pay.\"\"\"\n\n    def pay(self, amount: int) -> str: ...\n\n\nclass CardPayment:\n    def pay(self, amount: int) -> str:\n        return f\"карта: списано {amount} ₽\"\n\n\nclass CashPayment:\n    def pay(self, amount: int) -> str:\n        return f\"наличные: принято {amount} ₽\"\n\n\ndef checkout(provider: PaymentProvider, amount: int) -> None:\n    print(provider.pay(amount))\n\n\nclass Repository(ABC):\n    @abstractmethod\n    def save(self, item: str) -> None: ...\n\n    @abstractmethod\n    def all(self) -> list[str]: ...\n\n\nclass MemoryRepository(Repository):\n    def __init__(self) -> None:\n        self._items: list[str] = []\n\n    def save(self, item: str) -> None:\n        self._items.append(item)\n\n    def all(self) -> list[str]:\n        return list(self._items)\n\n\ndef main() -> None:\n    checkout(CardPayment(), 1500)\n    checkout(CashPayment(), 300)\n\n    repository: Repository = MemoryRepository()\n    repository.save(\"Python\")\n    repository.save(\"FastAPI\")\n    print(repository.all())\n\n    try:\n        Repository()\n    except TypeError as error:\n        print(\"ABC:\", error)\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "PaymentProvider",
+          "kind": "class",
+          "start": 7,
+          "end": 10,
+          "signature": "class PaymentProvider(Protocol):"
+        },
+        {
+          "name": "PaymentProvider.pay",
+          "kind": "method",
+          "start": 10,
+          "end": 10,
+          "signature": "def pay(self, amount: int) -> str: ..."
+        },
+        {
+          "name": "CardPayment",
+          "kind": "class",
+          "start": 13,
+          "end": 15,
+          "signature": "class CardPayment:"
+        },
+        {
+          "name": "CardPayment.pay",
+          "kind": "method",
+          "start": 14,
+          "end": 15,
+          "signature": "def pay(self, amount: int) -> str:"
+        },
+        {
+          "name": "CashPayment",
+          "kind": "class",
+          "start": 18,
+          "end": 20,
+          "signature": "class CashPayment:"
+        },
+        {
+          "name": "CashPayment.pay",
+          "kind": "method",
+          "start": 19,
+          "end": 20,
+          "signature": "def pay(self, amount: int) -> str:"
+        },
+        {
+          "name": "checkout",
+          "kind": "function",
+          "start": 23,
+          "end": 24,
+          "signature": "def checkout(provider: PaymentProvider, amount: int) -> None:"
+        },
+        {
+          "name": "Repository",
+          "kind": "class",
+          "start": 27,
+          "end": 32,
+          "signature": "class Repository(ABC):"
+        },
+        {
+          "name": "Repository.save",
+          "kind": "method",
+          "start": 28,
+          "end": 29,
+          "signature": "def save(self, item: str) -> None: ..."
+        },
+        {
+          "name": "Repository.all",
+          "kind": "method",
+          "start": 31,
+          "end": 32,
+          "signature": "def all(self) -> list[str]: ..."
+        },
+        {
+          "name": "MemoryRepository",
+          "kind": "class",
+          "start": 35,
+          "end": 43,
+          "signature": "class MemoryRepository(Repository):"
+        },
+        {
+          "name": "MemoryRepository.__init__",
+          "kind": "method",
+          "start": 36,
+          "end": 37,
+          "signature": "def __init__(self) -> None:"
+        },
+        {
+          "name": "MemoryRepository.save",
+          "kind": "method",
+          "start": 39,
+          "end": 40,
+          "signature": "def save(self, item: str) -> None:"
+        },
+        {
+          "name": "MemoryRepository.all",
+          "kind": "method",
+          "start": 42,
+          "end": 43,
+          "signature": "def all(self) -> list[str]:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 46,
+          "end": 58,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [
+        {
+          "name": "PaymentProvider",
+          "kind": "class",
+          "start": 7,
+          "end": 10,
+          "signature": "class PaymentProvider(Protocol):"
+        },
+        {
+          "name": "CardPayment",
+          "kind": "class",
+          "start": 13,
+          "end": 15,
+          "signature": "class CardPayment:"
+        },
+        {
+          "name": "CashPayment",
+          "kind": "class",
+          "start": 18,
+          "end": 20,
+          "signature": "class CashPayment:"
+        },
+        {
+          "name": "Repository",
+          "kind": "class",
+          "start": 27,
+          "end": 32,
+          "signature": "class Repository(ABC):"
+        },
+        {
+          "name": "MemoryRepository",
+          "kind": "class",
+          "start": 35,
+          "end": 43,
+          "signature": "class MemoryRepository(Repository):"
+        }
+      ],
+      "functions": [
+        {
+          "name": "checkout",
+          "kind": "function",
+          "start": 23,
+          "end": 24,
+          "signature": "def checkout(provider: PaymentProvider, amount: int) -> None:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 46,
+          "end": 58,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "карта: списано 1500 ₽\nналичные: принято 300 ₽\n['Python', 'FastAPI']\nABC: Can't instantiate abstract class Repository without an implementation for abstract methods 'all', 'save'",
+      "ok": true,
+      "error": ""
+    },
+    "stdlib/01_datetime.py": {
+      "path": "stdlib/01_datetime.py",
+      "lines": 52,
+      "code": "\"\"\"Дата и время: datetime, timedelta и часовые пояса.\"\"\"\n\nfrom datetime import date, datetime, timedelta, timezone\n\n\ndef demonstrate_dates() -> None:\n    today = date(2026, 11, 25)\n    new_year = date(2027, 1, 1)\n    delta = new_year - today\n    print(\"до Нового года:\", delta.days, \"дней\")\n\n    tomorrow = today + timedelta(days=1)\n    print(\"завтра:\", tomorrow)\n\n\ndef demonstrate_formatting() -> None:\n    moment = datetime(2026, 11, 25, 14, 30, 5)\n    print(moment.strftime(\"%d.%m.%Y %H:%M\"))\n    print(moment.isoformat())\n\n    parsed = datetime.strptime(\"25.11.2026 14:30\", \"%d.%m.%Y %H:%M\")\n    print(\"разобрали:\", parsed.year, parsed.month, parsed.day)\n\n\ndef demonstrate_timezones() -> None:\n    utc = datetime(2026, 11, 25, 12, 0, tzinfo=timezone.utc)\n    moscow = utc.astimezone(timezone(timedelta(hours=3)))\n    print(\"UTC:\", utc.isoformat())\n    print(\"Москва:\", moscow.isoformat())\n\n\ndef working_days(start: date, end: date) -> int:\n    \"\"\"Считает будние дни в диапазоне [start, end).\"\"\"\n    days = 0\n    current = start\n    while current < end:\n        if current.weekday() < 5:\n            days += 1\n        current += timedelta(days=1)\n    return days\n\n\ndef main() -> None:\n    demonstrate_dates()\n    demonstrate_formatting()\n    demonstrate_timezones()\n    print(\"будних дней:\", working_days(date(2026, 11, 23), date(2026, 11, 30)))\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "demonstrate_dates",
+          "kind": "function",
+          "start": 6,
+          "end": 13,
+          "signature": "def demonstrate_dates() -> None:"
+        },
+        {
+          "name": "demonstrate_formatting",
+          "kind": "function",
+          "start": 16,
+          "end": 22,
+          "signature": "def demonstrate_formatting() -> None:"
+        },
+        {
+          "name": "demonstrate_timezones",
+          "kind": "function",
+          "start": 25,
+          "end": 29,
+          "signature": "def demonstrate_timezones() -> None:"
+        },
+        {
+          "name": "working_days",
+          "kind": "function",
+          "start": 32,
+          "end": 40,
+          "signature": "def working_days(start: date, end: date) -> int:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 43,
+          "end": 47,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "demonstrate_dates",
+          "kind": "function",
+          "start": 6,
+          "end": 13,
+          "signature": "def demonstrate_dates() -> None:"
+        },
+        {
+          "name": "demonstrate_formatting",
+          "kind": "function",
+          "start": 16,
+          "end": 22,
+          "signature": "def demonstrate_formatting() -> None:"
+        },
+        {
+          "name": "demonstrate_timezones",
+          "kind": "function",
+          "start": 25,
+          "end": 29,
+          "signature": "def demonstrate_timezones() -> None:"
+        },
+        {
+          "name": "working_days",
+          "kind": "function",
+          "start": 32,
+          "end": 40,
+          "signature": "def working_days(start: date, end: date) -> int:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 43,
+          "end": 47,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "до Нового года: 37 дней\nзавтра: 2026-11-26\n25.11.2026 14:30\n2026-11-25T14:30:05\nразобрали: 2026 11 25\nUTC: 2026-11-25T12:00:00+00:00\nМосква: 2026-11-25T15:00:00+03:00\nбудних дней: 5",
+      "ok": true,
+      "error": ""
+    },
+    "stdlib/02_collections.py": {
+      "path": "stdlib/02_collections.py",
+      "lines": 49,
+      "code": "\"\"\"collections: Counter, defaultdict и deque.\"\"\"\n\nfrom collections import Counter, defaultdict, deque\n\n\ndef demonstrate_counter() -> None:\n    words = \"кот пёс кот сова кот пёс\".split()\n    counter = Counter(words)\n    print(counter)\n    print(\"топ-2:\", counter.most_common(2))\n    print(\"кот:\", counter[\"кот\"], \"зебра:\", counter[\"зебра\"])\n\n\ndef group_by_first_letter(words: list[str]) -> dict[str, list[str]]:\n    groups: dict[str, list[str]] = defaultdict(list)\n    for word in words:\n        groups[word[0]].append(word)\n    return dict(groups)\n\n\ndef demonstrate_deque() -> None:\n    queue = deque([\"Анна\", \"Борис\"])\n    queue.append(\"Вера\")\n    queue.appendleft(\"Глеб\")\n    print(\"очередь:\", queue)\n    print(\"слева:\", queue.popleft(), \"справа:\", queue.pop())\n\n\ndef sliding_window(numbers: list[int], size: int) -> list[int]:\n    \"\"\"deque с maxlen — готовое скользящее окно.\"\"\"\n    window: deque[int] = deque(maxlen=size)\n    sums: list[int] = []\n    for number in numbers:\n        window.append(number)\n        if len(window) == size:\n            sums.append(sum(window))\n    return sums\n\n\ndef main() -> None:\n    demonstrate_counter()\n    print(group_by_first_letter([\"анна\", \"борис\", \"алла\", \"вера\"]))\n    demonstrate_deque()\n    print(\"окна:\", sliding_window([1, 2, 3, 4, 5], 3))\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "demonstrate_counter",
+          "kind": "function",
+          "start": 6,
+          "end": 11,
+          "signature": "def demonstrate_counter() -> None:"
+        },
+        {
+          "name": "group_by_first_letter",
+          "kind": "function",
+          "start": 14,
+          "end": 18,
+          "signature": "def group_by_first_letter(words: list[str]) -> dict[str, list[str]]:"
+        },
+        {
+          "name": "demonstrate_deque",
+          "kind": "function",
+          "start": 21,
+          "end": 26,
+          "signature": "def demonstrate_deque() -> None:"
+        },
+        {
+          "name": "sliding_window",
+          "kind": "function",
+          "start": 29,
+          "end": 37,
+          "signature": "def sliding_window(numbers: list[int], size: int) -> list[int]:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 40,
+          "end": 44,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "demonstrate_counter",
+          "kind": "function",
+          "start": 6,
+          "end": 11,
+          "signature": "def demonstrate_counter() -> None:"
+        },
+        {
+          "name": "group_by_first_letter",
+          "kind": "function",
+          "start": 14,
+          "end": 18,
+          "signature": "def group_by_first_letter(words: list[str]) -> dict[str, list[str]]:"
+        },
+        {
+          "name": "demonstrate_deque",
+          "kind": "function",
+          "start": 21,
+          "end": 26,
+          "signature": "def demonstrate_deque() -> None:"
+        },
+        {
+          "name": "sliding_window",
+          "kind": "function",
+          "start": 29,
+          "end": 37,
+          "signature": "def sliding_window(numbers: list[int], size: int) -> list[int]:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 40,
+          "end": 44,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "Counter({'кот': 3, 'пёс': 2, 'сова': 1})\nтоп-2: [('кот', 3), ('пёс', 2)]\nкот: 3 зебра: 0\n{'а': ['анна', 'алла'], 'б': ['борис'], 'в': ['вера']}\nочередь: deque(['Глеб', 'Анна', 'Борис', 'Вера'])\nслева: Глеб справа: Вера\nокна: [6, 9, 12]",
+      "ok": true,
+      "error": ""
+    },
+    "stdlib/03_regex.py": {
+      "path": "stdlib/03_regex.py",
+      "lines": 45,
+      "code": "\"\"\"Регулярные выражения: re.search, findall, sub и группы.\"\"\"\n\nimport re\n\n\ndef demonstrate_search() -> None:\n    text = \"Пишите на support@example.com или sales@example.org\"\n    match = re.search(r\"[\\w.+-]+@[\\w-]+\\.[\\w.]+\", text)\n    print(\"первый email:\", match.group() if match else None)\n    print(\"все email:\", re.findall(r\"[\\w.+-]+@[\\w-]+\\.[\\w.]+\", text))\n\n\ndef demonstrate_groups() -> None:\n    date = \"2026-11-25\"\n    match = re.match(r\"(\\d{4})-(\\d{2})-(\\d{2})\", date)\n    if match:\n        year, month, day = match.groups()\n        print(\"год:\", year, \"месяц:\", month, \"день:\", day)\n        print(\"именованные:\", re.match(r\"(?P<y>\\d{4})-(?P<m>\\d{2})\", date).groupdict())\n\n\ndef demonstrate_sub() -> None:\n    text = \"телефон: +7 (999) 123-45-67\"\n    digits = re.sub(r\"\\D\", \"\", text)\n    print(\"цифры:\", digits)\n    print(\"маска:\", re.sub(r\"(\\d{1})(\\d{3})(\\d{3})(\\d{2})(\\d{2})\", r\"+\\1 (\\2) \\3-\\4-\\5\", digits))\n\n\ndef parse_log_line(line: str) -> dict[str, str] | None:\n    pattern = re.compile(r\"^(?P<level>[A-Z]+)\\s+(?P<service>[\\w-]+):\\s+(?P<message>.+)$\")\n    match = pattern.match(line)\n    return match.groupdict() if match else None\n\n\ndef main() -> None:\n    demonstrate_search()\n    demonstrate_groups()\n    demonstrate_sub()\n    print(parse_log_line(\"ERROR api: база недоступна\"))\n    print(parse_log_line(\"неверный формат\"))\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "demonstrate_search",
+          "kind": "function",
+          "start": 6,
+          "end": 10,
+          "signature": "def demonstrate_search() -> None:"
+        },
+        {
+          "name": "demonstrate_groups",
+          "kind": "function",
+          "start": 13,
+          "end": 19,
+          "signature": "def demonstrate_groups() -> None:"
+        },
+        {
+          "name": "demonstrate_sub",
+          "kind": "function",
+          "start": 22,
+          "end": 26,
+          "signature": "def demonstrate_sub() -> None:"
+        },
+        {
+          "name": "parse_log_line",
+          "kind": "function",
+          "start": 29,
+          "end": 32,
+          "signature": "def parse_log_line(line: str) -> dict[str, str] | None:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 35,
+          "end": 40,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "demonstrate_search",
+          "kind": "function",
+          "start": 6,
+          "end": 10,
+          "signature": "def demonstrate_search() -> None:"
+        },
+        {
+          "name": "demonstrate_groups",
+          "kind": "function",
+          "start": 13,
+          "end": 19,
+          "signature": "def demonstrate_groups() -> None:"
+        },
+        {
+          "name": "demonstrate_sub",
+          "kind": "function",
+          "start": 22,
+          "end": 26,
+          "signature": "def demonstrate_sub() -> None:"
+        },
+        {
+          "name": "parse_log_line",
+          "kind": "function",
+          "start": 29,
+          "end": 32,
+          "signature": "def parse_log_line(line: str) -> dict[str, str] | None:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 35,
+          "end": 40,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "первый email: support@example.com\nвсе email: ['support@example.com', 'sales@example.org']\nгод: 2026 месяц: 11 день: 25\nименованные: {'y': '2026', 'm': '11'}\nцифры: 79991234567\nмаска: +7 (999) 123-45-67\n{'level': 'ERROR', 'service': 'api', 'message': 'база недоступна'}\nNone",
+      "ok": true,
+      "error": ""
+    },
+    "stdlib/04_random_stats.py": {
+      "path": "stdlib/04_random_stats.py",
+      "lines": 39,
+      "code": "\"\"\"random и statistics: воспроизводимые случайности и описательная статистика.\"\"\"\n\nimport random\nimport statistics\n\n\ndef demonstrate_random() -> None:\n    rng = random.Random(42)  # seed делает результат воспроизводимым\n    print(\"выбор:\", rng.choice([\"камень\", \"ножницы\", \"бумага\"]))\n    print(\"3 из 10:\", rng.sample(range(1, 11), 3))\n    print(\"перемешали:\", (lambda items: (rng.shuffle(items), items)[1])([1, 2, 3, 4]))\n\n\ndef simulate_dice(rolls: int = 10) -> dict[int, int]:\n    rng = random.Random(7)\n    counts = {face: 0 for face in range(1, 7)}\n    for _ in range(rolls):\n        counts[rng.randint(1, 6)] += 1\n    return counts\n\n\ndef demonstrate_statistics() -> None:\n    values = [7, 3, 9, 3, 5, 10]\n    print(\"mean:\", statistics.mean(values))\n    print(\"median:\", statistics.median(values))\n    print(\"mode:\", statistics.mode(values))\n    print(\"stdev:\", round(statistics.stdev(values), 3))\n    print(\"quantiles:\", statistics.quantiles(values, n=4))\n\n\ndef main() -> None:\n    demonstrate_random()\n    print(\"кубик:\", simulate_dice())\n    demonstrate_statistics()\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "demonstrate_random",
+          "kind": "function",
+          "start": 7,
+          "end": 11,
+          "signature": "def demonstrate_random() -> None:"
+        },
+        {
+          "name": "simulate_dice",
+          "kind": "function",
+          "start": 14,
+          "end": 19,
+          "signature": "def simulate_dice(rolls: int = 10) -> dict[int, int]:"
+        },
+        {
+          "name": "demonstrate_statistics",
+          "kind": "function",
+          "start": 22,
+          "end": 28,
+          "signature": "def demonstrate_statistics() -> None:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 31,
+          "end": 34,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "demonstrate_random",
+          "kind": "function",
+          "start": 7,
+          "end": 11,
+          "signature": "def demonstrate_random() -> None:"
+        },
+        {
+          "name": "simulate_dice",
+          "kind": "function",
+          "start": 14,
+          "end": 19,
+          "signature": "def simulate_dice(rolls: int = 10) -> dict[int, int]:"
+        },
+        {
+          "name": "demonstrate_statistics",
+          "kind": "function",
+          "start": 22,
+          "end": 28,
+          "signature": "def demonstrate_statistics() -> None:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 31,
+          "end": 34,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "выбор: бумага\n3 из 10: [2, 1, 5]\nперемешали: [4, 3, 1, 2]\nкубик: {1: 3, 2: 1, 3: 2, 4: 1, 5: 2, 6: 1}\nmean: 6.166666666666667\nmedian: 6.0\nmode: 3\nstdev: 2.994\nquantiles: [3.0, 6.0, 9.25]",
+      "ok": true,
+      "error": ""
+    },
+    "stdlib/05_logging.py": {
+      "path": "stdlib/05_logging.py",
+      "lines": 45,
+      "code": "\"\"\"Логирование: уровни, формат и логгеры.\"\"\"\n\nimport logging\nimport sys\n\n\ndef configure(level: int = logging.INFO) -> logging.Logger:\n    logger = logging.getLogger(\"course.demo\")\n    logger.setLevel(level)\n    logger.handlers.clear()\n\n    handler = logging.StreamHandler(sys.stdout)\n    handler.setFormatter(logging.Formatter(\"%(levelname)s %(name)s: %(message)s\"))\n    logger.addHandler(handler)\n    logger.propagate = False\n    return logger\n\n\ndef process_order(logger: logging.Logger, order_id: int, amount: int) -> None:\n    logger.debug(\"старт обработки заказа %s\", order_id)\n    if amount <= 0:\n        logger.error(\"заказ %s: некорректная сумма %s\", order_id, amount)\n        return\n    logger.info(\"заказ %s принят на %s ₽\", order_id, amount)\n    logger.warning(\"заказ %s: проверьте адрес доставки\", order_id)\n\n\ndef main() -> None:\n    logger = configure()\n    process_order(logger, 101, 2500)\n    process_order(logger, 102, 0)\n\n    logger.setLevel(logging.DEBUG)\n    process_order(logger, 103, 700)\n\n    try:\n        1 / 0\n    except ZeroDivisionError as error:\n        # В реальном коде здесь уместен logger.exception(\"...\") — он добавит traceback.\n        logger.error(\"пример ошибки: %s\", error)\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "configure",
+          "kind": "function",
+          "start": 7,
+          "end": 16,
+          "signature": "def configure(level: int = logging.INFO) -> logging.Logger:"
+        },
+        {
+          "name": "process_order",
+          "kind": "function",
+          "start": 19,
+          "end": 25,
+          "signature": "def process_order(logger: logging.Logger, order_id: int, amount: int) -> None:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 28,
+          "end": 40,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "configure",
+          "kind": "function",
+          "start": 7,
+          "end": 16,
+          "signature": "def configure(level: int = logging.INFO) -> logging.Logger:"
+        },
+        {
+          "name": "process_order",
+          "kind": "function",
+          "start": 19,
+          "end": 25,
+          "signature": "def process_order(logger: logging.Logger, order_id: int, amount: int) -> None:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 28,
+          "end": 40,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "INFO course.demo: заказ 101 принят на 2500 ₽\nWARNING course.demo: заказ 101: проверьте адрес доставки\nERROR course.demo: заказ 102: некорректная сумма 0\nDEBUG course.demo: старт обработки заказа 103\nINFO course.demo: заказ 103 принят на 700 ₽\nWARNING course.demo: заказ 103: проверьте адрес доставки\nERROR course.demo: пример ошибки: division by zero",
+      "ok": true,
+      "error": ""
+    },
+    "testing/01_environment.py": {
+      "path": "testing/01_environment.py",
+      "lines": 38,
+      "code": "\"\"\"Окружение Python: версия, интерпретатор и виртуальное окружение.\"\"\"\n\nimport os\nimport sys\nfrom pathlib import Path\n\n\ndef describe_interpreter() -> None:\n    print(\"версия:\", sys.version.split()[0])\n    print(\"реализация:\", sys.implementation.name)\n    major, minor, micro = sys.version_info[:3]\n    print(\"version_info:\", major, minor, micro)\n\n\ndef describe_environment() -> None:\n    in_venv = sys.prefix != getattr(sys, \"base_prefix\", sys.prefix)\n    print(\"в виртуальном окружении:\", in_venv)\n    print(\"PYTHONPATH задан:\", \"PYTHONPATH\" in os.environ)\n    print(\"текущая папка:\", Path.cwd().name)\n\n\ndef check_version(minimum: tuple[int, int] = (3, 10)) -> bool:\n    \"\"\"Курс рассчитан на Python 3.10+.\"\"\"\n    return sys.version_info[:2] >= minimum\n\n\ndef main() -> None:\n    describe_interpreter()\n    describe_environment()\n    if not check_version():\n        print(\"Обновите Python: нужен 3.10 или новее\")\n    else:\n        print(\"версия подходит для курса\")\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "describe_interpreter",
+          "kind": "function",
+          "start": 8,
+          "end": 12,
+          "signature": "def describe_interpreter() -> None:"
+        },
+        {
+          "name": "describe_environment",
+          "kind": "function",
+          "start": 15,
+          "end": 19,
+          "signature": "def describe_environment() -> None:"
+        },
+        {
+          "name": "check_version",
+          "kind": "function",
+          "start": 22,
+          "end": 24,
+          "signature": "def check_version(minimum: tuple[int, int] = (3, 10)) -> bool:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 27,
+          "end": 33,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "describe_interpreter",
+          "kind": "function",
+          "start": 8,
+          "end": 12,
+          "signature": "def describe_interpreter() -> None:"
+        },
+        {
+          "name": "describe_environment",
+          "kind": "function",
+          "start": 15,
+          "end": 19,
+          "signature": "def describe_environment() -> None:"
+        },
+        {
+          "name": "check_version",
+          "kind": "function",
+          "start": 22,
+          "end": 24,
+          "signature": "def check_version(minimum: tuple[int, int] = (3, 10)) -> bool:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 27,
+          "end": 33,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "версия: 3.14.3\nреализация: cpython\nversion_info: 3 14 3\nв виртуальном окружении: False\nPYTHONPATH задан: False\nтекущая папка: learn-python-core\nверсия подходит для курса",
+      "ok": true,
+      "error": ""
+    },
+    "testing/02_pytest_demo.py": {
+      "path": "testing/02_pytest_demo.py",
+      "lines": 67,
+      "code": "\"\"\"Тесты: assert, pytest-стиль и параметризация.\n\nФайл запускается и без pytest: функция run_self_tests сама проверяет\nрезультаты и печатает отчёт. При установленном pytest его можно запустить\nкомандой: pytest src/python/testing/02_pytest_demo.py\n\"\"\"\n\n\ndef slugify(title: str) -> str:\n    return \"-\".join(title.lower().split())\n\n\ndef parse_price(text: str) -> int:\n    digits = \"\".join(char for char in text if char.isdigit())\n    if not digits:\n        raise ValueError(\"в строке нет цены\")\n    return int(digits)\n\n\ndef test_slugify_simple() -> None:\n    assert slugify(\"Learn Python\") == \"learn-python\"\n\n\ndef test_slugify_single_word() -> None:\n    assert slugify(\"Python\") == \"python\"\n\n\ndef test_parse_price() -> None:\n    assert parse_price(\"1 200 ₽\") == 1200\n\n\ndef test_parse_price_error() -> None:\n    try:\n        parse_price(\"бесплатно\")\n    except ValueError:\n        return\n    raise AssertionError(\"ожидалось ValueError\")\n\n\ndef run_self_tests() -> None:\n    tests = [\n        test_slugify_simple,\n        test_slugify_single_word,\n        test_parse_price,\n        test_parse_price_error,\n    ]\n    passed = 0\n    for test in tests:\n        try:\n            test()\n        except AssertionError as error:\n            print(f\"FAIL {test.__name__}: {error}\")\n        else:\n            passed += 1\n            print(f\"ok   {test.__name__}\")\n    print(f\"итого: {passed}/{len(tests)}\")\n\n\ndef main() -> None:\n    print(slugify(\"Learn Python Core\"))\n    print(parse_price(\"4 900 ₽\"))\n    run_self_tests()\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "slugify",
+          "kind": "function",
+          "start": 9,
+          "end": 10,
+          "signature": "def slugify(title: str) -> str:"
+        },
+        {
+          "name": "parse_price",
+          "kind": "function",
+          "start": 13,
+          "end": 17,
+          "signature": "def parse_price(text: str) -> int:"
+        },
+        {
+          "name": "test_slugify_simple",
+          "kind": "function",
+          "start": 20,
+          "end": 21,
+          "signature": "def test_slugify_simple() -> None:"
+        },
+        {
+          "name": "test_slugify_single_word",
+          "kind": "function",
+          "start": 24,
+          "end": 25,
+          "signature": "def test_slugify_single_word() -> None:"
+        },
+        {
+          "name": "test_parse_price",
+          "kind": "function",
+          "start": 28,
+          "end": 29,
+          "signature": "def test_parse_price() -> None:"
+        },
+        {
+          "name": "test_parse_price_error",
+          "kind": "function",
+          "start": 32,
+          "end": 37,
+          "signature": "def test_parse_price_error() -> None:"
+        },
+        {
+          "name": "run_self_tests",
+          "kind": "function",
+          "start": 40,
+          "end": 56,
+          "signature": "def run_self_tests() -> None:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 59,
+          "end": 62,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "slugify",
+          "kind": "function",
+          "start": 9,
+          "end": 10,
+          "signature": "def slugify(title: str) -> str:"
+        },
+        {
+          "name": "parse_price",
+          "kind": "function",
+          "start": 13,
+          "end": 17,
+          "signature": "def parse_price(text: str) -> int:"
+        },
+        {
+          "name": "test_slugify_simple",
+          "kind": "function",
+          "start": 20,
+          "end": 21,
+          "signature": "def test_slugify_simple() -> None:"
+        },
+        {
+          "name": "test_slugify_single_word",
+          "kind": "function",
+          "start": 24,
+          "end": 25,
+          "signature": "def test_slugify_single_word() -> None:"
+        },
+        {
+          "name": "test_parse_price",
+          "kind": "function",
+          "start": 28,
+          "end": 29,
+          "signature": "def test_parse_price() -> None:"
+        },
+        {
+          "name": "test_parse_price_error",
+          "kind": "function",
+          "start": 32,
+          "end": 37,
+          "signature": "def test_parse_price_error() -> None:"
+        },
+        {
+          "name": "run_self_tests",
+          "kind": "function",
+          "start": 40,
+          "end": 56,
+          "signature": "def run_self_tests() -> None:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 59,
+          "end": 62,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "learn-python-core\n4900\nok   test_slugify_simple\nok   test_slugify_single_word\nok   test_parse_price\nok   test_parse_price_error\nитого: 4/4",
+      "ok": true,
+      "error": ""
+    },
+    "testing/03_typing.py": {
+      "path": "testing/03_typing.py",
+      "lines": 56,
+      "code": "\"\"\"Аннотации типов: подсказки для человека и инструментов.\"\"\"\n\nfrom dataclasses import dataclass\nfrom typing import Iterable, Protocol, TypedDict\n\n\nclass Movie(TypedDict):\n    title: str\n    year: int\n\n\n@dataclass\nclass Book:\n    title: str\n    pages: int\n\n    def __len__(self) -> int:\n        return self.pages\n\n\nclass Sized(Protocol):\n    def __len__(self) -> int: ...\n\n\ndef average(values: Iterable[float]) -> float:\n    items = list(values)\n    if not items:\n        return 0.0\n    return sum(items) / len(items)\n\n\ndef newest(movies: list[Movie]) -> Movie | None:\n    if not movies:\n        return None\n    return max(movies, key=lambda movie: movie[\"year\"])\n\n\ndef total_pages(items: Iterable[Sized]) -> int:\n    return sum(len(item) for item in items)\n\n\ndef main() -> None:\n    print(\"average:\", average([4, 5, 9]))\n    print(\"average пусто:\", average([]))\n\n    movies: list[Movie] = [\n        {\"title\": \"Alien\", \"year\": 1979},\n        {\"title\": \"Arrival\", \"year\": 2016},\n    ]\n    print(\"newest:\", newest(movies))\n    print(\"total pages:\", total_pages([Book(\"Core\", 320), Book(\"API\", 180)]))\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "Movie",
+          "kind": "class",
+          "start": 7,
+          "end": 9,
+          "signature": "class Movie(TypedDict):"
+        },
+        {
+          "name": "Book",
+          "kind": "class",
+          "start": 12,
+          "end": 18,
+          "signature": "class Book:"
+        },
+        {
+          "name": "Book.__len__",
+          "kind": "method",
+          "start": 17,
+          "end": 18,
+          "signature": "def __len__(self) -> int:"
+        },
+        {
+          "name": "Sized",
+          "kind": "class",
+          "start": 21,
+          "end": 22,
+          "signature": "class Sized(Protocol):"
+        },
+        {
+          "name": "Sized.__len__",
+          "kind": "method",
+          "start": 22,
+          "end": 22,
+          "signature": "def __len__(self) -> int: ..."
+        },
+        {
+          "name": "average",
+          "kind": "function",
+          "start": 25,
+          "end": 29,
+          "signature": "def average(values: Iterable[float]) -> float:"
+        },
+        {
+          "name": "newest",
+          "kind": "function",
+          "start": 32,
+          "end": 35,
+          "signature": "def newest(movies: list[Movie]) -> Movie | None:"
+        },
+        {
+          "name": "total_pages",
+          "kind": "function",
+          "start": 38,
+          "end": 39,
+          "signature": "def total_pages(items: Iterable[Sized]) -> int:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 42,
+          "end": 51,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [
+        {
+          "name": "Movie",
+          "kind": "class",
+          "start": 7,
+          "end": 9,
+          "signature": "class Movie(TypedDict):"
+        },
+        {
+          "name": "Book",
+          "kind": "class",
+          "start": 12,
+          "end": 18,
+          "signature": "class Book:"
+        },
+        {
+          "name": "Sized",
+          "kind": "class",
+          "start": 21,
+          "end": 22,
+          "signature": "class Sized(Protocol):"
+        }
+      ],
+      "functions": [
+        {
+          "name": "average",
+          "kind": "function",
+          "start": 25,
+          "end": 29,
+          "signature": "def average(values: Iterable[float]) -> float:"
+        },
+        {
+          "name": "newest",
+          "kind": "function",
+          "start": 32,
+          "end": 35,
+          "signature": "def newest(movies: list[Movie]) -> Movie | None:"
+        },
+        {
+          "name": "total_pages",
+          "kind": "function",
+          "start": 38,
+          "end": 39,
+          "signature": "def total_pages(items: Iterable[Sized]) -> int:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 42,
+          "end": 51,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "average: 6.0\naverage пусто: 0.0\nnewest: {'title': 'Arrival', 'year': 2016}\ntotal pages: 500",
+      "ok": true,
+      "error": ""
+    },
+    "testing/04_debugging.py": {
+      "path": "testing/04_debugging.py",
+      "lines": 57,
+      "code": "\"\"\"Отладка: чтение traceback, assert и типичные ошибки.\"\"\"\n\nimport traceback\n\n\ndef divide(a: int, b: int) -> float:\n    assert b != 0, \"b не должен быть нулём\"\n    return a / b\n\n\ndef parse_ints(values: list[str]) -> list[int]:\n    result: list[int] = []\n    for value in values:\n        try:\n            result.append(int(value))\n        except ValueError:\n            print(f\"пропущено: {value!r}\")\n    return result\n\n\ndef show_traceback() -> None:\n    try:\n        data = {\"name\": \"Анна\"}\n        print(data[\"age\"])\n    except KeyError:\n        text = traceback.format_exc()\n        print(\"последняя строка traceback:\")\n        print(text.strip().splitlines()[-1])\n\n\ndef explain_common_errors() -> None:\n    examples = {\n        \"NameError\": \"обращение к имени, которое не объявлено\",\n        \"TypeError\": \"операция не подходит для этого типа\",\n        \"IndexError\": \"индекс за пределами последовательности\",\n        \"KeyError\": \"ключа нет в словаре\",\n        \"AttributeError\": \"у объекта нет такого атрибута\",\n    }\n    for name, text in examples.items():\n        print(f\"{name:14} {text}\")\n\n\ndef main() -> None:\n    print(\"divide:\", divide(10, 2))\n    try:\n        divide(1, 0)\n    except AssertionError as error:\n        print(\"assert:\", error)\n\n    print(parse_ints([\"1\", \"два\", \"3\"]))\n    show_traceback()\n    explain_common_errors()\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "divide",
+          "kind": "function",
+          "start": 6,
+          "end": 8,
+          "signature": "def divide(a: int, b: int) -> float:"
+        },
+        {
+          "name": "parse_ints",
+          "kind": "function",
+          "start": 11,
+          "end": 18,
+          "signature": "def parse_ints(values: list[str]) -> list[int]:"
+        },
+        {
+          "name": "show_traceback",
+          "kind": "function",
+          "start": 21,
+          "end": 28,
+          "signature": "def show_traceback() -> None:"
+        },
+        {
+          "name": "explain_common_errors",
+          "kind": "function",
+          "start": 31,
+          "end": 40,
+          "signature": "def explain_common_errors() -> None:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 43,
+          "end": 52,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "divide",
+          "kind": "function",
+          "start": 6,
+          "end": 8,
+          "signature": "def divide(a: int, b: int) -> float:"
+        },
+        {
+          "name": "parse_ints",
+          "kind": "function",
+          "start": 11,
+          "end": 18,
+          "signature": "def parse_ints(values: list[str]) -> list[int]:"
+        },
+        {
+          "name": "show_traceback",
+          "kind": "function",
+          "start": 21,
+          "end": 28,
+          "signature": "def show_traceback() -> None:"
+        },
+        {
+          "name": "explain_common_errors",
+          "kind": "function",
+          "start": 31,
+          "end": 40,
+          "signature": "def explain_common_errors() -> None:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 43,
+          "end": 52,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "divide: 5.0\nassert: b не должен быть нулём\nпропущено: 'два'\n[1, 3]\nпоследняя строка traceback:\nKeyError: 'age'\nNameError      обращение к имени, которое не объявлено\nTypeError      операция не подходит для этого типа\nIndexError     индекс за пределами последовательности\nKeyError       ключа нет в словаре\nAttributeError у объекта нет такого атрибута",
+      "ok": true,
+      "error": ""
+    },
+    "testing/05_project_layout.py": {
+      "path": "testing/05_project_layout.py",
+      "lines": 49,
+      "code": "\"\"\"Структура проекта: пакеты, модули и точка входа.\n\nНиже — схема, к которой стоит стремиться, когда скриптов становится больше\nодного. Начинать можно с одного файла, но не стоит держать весь проект\nв main.py на 800 строк.\n\"\"\"\n\nfrom pathlib import Path\n\nLAYOUT = \"\"\"project/\n├── pyproject.toml\n├── README.md\n├── .env.example\n├── src/\n│   └── app/\n│       ├── __init__.py\n│       ├── main.py\n│       ├── config.py\n│       ├── models.py\n│       └── services/\n│           ├── __init__.py\n│           └── users.py\n└── tests/\n    ├── conftest.py\n    └── test_users.py\"\"\"\n\n\ndef describe_module(path: str) -> dict[str, str]:\n    \"\"\"Разбирает dotted path модуля.\"\"\"\n    parts = path.split(\".\")\n    return {\n        \"package\": \".\".join(parts[:-1]),\n        \"module\": parts[-1],\n        \"file\": str(Path(*parts).with_suffix(\".py\")),\n    }\n\n\ndef main() -> None:\n    print(LAYOUT)\n    print()\n    print(describe_module(\"app.services.users\"))\n    print(\"package:\", __package__ or \"запущен как скрипт\")\n    print(\"file:\", Path(__file__).name)\n    print(\"родительская папка:\", Path(__file__).parent.name)\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "describe_module",
+          "kind": "function",
+          "start": 28,
+          "end": 35,
+          "signature": "def describe_module(path: str) -> dict[str, str]:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 38,
+          "end": 44,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "describe_module",
+          "kind": "function",
+          "start": 28,
+          "end": 35,
+          "signature": "def describe_module(path: str) -> dict[str, str]:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 38,
+          "end": 44,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "project/\n├── pyproject.toml\n├── README.md\n├── .env.example\n├── src/\n│   └── app/\n│       ├── __init__.py\n│       ├── main.py\n│       ├── config.py\n│       ├── models.py\n│       └── services/\n│           ├── __init__.py\n│           └── users.py\n└── tests/\n    ├── conftest.py\n    └── test_users.py\n\n{'package': 'app.services', 'module': 'users', 'file': 'app\\\\services\\\\users.py'}\npackage: запущен как скрипт\nfile: 05_project_layout.py\nродительская папка: testing",
+      "ok": true,
+      "error": ""
+    },
+    "web/01_http_server.py": {
+      "path": "web/01_http_server.py",
+      "lines": 66,
+      "code": "\"\"\"HTTP без фреймворка: маршрутизация и устройство сервера.\n\nСервер здесь не запускается, чтобы пример завершался сам. Но функции\nпоказывают, что внутри FastAPI и Flask происходит примерно то же самое:\nприходит метод и путь, находится обработчик, возвращается ответ.\n\"\"\"\n\nfrom http.server import BaseHTTPRequestHandler\n\nROUTES = {\n    (\"GET\", \"/\"): \"главная страница\",\n    (\"GET\", \"/health\"): \"ok\",\n    (\"GET\", \"/users\"): \"список пользователей\",\n    (\"POST\", \"/users\"): \"пользователь создан\",\n    (\"GET\", \"/users/42\"): \"пользователь 42\",\n}\n\n\ndef match_route(method: str, path: str) -> str:\n    \"\"\"Точное совпадение, затем простой шаблон /users/{id}.\"\"\"\n    key = (method.upper(), path)\n    if key in ROUTES:\n        return ROUTES[key]\n\n    parts = path.strip(\"/\").split(\"/\")\n    if len(parts) == 2 and parts[0] == \"users\" and parts[1].isdigit():\n        return f\"пользователь {parts[1]}\"\n\n    return \"404 Not Found\"\n\n\ndef make_handler():\n    \"\"\"Фабрика обработчика для http.server.\"\"\"\n\n    class Handler(BaseHTTPRequestHandler):\n        def do_GET(self):\n            body = match_route(\"GET\", self.path).encode(\"utf-8\")\n            self.send_response(200 if \"404\" not in body.decode() else 404)\n            self.send_header(\"Content-Type\", \"text/plain; charset=utf-8\")\n            self.end_headers()\n            self.wfile.write(body)\n\n        def log_message(self, format, *args):\n            return\n\n    return Handler\n\n\ndef main() -> None:\n    requests = [\n        (\"GET\", \"/\"),\n        (\"GET\", \"/health\"),\n        (\"POST\", \"/users\"),\n        (\"GET\", \"/users/7\"),\n        (\"GET\", \"/missing\"),\n    ]\n    for method, path in requests:\n        print(f\"{method:5} {path:12} → {match_route(method, path)}\")\n\n    print(\"обработчик:\", make_handler().__name__)\n    print(\"базовый класс:\", BaseHTTPRequestHandler.__name__)\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "match_route",
+          "kind": "function",
+          "start": 19,
+          "end": 29,
+          "signature": "def match_route(method: str, path: str) -> str:"
+        },
+        {
+          "name": "make_handler",
+          "kind": "function",
+          "start": 32,
+          "end": 46,
+          "signature": "def make_handler():"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 49,
+          "end": 61,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "match_route",
+          "kind": "function",
+          "start": 19,
+          "end": 29,
+          "signature": "def match_route(method: str, path: str) -> str:"
+        },
+        {
+          "name": "make_handler",
+          "kind": "function",
+          "start": 32,
+          "end": 46,
+          "signature": "def make_handler():"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 49,
+          "end": 61,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "GET   /            → главная страница\nGET   /health      → ok\nPOST  /users       → пользователь создан\nGET   /users/7     → пользователь 7\nGET   /missing     → 404 Not Found\nобработчик: Handler\nбазовый класс: BaseHTTPRequestHandler",
+      "ok": true,
+      "error": ""
+    },
+    "web/02_fastapi_intro.py": {
+      "path": "web/02_fastapi_intro.py",
+      "lines": 80,
+      "code": "\"\"\"FastAPI: первый взгляд.\n\nЕсли fastapi и uvicorn установлены, функция create_app собирает настоящее\nприложение. Если нет — пример всё равно запускается и показывает, как\nвыглядит код. Установка:\n\n    pip install fastapi uvicorn\n    uvicorn src.python.web.02_fastapi_intro:create_app --factory --reload\n\"\"\"\n\n\ndef create_app():\n    from fastapi import FastAPI, HTTPException\n    from pydantic import BaseModel\n\n    class Item(BaseModel):\n        title: str\n        price: int\n\n    app = FastAPI(title=\"Learn Python API\")\n    items: dict[int, Item] = {}\n\n    @app.get(\"/health\")\n    def health() -> dict[str, str]:\n        return {\"status\": \"ok\"}\n\n    @app.get(\"/items\")\n    def list_items() -> list[Item]:\n        return list(items.values())\n\n    @app.post(\"/items\", status_code=201)\n    def create_item(item: Item) -> Item:\n        item_id = len(items) + 1\n        items[item_id] = item\n        return item\n\n    @app.get(\"/items/{item_id}\")\n    def get_item(item_id: int) -> Item:\n        if item_id not in items:\n            raise HTTPException(status_code=404, detail=\"item not found\")\n        return items[item_id]\n\n    return app\n\n\ndef dependency_status() -> tuple[bool, bool]:\n    try:\n        import fastapi  # noqa: F401\n    except ImportError:\n        fastapi_installed = False\n    else:\n        fastapi_installed = True\n\n    try:\n        import pydantic  # noqa: F401\n    except ImportError:\n        pydantic_installed = False\n    else:\n        pydantic_installed = True\n\n    return fastapi_installed, pydantic_installed\n\n\ndef main() -> None:\n    fastapi_installed, pydantic_installed = dependency_status()\n    print(\"FastAPI установлен:\", fastapi_installed)\n    print(\"Pydantic установлен:\", pydantic_installed)\n\n    if fastapi_installed and pydantic_installed:\n        app = create_app()\n        print(\"маршруты:\", [route.path for route in app.routes if hasattr(route, \"path\")])\n    else:\n        print(\"Код приложения готов, но зависимости не установлены.\")\n        print(\"Выполните: pip install fastapi uvicorn\")\n        print(\"Маршруты: GET /health, GET /items, POST /items, GET /items/{id}\")\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "create_app",
+          "kind": "function",
+          "start": 12,
+          "end": 43,
+          "signature": "def create_app():"
+        },
+        {
+          "name": "dependency_status",
+          "kind": "function",
+          "start": 46,
+          "end": 61,
+          "signature": "def dependency_status() -> tuple[bool, bool]:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 64,
+          "end": 75,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "create_app",
+          "kind": "function",
+          "start": 12,
+          "end": 43,
+          "signature": "def create_app():"
+        },
+        {
+          "name": "dependency_status",
+          "kind": "function",
+          "start": 46,
+          "end": 61,
+          "signature": "def dependency_status() -> tuple[bool, bool]:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 64,
+          "end": 75,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "FastAPI установлен: False\nPydantic установлен: False\nКод приложения готов, но зависимости не установлены.\nВыполните: pip install fastapi uvicorn\nМаршруты: GET /health, GET /items, POST /items, GET /items/{id}",
+      "ok": true,
+      "error": ""
+    },
+    "web/03_pydantic.py": {
+      "path": "web/03_pydantic.py",
+      "lines": 61,
+      "code": "\"\"\"Валидация данных: ручная проверка и идея Pydantic.\"\"\"\n\nfrom dataclasses import dataclass\n\n\nclass ValidationProblem(Exception):\n    pass\n\n\n@dataclass\nclass UserCreate:\n    email: str\n    age: int\n    name: str = \"\"\n\n\ndef validate_user(email: str, age: int, name: str = \"\") -> UserCreate:\n    \"\"\"Ручная валидация — то, что Pydantic делает по аннотациям типов.\"\"\"\n    if \"@\" not in email:\n        raise ValidationProblem(\"email должен содержать @\")\n    if not 0 < age < 150:\n        raise ValidationProblem(\"возраст должен быть от 1 до 149\")\n    if not name.strip():\n        raise ValidationProblem(\"имя не может быть пустым\")\n    return UserCreate(email=email.lower(), age=age, name=name.strip())\n\n\ndef try_pydantic() -> None:\n    try:\n        from pydantic import BaseModel, Field, ValidationError\n    except ImportError:\n        print(\"Pydantic не установлен — ручная валидация выше всё равно работает\")\n        return\n\n    class UserModel(BaseModel):\n        email: str\n        age: int = Field(gt=0, lt=150)\n        name: str\n\n    try:\n        user = UserModel(email=\"ANNA@EXAMPLE.COM\", age=27, name=\"Анна\")\n        print(\"Pydantic:\", user.model_dump())\n        UserModel(email=\"wrong\", age=200, name=\"\")\n    except ValidationError as error:\n        print(\"Pydantic нашёл ошибок:\", error.error_count())\n\n\ndef main() -> None:\n    print(validate_user(\"Anna@Example.com\", 27, \" Анна \"))\n    for email, age, name in [(\"wrong\", 20, \"Анна\"), (\"a@b.c\", 200, \"Анна\")]:\n        try:\n            validate_user(email, age, name)\n        except ValidationProblem as error:\n            print(\"ошибка:\", error)\n\n    try_pydantic()\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "ValidationProblem",
+          "kind": "class",
+          "start": 6,
+          "end": 7,
+          "signature": "class ValidationProblem(Exception):"
+        },
+        {
+          "name": "UserCreate",
+          "kind": "class",
+          "start": 10,
+          "end": 14,
+          "signature": "class UserCreate:"
+        },
+        {
+          "name": "validate_user",
+          "kind": "function",
+          "start": 17,
+          "end": 25,
+          "signature": "def validate_user(email: str, age: int, name: str = \"\") -> UserCreate:"
+        },
+        {
+          "name": "try_pydantic",
+          "kind": "function",
+          "start": 28,
+          "end": 45,
+          "signature": "def try_pydantic() -> None:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 48,
+          "end": 56,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [
+        {
+          "name": "ValidationProblem",
+          "kind": "class",
+          "start": 6,
+          "end": 7,
+          "signature": "class ValidationProblem(Exception):"
+        },
+        {
+          "name": "UserCreate",
+          "kind": "class",
+          "start": 10,
+          "end": 14,
+          "signature": "class UserCreate:"
+        }
+      ],
+      "functions": [
+        {
+          "name": "validate_user",
+          "kind": "function",
+          "start": 17,
+          "end": 25,
+          "signature": "def validate_user(email: str, age: int, name: str = \"\") -> UserCreate:"
+        },
+        {
+          "name": "try_pydantic",
+          "kind": "function",
+          "start": 28,
+          "end": 45,
+          "signature": "def try_pydantic() -> None:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 48,
+          "end": 56,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "UserCreate(email='anna@example.com', age=27, name='Анна')\nошибка: email должен содержать @\nошибка: возраст должен быть от 1 до 149\nPydantic не установлен — ручная валидация выше всё равно работает",
+      "ok": true,
+      "error": ""
+    },
+    "web/04_sqlite.py": {
+      "path": "web/04_sqlite.py",
+      "lines": 61,
+      "code": "\"\"\"SQLite: база данных в одном файле и обычный SQL.\"\"\"\n\nimport sqlite3\n\n\ndef create_schema(connection: sqlite3.Connection) -> None:\n    connection.execute(\n        \"\"\"\n        CREATE TABLE users (\n            id INTEGER PRIMARY KEY AUTOINCREMENT,\n            name TEXT NOT NULL,\n            email TEXT NOT NULL UNIQUE\n        )\n        \"\"\"\n    )\n    connection.commit()\n\n\ndef add_user(connection: sqlite3.Connection, name: str, email: str) -> int:\n    cursor = connection.execute(\n        \"INSERT INTO users (name, email) VALUES (?, ?)\",\n        (name, email),\n    )\n    connection.commit()\n    return int(cursor.lastrowid)\n\n\ndef list_users(connection: sqlite3.Connection) -> list[tuple[int, str, str]]:\n    cursor = connection.execute(\"SELECT id, name, email FROM users ORDER BY id\")\n    return cursor.fetchall()\n\n\ndef find_by_email(connection: sqlite3.Connection, email: str) -> tuple | None:\n    cursor = connection.execute(\n        \"SELECT id, name, email FROM users WHERE email = ?\",\n        (email,),\n    )\n    return cursor.fetchone()\n\n\ndef main() -> None:\n    connection = sqlite3.connect(\":memory:\")\n    try:\n        create_schema(connection)\n        anna_id = add_user(connection, \"Анна\", \"anna@example.com\")\n        add_user(connection, \"Борис\", \"boris@example.com\")\n        print(\"id Анны:\", anna_id)\n        print(\"все пользователи:\", list_users(connection))\n        print(\"поиск:\", find_by_email(connection, \"boris@example.com\"))\n\n        try:\n            add_user(connection, \"Дубль\", \"anna@example.com\")\n        except sqlite3.IntegrityError as error:\n            print(\"UNIQUE сработал:\", error)\n    finally:\n        connection.close()\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "create_schema",
+          "kind": "function",
+          "start": 6,
+          "end": 16,
+          "signature": "def create_schema(connection: sqlite3.Connection) -> None:"
+        },
+        {
+          "name": "add_user",
+          "kind": "function",
+          "start": 19,
+          "end": 25,
+          "signature": "def add_user(connection: sqlite3.Connection, name: str, email: str) -> int:"
+        },
+        {
+          "name": "list_users",
+          "kind": "function",
+          "start": 28,
+          "end": 30,
+          "signature": "def list_users(connection: sqlite3.Connection) -> list[tuple[int, str, str]]:"
+        },
+        {
+          "name": "find_by_email",
+          "kind": "function",
+          "start": 33,
+          "end": 38,
+          "signature": "def find_by_email(connection: sqlite3.Connection, email: str) -> tuple | None:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 41,
+          "end": 56,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "create_schema",
+          "kind": "function",
+          "start": 6,
+          "end": 16,
+          "signature": "def create_schema(connection: sqlite3.Connection) -> None:"
+        },
+        {
+          "name": "add_user",
+          "kind": "function",
+          "start": 19,
+          "end": 25,
+          "signature": "def add_user(connection: sqlite3.Connection, name: str, email: str) -> int:"
+        },
+        {
+          "name": "list_users",
+          "kind": "function",
+          "start": 28,
+          "end": 30,
+          "signature": "def list_users(connection: sqlite3.Connection) -> list[tuple[int, str, str]]:"
+        },
+        {
+          "name": "find_by_email",
+          "kind": "function",
+          "start": 33,
+          "end": 38,
+          "signature": "def find_by_email(connection: sqlite3.Connection, email: str) -> tuple | None:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 41,
+          "end": 56,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "id Анны: 1\nвсе пользователи: [(1, 'Анна', 'anna@example.com'), (2, 'Борис', 'boris@example.com')]\nпоиск: (2, 'Борис', 'boris@example.com')\nUNIQUE сработал: UNIQUE constraint failed: users.email",
+      "ok": true,
+      "error": ""
+    },
+    "web/05_async.py": {
+      "path": "web/05_async.py",
+      "lines": 41,
+      "code": "\"\"\"async/await: конкурентные операции ввода-вывода.\"\"\"\n\nimport asyncio\n\n\nasync def fetch_user(user_id: int) -> dict[str, object]:\n    await asyncio.sleep(0.01)  # имитация сетевого запроса\n    return {\"id\": user_id, \"name\": f\"user-{user_id}\"}\n\n\nasync def fetch_all(ids: list[int]) -> list[dict[str, object]]:\n    \"\"\"gather запускает задачи конкурентно, а не по очереди.\"\"\"\n    tasks = [fetch_user(user_id) for user_id in ids]\n    return await asyncio.gather(*tasks)\n\n\nasync def with_timeout(coro, seconds: float):\n    try:\n        return await asyncio.wait_for(coro, timeout=seconds)\n    except TimeoutError:\n        return {\"error\": \"timeout\"}\n\n\nasync def slow_operation() -> str:\n    await asyncio.sleep(1)\n    return \"готово\"\n\n\nasync def main_async() -> None:\n    users = await fetch_all([1, 2, 3])\n    print(\"пользователи:\", users)\n    print(\"timeout:\", await with_timeout(slow_operation(), 0.01))\n\n\ndef main() -> None:\n    asyncio.run(main_async())\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "fetch_user",
+          "kind": "function",
+          "start": 6,
+          "end": 8,
+          "signature": "async def fetch_user(user_id: int) -> dict[str, object]:"
+        },
+        {
+          "name": "fetch_all",
+          "kind": "function",
+          "start": 11,
+          "end": 14,
+          "signature": "async def fetch_all(ids: list[int]) -> list[dict[str, object]]:"
+        },
+        {
+          "name": "with_timeout",
+          "kind": "function",
+          "start": 17,
+          "end": 21,
+          "signature": "async def with_timeout(coro, seconds: float):"
+        },
+        {
+          "name": "slow_operation",
+          "kind": "function",
+          "start": 24,
+          "end": 26,
+          "signature": "async def slow_operation() -> str:"
+        },
+        {
+          "name": "main_async",
+          "kind": "function",
+          "start": 29,
+          "end": 32,
+          "signature": "async def main_async() -> None:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 35,
+          "end": 36,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "fetch_user",
+          "kind": "function",
+          "start": 6,
+          "end": 8,
+          "signature": "async def fetch_user(user_id: int) -> dict[str, object]:"
+        },
+        {
+          "name": "fetch_all",
+          "kind": "function",
+          "start": 11,
+          "end": 14,
+          "signature": "async def fetch_all(ids: list[int]) -> list[dict[str, object]]:"
+        },
+        {
+          "name": "with_timeout",
+          "kind": "function",
+          "start": 17,
+          "end": 21,
+          "signature": "async def with_timeout(coro, seconds: float):"
+        },
+        {
+          "name": "slow_operation",
+          "kind": "function",
+          "start": 24,
+          "end": 26,
+          "signature": "async def slow_operation() -> str:"
+        },
+        {
+          "name": "main_async",
+          "kind": "function",
+          "start": 29,
+          "end": 32,
+          "signature": "async def main_async() -> None:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 35,
+          "end": 36,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "пользователи: [{'id': 1, 'name': 'user-1'}, {'id': 2, 'name': 'user-2'}, {'id': 3, 'name': 'user-3'}]\ntimeout: {'error': 'timeout'}",
+      "ok": true,
+      "error": ""
+    }
+  }
+}

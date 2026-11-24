@@ -1,0 +1,194 @@
+---
+import { Code } from 'astro-expressive-code/components';
+import CourseManifest from './CourseManifest.astro';
+import ModuleCard from './ModuleCard.astro';
+import ProgressSummary from './ProgressSummary.astro';
+import generated from '../data/generated.json';
+import { lessons, modules, lessonsOfModule, courseStats } from '../data/course.mjs';
+import { url } from '../utils/url.js';
+
+const lessonIds = lessons.map((lesson) => lesson.id);
+const number = new Intl.NumberFormat('ru-RU');
+const heroSnippet = `def greet(name: str) -> str:
+    return f"Привет, {name}!"
+
+print(greet("мир"))
+# Привет, мир!`;
+const interactiveCount = lessons.filter((lesson) => lesson.practice?.tests?.length).length;
+---
+
+<CourseManifest />
+
+<div id="_top" aria-hidden="true"></div>
+
+<div class="course-home">
+  <section class="course-hero">
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="eyebrow-dot"></span>Python Core · курс по реальному коду</p>
+      <h1>Python, который<br /><span class="hero-gradient">можно читать</span></h1>
+      <p class="hero-lead">
+        {modules.length} модулей, {lessons.length} коротких уроков и исходники из этого же репозитория.
+        Не «40 часов видео», а понятная идея, живой код, запуск и практика — по 10–15 минут в день.
+      </p>
+      <div class="hero-actions">
+        <a
+          class="course-btn course-btn-primary"
+          href={url('/start/')}
+          data-continue-link
+          data-finished-url={url('/next/')}
+        >
+          <span data-continue-label>Начать курс</span>
+        </a>
+        <a class="course-btn course-btn-ghost" href={url('/start/setup/')}>Установка Python</a>
+        <a class="course-btn course-btn-ghost" href={url('/contributors/route/')}>Маршрут</a>
+      </div>
+      <div class="hero-badges">
+        <span class="hero-badge"><span class="hero-badge-mark" aria-hidden="true"></span> код запускается в браузере</span>
+        <span class="hero-badge"><span class="hero-badge-mark" aria-hidden="true"></span> {interactiveCount} интерактивных практик</span>
+        <span class="hero-badge"><span class="hero-badge-mark" aria-hidden="true"></span> без аккаунта</span>
+      </div>
+      <dl class="hero-stats">
+        <div><dt>Модулей</dt><dd>{modules.length}</dd></div>
+        <div><dt>Уроков</dt><dd>{lessons.length}</dd></div>
+        <div><dt>Файлов</dt><dd>{generated.stats.files}</dd></div>
+        <div><dt>Строк кода</dt><dd>{number.format(generated.stats.lines)}</dd></div>
+      </dl>
+    </div>
+    <div class="hero-code">
+      <div class="hero-code-caption">
+        <span class="hero-code-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>hello.py</span>
+        <span class="hero-code-tag">первый урок</span>
+      </div>
+      <Code code={heroSnippet} lang="python" frame="none" showLineNumbers={false} wrap />
+      <p class="hero-code-note">
+        Каждый фрагмент на сайте — из настоящего файла в <code>src/python</code>, а не из учебного «идеального» примера.
+        Практика проверяется реальным интерпретатором.
+      </p>
+    </div>
+  </section>
+
+  <section class="home-section">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Как это работает</p>
+        <h2>Один урок — один понятный шаг</h2>
+      </div>
+      <p class="section-lead">10–15 минут. Без воды и без «сначала посмотрите 40 часов теории».</p>
+    </div>
+    <ol class="lesson-loop">
+      <li>
+        <span class="loop-number">01</span>
+        <h3>Цель</h3>
+        <p>Одна тема и 3–5 идей, которые нужно унести с собой.</p>
+      </li>
+      <li>
+        <span class="loop-number">02</span>
+        <h3>Код</h3>
+        <p>Фрагменты реального файла с номерами строк и пояснениями.</p>
+      </li>
+      <li>
+        <span class="loop-number">03</span>
+        <h3>Практика</h3>
+        <p>Редактор с Python, реальный запуск и тесты. Сначала пробуем сами.</p>
+      </li>
+      <li>
+        <span class="loop-number">04</span>
+        <h3>Самопроверка</h3>
+        <p>Короткий квиз с объяснениями. Прогресс сохраняется локально.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="home-section home-progress">
+    <div>
+      <p class="eyebrow">Личный прогресс</p>
+      <h2>Продолжить с того места, где остановились</h2>
+      <p class="section-lead">
+        Отметки хранятся в этом браузере. Можно экспортировать прогресс и перенести на другое устройство.
+      </p>
+      <a class="course-btn course-btn-ghost" href={url('/progress/')}>Открыть страницу прогресса</a>
+    </div>
+    <div class="home-progress-card">
+      <ProgressSummary lessonIds={lessonIds} label="Пройдено уроков" />
+      <p class="muted-note">Прогресс не отправляется на сервер и не требует аккаунта.</p>
+    </div>
+  </section>
+
+  <section class="home-section">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Программа</p>
+        <h2>Восемь модулей — от нуля до API</h2>
+      </div>
+      <p class="section-lead">
+        От первого <code>print</code> до FastAPI и SQLite. Внутри каждого модуля уроки идут по порядку,
+        а практика запускает настоящий Python.
+      </p>
+    </div>
+    <div class="module-grid">
+      {modules.map((module) => <ModuleCard module={module} lessons={lessonsOfModule(module.number)} />)}
+      <a class="module-card module-card-next" href={url('/next/')} style="--module-color: #64748b">
+        <div class="module-card-head">
+          <span class="module-number">→</span>
+          <div>
+            <h3>Что дальше</h3>
+            <p>Django, базы данных, тесты, Docker и первый настоящий проект.</p>
+          </div>
+        </div>
+        <ul class="module-outcomes">
+          <li>выбрать направление</li>
+          <li>закрепить Core проектом</li>
+          <li>не потерять прогресс</li>
+        </ul>
+        <div class="module-card-footer">
+          <span class="module-count">после {lessons.length} уроков</span>
+          <span class="module-next-arrow" aria-hidden="true">→</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <section class="home-section home-principles">
+    <div class="principle">
+      <span class="principle-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 6-5 6 5 6M16 6l5 6-5 6"/></svg>
+      </span>
+      <h3>Код — из репозитория</h3>
+      <p>Сайт собирается из тех же <code>.py</code>-файлов, что открываются в редакторе. Никаких копий, которые расходятся с оригиналом.</p>
+    </div>
+    <div class="principle">
+      <span class="principle-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      </span>
+      <h3>Практика по-настоящему</h3>
+      <p>Pyodide выполняет Python в браузере, а тесты проверяют результат. Не «похоже на код», а работает или нет.</p>
+    </div>
+    <div class="principle">
+      <span class="principle-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h10M4 12h16M4 17h7"/></svg>
+      </span>
+      <h3>Маленькие шаги</h3>
+      <p>Один урок — одна тема. Можно заниматься по 15 минут в день и видеть прогресс без выгорания.</p>
+    </div>
+  </section>
+
+  <section class="home-cta">
+    <div>
+      <p class="eyebrow">Готовы?</p>
+      <h2>Начните с первой программы</h2>
+      <p class="section-lead">Первый урок займёт около шести минут. Дальше — по одному шагу.</p>
+    </div>
+    <div class="hero-actions">
+      <a
+        class="course-btn course-btn-primary"
+        href={url(`/lessons/${lessons[0].id}/`)}
+        data-continue-link
+        data-finished-url={url('/next/')}
+      >
+        <span data-continue-label>Начать с урока 1</span>
+      </a>
+      <a class="course-btn course-btn-ghost" href={url('/contributors/')}>Как устроен курс</a>
+    </div>
+  </section>
+</div>

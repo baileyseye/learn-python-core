@@ -1,0 +1,98 @@
+---
+import { Code } from 'astro-expressive-code/components';
+
+const { lessonId, practice } = Astro.props;
+
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function inline(value) {
+  return escapeHtml(value).replace(/`([^`]+)`/g, '<code>$1</code>');
+}
+
+const starter = practice.starter ?? '# Напиши решение здесь\n';
+const solution = practice.solution ?? '';
+const tests = practice.tests ?? [];
+const testsJson = JSON.stringify(tests).replace(/</g, '\\u003c');
+const solutionJson = JSON.stringify(solution).replace(/</g, '\\u003c');
+const starterJson = JSON.stringify(starter).replace(/</g, '\\u003c');
+---
+
+<div class="practice-editor-card" data-practice data-lesson-id={lessonId}>
+  <div class="practice-header">
+    <div>
+      <p class="eyebrow">Интерактив</p>
+      <h2 id="practice" class="practice-title">Практика</h2>
+    </div>
+    <span class="practice-badge" data-practice-status>черновик</span>
+  </div>
+
+  <p class="practice-task" set:html={inline(practice.task)}></p>
+
+  <div class="practice-editor">
+    <div class="practice-editor-top">
+      <span class="practice-editor-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span class="practice-editor-file">solution.py</span>
+      <span class="practice-editor-hint">Ctrl+Space — подсказка · Ctrl+Enter — проверить</span>
+    </div>
+    <div class="practice-editor-body is-code">
+      <div class="practice-codemirror" data-practice-codemirror></div>
+      <noscript>
+        <textarea class="practice-fallback" aria-label="Твой код" spellcheck="false">{starter}</textarea>
+      </noscript>
+    </div>
+  </div>
+
+  <div class="practice-actions">
+    <button type="button" class="course-btn course-btn-primary" data-practice-check>Проверить</button>
+    <button type="button" class="course-btn course-btn-ghost" data-practice-reset>Сбросить</button>
+    <span class="practice-feedback" data-practice-feedback role="status" aria-live="polite"></span>
+  </div>
+
+  <div class="practice-result" data-practice-result hidden></div>
+
+  <div class="practice-details-grid">
+    <details class="practice-details">
+      <summary>Подсказка</summary>
+      <p set:html={inline(practice.hint)}></p>
+    </details>
+
+    {
+      solution && (
+        <details class="practice-details">
+          <summary>Показать решение</summary>
+          <p class="section-note">
+            Сначала попробуй сам. Решение — один из вариантов, а не единственно правильный.
+          </p>
+          <Code code={solution} lang="python" title="Решение" frame="code" showLineNumbers={false} wrap />
+        </details>
+      )
+    }
+  </div>
+
+  <details class="practice-note">
+    <summary>Как работает проверка</summary>
+    <p>
+      Код выполняется прямо в браузере через <strong>Pyodide</strong> — это Python, скомпилированный
+      в WebAssembly. Первый запуск скачивает среду с CDN и занимает несколько секунд, дальше всё
+      работает локально. Никакой код не отправляется на сервер.
+    </p>
+    <p>
+      После выполнения запускаются тесты из урока. Если Pyodide недоступен (например, нет интернета),
+      остаётся структурная проверка: скобки, TODO и близость к эталону. Она не выполняет код.
+    </p>
+  </details>
+
+  <script type="application/json" data-practice-starter set:html={starterJson}></script>
+  <script type="application/json" data-practice-tests set:html={testsJson}></script>
+  <script type="application/json" data-practice-solution set:html={solutionJson}></script>
+</div>
+
+<script>
+  import '../scripts/practice.js';
+</script>

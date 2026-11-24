@@ -1,0 +1,16 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import RouteMap from '../../../components/RouteMap.astro';
+import { sidebar } from '../../../data/sidebar.mjs';
+---
+
+<StarlightPage
+  frontmatter={{
+    title: 'Карта маршрута',
+    description: 'Все модули, уроки и темы курса Learn Python Core на одной странице.'
+  }}
+  headings={[]}
+  sidebar={sidebar}
+>
+  <RouteMap />
+</StarlightPage>

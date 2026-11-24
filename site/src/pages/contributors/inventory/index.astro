@@ -1,0 +1,16 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import Inventory from '../../../components/Inventory.astro';
+import { sidebar } from '../../../data/sidebar.mjs';
+---
+
+<StarlightPage
+  frontmatter={{
+    title: 'Инвентарь файлов',
+    description: 'Все Python-файлы курса, их размер, структура и связи с уроками.'
+  }}
+  headings={[]}
+  sidebar={sidebar}
+>
+  <Inventory />
+</StarlightPage>

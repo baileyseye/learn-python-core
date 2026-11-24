@@ -1,0 +1,134 @@
+---
+title: Частые ошибки
+description: "Ловушки Python, на которых спотыкаются новички: изменяемые значения по умолчанию, копирование, импорты, float и другие."
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+## Изменяемое значение по умолчанию
+
+```python
+# Плохо: один и тот же список на все вызовы
+def add_item(item, items=[]):
+    items.append(item)
+    return items
+
+# Хорошо
+def add_item(item, items=None):
+    if items is None:
+        items = []
+    items.append(item)
+    return items
+```
+
+В dataclass для этого есть `field(default_factory=list)`.
+
+## Копия списка — не всегда копия
+
+```python
+original = [[1, 2], [3, 4]]
+shallow = original.copy()
+shallow[0].append(99)
+print(original)   # [[1, 2, 99], [3, 4]]
+
+from copy import deepcopy
+deep = deepcopy(original)
+```
+
+`copy()` копирует только внешний список. Вложенные объекты остаются общими.
+
+## `is` вместо `==`
+
+```python
+a = [1, 2]
+b = [1, 2]
+a == b      # True — одинаковые значения
+a is b      # False — разные объекты
+```
+
+`is` сравнивает идентичность объектов. Для значений используйте `==`; `is` — для `None`, `True`, `False` и проверки «тот же объект».
+
+## Изменение списка во время итерации
+
+```python
+# Плохо
+for item in items:
+    if item < 0:
+        items.remove(item)
+
+# Хорошо
+items = [item for item in items if item >= 0]
+```
+
+## Забытый `return`
+
+```python
+def add(a, b):
+    result = a + b   # забыли return
+
+print(add(2, 3))     # None
+```
+
+## Локальная и глобальная переменная
+
+```python
+count = 0
+
+def increment():
+    global count   # без global будет UnboundLocalError
+    count += 1
+```
+
+Внутри функции лучше не менять глобальное состояние. Передавайте значения аргументами и возвращайте результат.
+
+## `except` слишком широкий
+
+```python
+# Плохо: скрывает любую ошибку
+try:
+    process()
+except Exception:
+    pass
+
+# Хорошо
+try:
+    process()
+except ValueError as error:
+    log.warning("некорректные данные: %s", error)
+```
+
+## Сравнение float
+
+```python
+0.1 + 0.2 == 0.3          # False
+abs((0.1 + 0.2) - 0.3) < 1e-9   # True
+```
+
+Для денег используйте `Decimal`, для сравнения — допуск.
+
+## Импорт и имя файла
+
+Файл `random.py` в корне проекта перекроет стандартный модуль `random`. Не называйте свои файлы именами библиотек: `json.py`, `types.py`, `logging.py`.
+
+## Циклический импорт
+
+Если `a.py` импортирует `b.py`, а `b.py` импортирует `a.py`, импорт может упасть. Решения: вынести общий код в третий модуль, импортировать внутри функции или перестроить зависимости.
+
+## Строки и байты
+
+```python
+text = "привет"          # str, Unicode
+data = text.encode("utf-8")   # bytes
+text = data.decode("utf-8")
+```
+
+Не смешивайте `str` и `bytes` в одном выражении без явного преобразования.
+
+## Изменяемый объект как ключ словаря
+
+Ключи должны быть хэшируемыми. Список и словарь — нет. Кортеж из неизменяемых элементов — да.
+
+<Aside type="tip" title="Как отлаживать">
+  Читайте traceback снизу вверх, проверяйте типы через `type(value)` и `repr(value)`,
+  сужайте входные данные. Если ошибка воспроизводится — сначала найдите минимальный пример.
+</Aside>

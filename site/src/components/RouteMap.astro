@@ -1,0 +1,63 @@
+---
+import { modules, lessonsOfModule, lessonCountLabel } from '../data/course.mjs';
+import { moduleUrl, lessonUrl } from '../utils/url.js';
+
+const totalLessons = modules.reduce((sum, module) => sum + lessonsOfModule(module.number).length, 0);
+const totalMinutes = modules.reduce(
+  (sum, module) => sum + lessonsOfModule(module.number).reduce((inner, lesson) => inner + lesson.minutes, 0),
+  0
+);
+---
+
+<div class="route-page">
+  <p class="lesson-lead">
+    Маршрут курса — это последовательность модулей и уроков. Внутри модуля уроки идут по порядку;
+    каждый следующий опирается на предыдущий.
+  </p>
+
+  <div class="route-legend">
+    <span><i class="route-legend-line"></i> основной маршрут</span>
+    <span class="muted-note">
+      всего {totalLessons} {lessonCountLabel(totalLessons)} · около {Math.round(totalMinutes / 60)} часов материала
+    </span>
+  </div>
+
+  <ol class="route-map">
+    {
+      modules.map((module) => (
+        <li class="route-module" style={`--module-color:${module.color}`}>
+          <div class="route-marker">{module.number}</div>
+          <div class="route-body">
+            <div class="route-head">
+              <h2>
+                <a href={moduleUrl(module)}>{module.title}</a>
+              </h2>
+              <span class="route-count">
+                {lessonsOfModule(module.number).length} {lessonCountLabel(lessonsOfModule(module.number).length)}
+              </span>
+            </div>
+            <p>{module.description}</p>
+            <ol class="route-lessons">
+              {lessonsOfModule(module.number).map((lesson) => (
+                <li>
+                  <a href={lessonUrl(lesson)}>
+                    <span class="route-lesson-order">{String(lesson.order).padStart(2, '0')}</span>
+                    <span>{lesson.title}</span>
+                    <span class="route-lesson-minutes">{lesson.minutes} мин</span>
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+
+  <div class="route-footnote">
+    <p>
+      Курс собирает {totalLessons} уроков из реальных файлов репозитория. Практика запускает Python
+      прямо в браузере, поэтому для проверки решений не нужен сервер.
+    </p>
+  </div>
+</div>

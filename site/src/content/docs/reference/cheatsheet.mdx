@@ -1,0 +1,187 @@
+---
+title: Шпаргалка Python
+description: "Быстрый справочник по синтаксису Python: переменные, коллекции, функции, классы, файлы и типы."
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Короткая выжимка из курса. Держите страницу открытой, пока пишете код.
+
+## Переменные и числа
+
+```python
+name = "Анна"          # str
+age = 27               # int
+price = 199.9          # float
+active = True          # bool
+unknown = None         # NoneType
+
+a, b = 1, 2
+a, b = b, a            # обмен без временной переменной
+first, *rest = [1, 2, 3]
+
+17 // 5                # 3
+17 % 5                 # 2
+2 ** 10                # 1024
+round(2.675, 2)        # 2.67 — float приблизителен
+```
+
+## Строки
+
+```python
+text = "  Learn Python  "
+text.strip()                 # "Learn Python"
+text.lower()                 # "  learn python  "
+text.replace("Python", "API")
+"a,b,c".split(",")           # ["a", "b", "c"]
+"-".join(["a", "b", "c"])    # "a-b-c"
+f"{name}: {price:.1f}%"      # форматирование
+text[0], text[-1]            # первый и последний символ
+text[2:6]                    # срез
+```
+
+## Коллекции
+
+```python
+items = [1, 2, 3]
+items.append(4)
+items[0] = 10
+
+point = (3, 7)               # tuple, неизменяемый
+x, y = point
+
+user = {"name": "Анна", "age": 27}
+user.get("email", "—")
+user["city"] = "Москва"
+for key, value in user.items():
+    print(key, value)
+
+tags = {"python", "api"}
+tags | {"sql"}               # объединение
+tags & {"python"}            # пересечение
+
+squares = [n ** 2 for n in range(5)]
+evens = {n for n in range(10) if n % 2 == 0}
+lengths = {word: len(word) for word in ["a", "bb"]}
+```
+
+## Условия и циклы
+
+```python
+if score >= 90:
+    grade = "A"
+elif score >= 75:
+    grade = "B"
+else:
+    grade = "C"
+
+for index, item in enumerate(items, start=1):
+    print(index, item)
+
+for left, right in zip([1, 2], ["a", "b"]):
+    print(left, right)
+
+while count > 0:
+    count -= 1
+    if count == 3:
+        continue
+    if count == 1:
+        break
+```
+
+## Функции
+
+```python
+def greet(name: str, greeting: str = "Привет") -> str:
+    """Возвращает приветствие."""
+    return f"{greeting}, {name}!"
+
+
+def total(*numbers: int) -> int:
+    return sum(numbers)
+
+
+def build(**fields):
+    return {"type": "item", **fields}
+
+
+apply = lambda value: value * 2
+```
+
+## Классы
+
+```python
+from dataclasses import dataclass, field
+
+
+class Account:
+    def __init__(self, owner: str, balance: int = 0):
+        self.owner = owner
+        self.balance = balance
+
+    def deposit(self, amount: int) -> None:
+        self.balance += amount
+
+
+@dataclass
+class Task:
+    title: str
+    done: bool = False
+    tags: list[str] = field(default_factory=list)
+```
+
+## Ошибки и файлы
+
+```python
+try:
+    value = int(raw)
+except (ValueError, TypeError):
+    value = 0
+else:
+    print("ok")
+finally:
+    print("done")
+
+from pathlib import Path
+
+path = Path("notes.txt")
+path.write_text("hello", encoding="utf-8")
+text = path.read_text(encoding="utf-8")
+
+with path.open(encoding="utf-8") as file:
+    for line in file:
+        print(line.rstrip())
+```
+
+## JSON, даты, regex
+
+```python
+import json
+from datetime import date, datetime, timedelta
+import re
+
+json.dumps({"name": "Анна"}, ensure_ascii=False)
+json.loads('{"name": "Анна"}')
+
+date.today() + timedelta(days=7)
+datetime.now().strftime("%d.%m.%Y")
+datetime.strptime("25.11.2026", "%d.%m.%Y")
+
+re.findall(r"[\w.+-]+@[\w-]+\.[\w.]+", text)
+re.sub(r"\D", "", "+7 (999) 123-45-67")
+```
+
+## Полезные команды
+
+```bash
+py --version
+py -m venv .venv
+.venv\Scripts\Activate.ps1
+py -m pip install pytest
+py -m pytest
+py -m pip freeze > requirements.txt
+```
+
+<Aside type="tip" title="Правило читаемости">
+  Если строчка не помещается в голову с первого прочтения — разбейте её на две. Python ценит ясность больше, чем трюки.
+</Aside>
