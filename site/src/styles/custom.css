@@ -1666,13 +1666,43 @@ header.header div:has(> select) {
 }
 
 .practice-codemirror {
-  min-height: 15rem;
-  max-height: 34rem;
-  overflow: auto;
+  width: 100%;
 }
 
 .practice-codemirror .cm-editor {
-  min-height: 15rem;
+  height: 18rem;
+  font-size: 0.84rem;
+}
+
+.practice-codemirror .cm-scroller {
+  overflow: auto;
+  font-family: var(--sl-font-mono);
+}
+
+/*
+ * Starlight добавляет margin-top соседним блокам внутри .sl-markdown-content.
+ * CodeMirror состоит из вложенных div, поэтому правило ломает геометрию:
+ * строки получают лишние 16px, а каретка и выделение уезжают.
+ * Сбрасываем margin у всего дерева редактора.
+ */
+.practice-codemirror .cm-editor,
+.practice-codemirror .cm-editor * {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+/* Выравниваем первый номер строки с padding-top у .cm-content. */
+.practice-codemirror .cm-gutters {
+  padding-top: 0.8rem;
+}
+
+/*
+ * CodeMirror считает высоту gutter-элементов по дефолтной высоте 14px,
+ * а строки кода у нас 1.65em. Выравниваем номера по той же высоте.
+ */
+.practice-codemirror .cm-lineNumbers .cm-gutterElement:not([style*='visibility: hidden']) {
+  height: 1.65em !important;
+  line-height: 1.65em !important;
 }
 
 .practice-fallback {
@@ -2508,6 +2538,11 @@ header.header div:has(> select) {
 
   .practice-editor-hint {
     display: none;
+  }
+
+  .practice-codemirror .cm-editor {
+    height: 15rem;
+    font-size: 0.78rem;
   }
 
   .hero-actions .course-btn {

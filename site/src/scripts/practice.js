@@ -24,6 +24,7 @@ import {
   autocompletion,
   closeBrackets,
   closeBracketsKeymap,
+  closeCompletion,
   completionKeymap
 } from '@codemirror/autocomplete';
 import { searchKeymap, highlightSelectionMatches } from '@codemirror/search';
@@ -473,9 +474,9 @@ function renderStatic(card, problems, solvedByShape) {
 
 const editors = new WeakMap();
 
-function initCard(card) {
-  if (card.dataset.ready === 'true') return;
-  card.dataset.ready = 'true';
+async function initCard(card) {
+  if (card.dataset.ready === 'true' || card.dataset.initializing === 'true') return;
+  card.dataset.initializing = 'true';
 
   const lessonId = card.dataset.lessonId;
   const starter = readJson(card.querySelector('[data-practice-starter]'), '');
@@ -489,6 +490,18 @@ function initCard(card) {
 
   const mount = card.querySelector('[data-practice-codemirror]');
   if (!mount) return;
+
+  // CodeMirror измеряет ширину символов и высоту строк по фактическому шрифту.
+  // Без ожидания загрузки JetBrains Mono каретка и клики уезжают.
+  if (document.fonts?.ready) {
+    try {
+      await document.fonts.ready;
+    } catch {
+      /* работаем со шрифтом по умолчанию */
+    }
+  }
+
+  card.dataset.ready = 'true';
 
   const save = (value) => {
     const store = readStore(DRAFT_KEY);
@@ -508,6 +521,7 @@ function initCard(card) {
         drawSelection(),
         dropCursor(),
         EditorState.allowMultipleSelections.of(true),
+        EditorState.tabSize.of(4),
         indentOnInput(),
         indentUnit.of('    '),
         syntaxHighlighting(highlightStyle),
@@ -521,6 +535,15 @@ function initCard(card) {
         python(),
         EditorView.lineWrapping,
         practiceTheme,
+        // Клик по коду должен сразу начинать выделение, а не попадать
+        // в открытый попап автодополнения.
+        EditorView.domEventHandlers({
+          mousedown: (event, view) => {
+            closeCompletion(view);
+            return false;
+          }
+        }),
+        EditorView.contentAttributes.of({ 'aria-label': 'Твой код' }),
         Prec.highest(
           keymap.of([
             {
@@ -556,6 +579,11 @@ function initCard(card) {
   });
 
   editors.set(card, view);
+
+  // После вставки в DOM и подгрузки шрифта пересчитываем координаты строк.
+  view.requestMeasure();
+  window.addEventListener('load', () => view.requestMeasure(), { once: true });
+  document.fonts?.ready.then(() => view.requestMeasure()).catch(() => {});
 
   card.querySelector('[data-practice-check]')?.addEventListener('click', () => check(card));
   card.querySelector('[data-practice-reset]')?.addEventListener('click', () => {
