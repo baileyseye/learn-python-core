@@ -1674,6 +1674,15 @@ header.header div:has(> select) {
   font-size: 0.84rem;
 }
 
+/*
+ * Базовая тема CodeMirror задаёт светлый фон выделения и перекрывает
+ * тему редактора более специфичным селектором. Тёмно-синий фон читается
+ * на фоне кода и не «выжигает» текст.
+ */
+.practice-codemirror .cm-selectionBackground {
+  background-color: #24324a !important;
+}
+
 .practice-codemirror .cm-scroller {
   overflow: auto;
   font-family: var(--sl-font-mono);

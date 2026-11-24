@@ -61,7 +61,7 @@ const practiceTheme = EditorView.theme({
   '.cm-activeLineGutter': { backgroundColor: 'rgba(255, 255, 255, 0.035)' },
   '.cm-cursor, .cm-dropCursor': { borderLeftColor: 'var(--course-accent-2)' },
   '&.cm-focused .cm-selectionBackground, .cm-selectionBackground, .cm-content ::selection': {
-    backgroundColor: 'rgba(96, 165, 250, 0.14)'
+    backgroundColor: '#24324a'
   },
   '.cm-matchingBracket': {
     backgroundColor: 'rgba(255, 212, 59, 0.16)',
@@ -96,7 +96,7 @@ const practiceTheme = EditorView.theme({
     color: 'rgba(200, 220, 255, 0.55)',
     fontSize: '0.72rem'
   }
-});
+}, { dark: true });
 
 const highlightStyle = HighlightStyle.define([
   { tag: tags.keyword, color: '#ffb86b' },
