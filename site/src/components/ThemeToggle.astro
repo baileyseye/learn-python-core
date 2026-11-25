@@ -1,0 +1,72 @@
+---
+// Заменяет стандартный селект Starlight: только иконки солнца и луны.
+---
+
+<starlight-theme-toggle class="theme-toggle" role="group" aria-label="Тема оформления">
+  <button
+    type="button"
+    class="theme-toggle-btn"
+    data-theme-value="light"
+    aria-label="Светлая тема"
+    title="Светлая тема"
+  >
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="4"></circle>
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+    </svg>
+  </button>
+  <button
+    type="button"
+    class="theme-toggle-btn"
+    data-theme-value="dark"
+    aria-label="Тёмная тема"
+    title="Тёмная тема"
+  >
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7Z"></path>
+    </svg>
+  </button>
+</starlight-theme-toggle>
+
+<script>
+  type Theme = 'light' | 'dark';
+
+  const storageKey = 'starlight-theme';
+
+  const currentTheme = (): Theme =>
+    document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
+
+  const syncButtons = () => {
+    const theme = currentTheme();
+    document.querySelectorAll<HTMLElement>('.theme-toggle-btn').forEach((button) => {
+      button.setAttribute('aria-pressed', String(button.dataset.themeValue === theme));
+    });
+  };
+
+  const applyTheme = (theme: Theme) => {
+    document.documentElement.dataset.theme = theme;
+    try {
+      localStorage.setItem(storageKey, theme);
+    } catch {
+      /* приватный режим — тема просто не сохранится */
+    }
+    syncButtons();
+  };
+
+  if (!(window as Window & { __lpcThemeToggle?: boolean }).__lpcThemeToggle) {
+    (window as Window & { __lpcThemeToggle?: boolean }).__lpcThemeToggle = true;
+
+    document.addEventListener('click', (event) => {
+      const button = (event.target as Element | null)?.closest<HTMLElement>('.theme-toggle-btn');
+      if (!button?.dataset.themeValue) return;
+      applyTheme(button.dataset.themeValue === 'dark' ? 'dark' : 'light');
+    });
+
+    new MutationObserver(syncButtons).observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme']
+    });
+
+    syncButtons();
+  }
+</script>
