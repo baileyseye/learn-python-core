@@ -8,20 +8,44 @@ import { Aside, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
 <Aside type="note" title="Короткая версия">
   Установите Python 3.11+ (рекомендуется 3.12+), откройте папку репозитория в VS Code, откройте
   `src/python/basics/01_hello.py` и нажмите **Run Python File**. Или выполните
-  `py src/python/basics/01_hello.py` в терминале.
+  `py src/python/basics/01_hello.py` в терминале (на macOS/Linux — `python3 ...`).
 </Aside>
 
 ## 1. Установите Python
 
-Скачайте установщик с [python.org](https://www.python.org/downloads/) или установите через Microsoft Store. На Windows удобно использовать лаунчер `py`.
+<Tabs>
+  <TabItem label="Windows">
+    Скачайте установщик с [python.org](https://www.python.org/downloads/) или установите через
+    Microsoft Store. На Windows удобно использовать лаунчер `py`. При установке с python.org
+    включите **Add python.exe to PATH**.
 
-При установке с python.org включите **Add python.exe to PATH**. После установки проверьте в терминале:
+    ```bash
+    py --version
+    ```
+  </TabItem>
+  <TabItem label="macOS">
+    Установите Python с [python.org](https://www.python.org/downloads/) или через Homebrew:
 
-```bash
-py --version
-```
+    ```bash
+    brew install python@3.12
+    python3 --version
+    ```
 
-Должна отображаться версия 3.11 или новее. Если команда `py` недоступна, попробуйте:
+    В командах ниже вместо `py` используйте `python3`.
+  </TabItem>
+  <TabItem label="Linux">
+    Установите пакет дистрибутива (пример для Debian/Ubuntu):
+
+    ```bash
+    sudo apt install python3.12 python3.12-venv
+    python3 --version
+    ```
+
+    В командах ниже вместо `py` используйте `python3`.
+  </TabItem>
+</Tabs>
+
+Должна отображаться версия 3.11 или новее. Если команда `py` недоступна на Windows, попробуйте:
 
 ```bash
 python --version
@@ -52,6 +76,12 @@ python --version
 py src/python/basics/01_hello.py
 ```
 
+На macOS/Linux:
+
+```bash
+python3 src/python/basics/01_hello.py
+```
+
 В выводе должно появиться:
 
 ```text
@@ -67,6 +97,12 @@ Python читается почти как обычный текст.
 
 ```bash
 py -m venv .venv
+```
+
+На macOS/Linux:
+
+```bash
+python3 -m venv .venv
 ```
 
 Активация:
@@ -90,6 +126,12 @@ source .venv/bin/activate
 
 ```bash
 py -m pytest src/python/testing/02_pytest_demo.py
+```
+
+На macOS/Linux:
+
+```bash
+python3 -m pytest src/python/testing/02_pytest_demo.py
 ```
 
 Если pytest не установлен:

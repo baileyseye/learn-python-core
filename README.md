@@ -95,6 +95,7 @@ npm run dev            # синхронизация данных + Astro dev ser
 npm run sync           # пересобрать generated.json из src/python
 npm run check:data     # проверить, что generated.json не устарел
 npm run check:practice # прогнать эталонные решения через их тесты
+npm run check:pyodide  # прогнать все решения и шаги в реальном Pyodide
 npm run build          # production-сборка в dist/
 npm run preview        # локальный просмотр сборки
 ```

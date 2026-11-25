@@ -10,7 +10,7 @@ from decimal import Decimal
 def demonstrate_integers() -> None:
     big = 2**100
     print("2**100 =", big)
-    print("деление нацело:", 17 // 5)
+    print("деление с округлением вниз:", 17 // 5)
     print("остаток:", 17 % 5)
     print("степень:", 2**10)
     print("знак минус:", -7 // 2, -7 % 2)

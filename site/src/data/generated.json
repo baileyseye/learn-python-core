@@ -1,7 +1,7 @@
 {
   "stats": {
     "files": 58,
-    "lines": 2566,
+    "lines": 2567,
     "methods": 300,
     "classes": 30,
     "outputs": 58,
@@ -278,7 +278,7 @@
     "basics/03_numbers.py": {
       "path": "basics/03_numbers.py",
       "lines": 44,
-      "code": "\"\"\"Числа и операторы.\n\nint в Python не переполняется, а float хранит двоичное приближение.\nДля денег и точных десятичных расчётов используют Decimal.\n\"\"\"\n\nfrom decimal import Decimal\n\n\ndef demonstrate_integers() -> None:\n    big = 2**100\n    print(\"2**100 =\", big)\n    print(\"деление нацело:\", 17 // 5)\n    print(\"остаток:\", 17 % 5)\n    print(\"степень:\", 2**10)\n    print(\"знак минус:\", -7 // 2, -7 % 2)\n\n\ndef demonstrate_floats() -> None:\n    print(\"0.1 + 0.2 =\", 0.1 + 0.2)\n    print(\"округление:\", round(2.675, 2))\n    print(\"Decimal:\", Decimal(\"0.1\") + Decimal(\"0.2\"))\n\n\ndef calculate(a: int, b: int) -> dict[str, int]:\n    \"\"\"Возвращает результаты пяти арифметических операций.\"\"\"\n    return {\n        \"sum\": a + b,\n        \"difference\": a - b,\n        \"product\": a * b,\n        \"quotient\": a // b,\n        \"remainder\": a % b,\n    }\n\n\ndef main() -> None:\n    demonstrate_integers()\n    demonstrate_floats()\n    print(calculate(10, 3))\n\n\nif __name__ == \"__main__\":\n    main()",
+      "code": "\"\"\"Числа и операторы.\n\nint в Python не переполняется, а float хранит двоичное приближение.\nДля денег и точных десятичных расчётов используют Decimal.\n\"\"\"\n\nfrom decimal import Decimal\n\n\ndef demonstrate_integers() -> None:\n    big = 2**100\n    print(\"2**100 =\", big)\n    print(\"деление с округлением вниз:\", 17 // 5)\n    print(\"остаток:\", 17 % 5)\n    print(\"степень:\", 2**10)\n    print(\"знак минус:\", -7 // 2, -7 % 2)\n\n\ndef demonstrate_floats() -> None:\n    print(\"0.1 + 0.2 =\", 0.1 + 0.2)\n    print(\"округление:\", round(2.675, 2))\n    print(\"Decimal:\", Decimal(\"0.1\") + Decimal(\"0.2\"))\n\n\ndef calculate(a: int, b: int) -> dict[str, int]:\n    \"\"\"Возвращает результаты пяти арифметических операций.\"\"\"\n    return {\n        \"sum\": a + b,\n        \"difference\": a - b,\n        \"product\": a * b,\n        \"quotient\": a // b,\n        \"remainder\": a % b,\n    }\n\n\ndef main() -> None:\n    demonstrate_integers()\n    demonstrate_floats()\n    print(calculate(10, 3))\n\n\nif __name__ == \"__main__\":\n    main()",
       "methods": [
         {
           "name": "demonstrate_integers",
@@ -341,7 +341,7 @@
         }
       ],
       "has_main": true,
-      "output": "2**100 = 1267650600228229401496703205376\nделение нацело: 3\nостаток: 2\nстепень: 1024\nзнак минус: -4 1\n0.1 + 0.2 = 0.30000000000000004\nокругление: 2.67\nDecimal: 0.3\n{'sum': 13, 'difference': 7, 'product': 30, 'quotient': 3, 'remainder': 1}",
+      "output": "2**100 = 1267650600228229401496703205376\nделение с округлением вниз: 3\nостаток: 2\nстепень: 1024\nзнак минус: -4 1\n0.1 + 0.2 = 0.30000000000000004\nокругление: 2.67\nDecimal: 0.3\n{'sum': 13, 'difference': 7, 'product': 30, 'quotient': 3, 'remainder': 1}",
       "ok": true,
       "error": ""
     },
@@ -655,8 +655,8 @@
     },
     "basics/08_io.py": {
       "path": "basics/08_io.py",
-      "lines": 42,
-      "code": "\"\"\"Ввод и вывод: print, f-строки и чтение из потока.\n\nНастоящий input() в демонстрации не вызывается, иначе программа ждала бы\nпользователя. Вместо этого функция принимает любой поток с методом readline.\n\"\"\"\n\nimport io\n\n\ndef ask_name(stream) -> str:\n    \"\"\"Читает имя из потока. В реальной программе сюда передают sys.stdin.\"\"\"\n    print(\"Как тебя зовут? \", end=\"\")\n    name = stream.readline().strip()\n    return name or \"друг\"\n\n\ndef format_receipt(items: list[tuple[str, int]]) -> str:\n    \"\"\"Выравнивание текста и чисел через f-строки.\"\"\"\n    lines = [\"Товар            Цена\"]\n    lines.append(\"-\" * 22)\n    for title, price in items:\n        lines.append(f\"{title:<16}{price:>6}\")\n    lines.append(\"-\" * 22)\n    lines.append(f\"{'Итого':<16}{sum(price for _, price in items):>6}\")\n    return \"\\n\".join(lines)\n\n\ndef main() -> None:\n    fake_input = io.StringIO(\"Анна\\n\")\n    name = ask_name(fake_input)\n    print(f\"Привет, {name}!\")\n\n    print(\"a\", \"b\", \"c\", sep=\" | \")\n    print(\"без перевода строки\", end=\"\")\n    print(\" — и продолжаем\")\n\n    print(format_receipt([(\"Книга\", 1200), (\"Курс\", 4900), (\"Кофе\", 250)]))\n\n\nif __name__ == \"__main__\":\n    main()",
+      "lines": 44,
+      "code": "\"\"\"Ввод и вывод: print, f-строки и чтение из потока.\n\nНастоящий input() в демонстрации не вызывается, иначе программа ждала бы\nпользователя. Вместо этого функция принимает любой поток с методом readline.\n\"\"\"\n\nimport io\n\n\ndef ask_name(stream) -> str:\n    \"\"\"Читает имя из потока. В реальной программе сюда передают sys.stdin.\"\"\"\n    print(\"Как тебя зовут? \", end=\"\")\n    name = stream.readline().strip()\n    return name or \"друг\"\n\n\ndef format_receipt(items: list[tuple[str, int]]) -> str:\n    \"\"\"Выравнивание текста и чисел через f-строки.\"\"\"\n    lines = [\"Товар            Цена\"]\n    lines.append(\"-\" * 22)\n    total = 0\n    for title, price in items:\n        total += price\n        lines.append(f\"{title:<16}{price:>6}\")\n    lines.append(\"-\" * 22)\n    lines.append(f\"{'Итого':<16}{total:>6}\")\n    return \"\\n\".join(lines)\n\n\ndef main() -> None:\n    fake_input = io.StringIO(\"Анна\\n\")\n    name = ask_name(fake_input)\n    print(f\"Привет, {name}!\")\n\n    print(\"a\", \"b\", \"c\", sep=\" | \")\n    print(\"без перевода строки\", end=\"\")\n    print(\" — и продолжаем\")\n\n    print(format_receipt([(\"Книга\", 1200), (\"Курс\", 4900), (\"Кофе\", 250)]))\n\n\nif __name__ == \"__main__\":\n    main()",
       "methods": [
         {
           "name": "ask_name",
@@ -669,14 +669,14 @@
           "name": "format_receipt",
           "kind": "function",
           "start": 17,
-          "end": 25,
+          "end": 27,
           "signature": "def format_receipt(items: list[tuple[str, int]]) -> str:"
         },
         {
           "name": "main",
           "kind": "function",
-          "start": 28,
-          "end": 37,
+          "start": 30,
+          "end": 39,
           "signature": "def main() -> None:"
         }
       ],
@@ -693,14 +693,14 @@
           "name": "format_receipt",
           "kind": "function",
           "start": 17,
-          "end": 25,
+          "end": 27,
           "signature": "def format_receipt(items: list[tuple[str, int]]) -> str:"
         },
         {
           "name": "main",
           "kind": "function",
-          "start": 28,
-          "end": 37,
+          "start": 30,
+          "end": 39,
           "signature": "def main() -> None:"
         }
       ],
@@ -3424,28 +3424,28 @@
     },
     "stdlib/05_logging.py": {
       "path": "stdlib/05_logging.py",
-      "lines": 45,
-      "code": "\"\"\"Логирование: уровни, формат и логгеры.\"\"\"\n\nimport logging\nimport sys\n\n\ndef configure(level: int = logging.INFO) -> logging.Logger:\n    logger = logging.getLogger(\"course.demo\")\n    logger.setLevel(level)\n    logger.handlers.clear()\n\n    handler = logging.StreamHandler(sys.stdout)\n    handler.setFormatter(logging.Formatter(\"%(levelname)s %(name)s: %(message)s\"))\n    logger.addHandler(handler)\n    logger.propagate = False\n    return logger\n\n\ndef process_order(logger: logging.Logger, order_id: int, amount: int) -> None:\n    logger.debug(\"старт обработки заказа %s\", order_id)\n    if amount <= 0:\n        logger.error(\"заказ %s: некорректная сумма %s\", order_id, amount)\n        return\n    logger.info(\"заказ %s принят на %s ₽\", order_id, amount)\n    logger.warning(\"заказ %s: проверьте адрес доставки\", order_id)\n\n\ndef main() -> None:\n    logger = configure()\n    process_order(logger, 101, 2500)\n    process_order(logger, 102, 0)\n\n    logger.setLevel(logging.DEBUG)\n    process_order(logger, 103, 700)\n\n    try:\n        1 / 0\n    except ZeroDivisionError as error:\n        # В реальном коде здесь уместен logger.exception(\"...\") — он добавит traceback.\n        logger.error(\"пример ошибки: %s\", error)\n\n\nif __name__ == \"__main__\":\n    main()",
+      "lines": 44,
+      "code": "\"\"\"Логирование: уровни, формат и логгеры.\"\"\"\n\nimport logging\nimport sys\n\n\ndef configure(level: int = logging.INFO) -> logging.Logger:\n    logger = logging.getLogger(\"course.demo\")\n    logger.setLevel(level)\n    if not logger.handlers:\n        handler = logging.StreamHandler(sys.stdout)\n        handler.setFormatter(logging.Formatter(\"%(levelname)s %(name)s: %(message)s\"))\n        logger.addHandler(handler)\n    logger.propagate = False\n    return logger\n\n\ndef process_order(logger: logging.Logger, order_id: int, amount: int) -> None:\n    logger.debug(\"старт обработки заказа %s\", order_id)\n    if amount <= 0:\n        logger.error(\"заказ %s: некорректная сумма %s\", order_id, amount)\n        return\n    logger.info(\"заказ %s принят на %s ₽\", order_id, amount)\n    logger.warning(\"заказ %s: проверьте адрес доставки\", order_id)\n\n\ndef main() -> None:\n    logger = configure()\n    process_order(logger, 101, 2500)\n    process_order(logger, 102, 0)\n\n    logger.setLevel(logging.DEBUG)\n    process_order(logger, 103, 700)\n\n    try:\n        1 / 0\n    except ZeroDivisionError as error:\n        # В реальном коде здесь уместен logger.exception(\"...\") — он добавит traceback.\n        logger.error(\"пример ошибки: %s\", error)\n\n\nif __name__ == \"__main__\":\n    main()",
       "methods": [
         {
           "name": "configure",
           "kind": "function",
           "start": 7,
-          "end": 16,
+          "end": 15,
           "signature": "def configure(level: int = logging.INFO) -> logging.Logger:"
         },
         {
           "name": "process_order",
           "kind": "function",
-          "start": 19,
-          "end": 25,
+          "start": 18,
+          "end": 24,
           "signature": "def process_order(logger: logging.Logger, order_id: int, amount: int) -> None:"
         },
         {
           "name": "main",
           "kind": "function",
-          "start": 28,
-          "end": 40,
+          "start": 27,
+          "end": 39,
           "signature": "def main() -> None:"
         }
       ],
@@ -3455,21 +3455,21 @@
           "name": "configure",
           "kind": "function",
           "start": 7,
-          "end": 16,
+          "end": 15,
           "signature": "def configure(level: int = logging.INFO) -> logging.Logger:"
         },
         {
           "name": "process_order",
           "kind": "function",
-          "start": 19,
-          "end": 25,
+          "start": 18,
+          "end": 24,
           "signature": "def process_order(logger: logging.Logger, order_id: int, amount: int) -> None:"
         },
         {
           "name": "main",
           "kind": "function",
-          "start": 28,
-          "end": 40,
+          "start": 27,
+          "end": 39,
           "signature": "def main() -> None:"
         }
       ],

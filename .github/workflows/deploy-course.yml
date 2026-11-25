@@ -29,6 +29,9 @@ jobs:
       - name: Install Python dependencies for examples
         run: python -m pip install fastapi pydantic uvicorn
       - run: npm ci
+      - run: npm run check:data
+      - run: npm run check:practice
+      - run: npm run check:pyodide
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:

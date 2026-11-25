@@ -122,7 +122,7 @@ export default [
       hint: 'Используй срез `items[start:start + size]` и шаг `range(0, len(items), size)`.',
       starter: 'def chunk(items, size):\n    pass\n',
       solution:
-        'def chunk(items, size):\n    if size <= 0:\n        raise ValueError("size должен быть положительным")\n    return [items[start:start + size] for start in range(0, len(items), size)]',
+        'def chunk(items, size):\n    if size <= 0:\n        raise ValueError("size должен быть положительным")\n    result = []\n    for start in range(0, len(items), size):\n        result.append(items[start:start + size])\n    return result',
       tests: [
         'assert chunk([1, 2, 3, 4, 5], 2) == [[1, 2], [3, 4], [5]]',
         'assert chunk([], 3) == []',
@@ -189,9 +189,9 @@ export default [
       },
       {
         q: 'Почему кортеж может быть ключом словаря, а список — нет?',
-        options: ['Кортеж быстрее', 'Кортеж неизменяем и хэшируем', 'Список нельзя сравнивать', 'Это не так'],
+        options: ['Кортеж быстрее', 'Кортеж неизменяем, а все его элементы хэшируемы', 'Список нельзя сравнивать', 'Это не так'],
         answer: 1,
-        explain: 'Ключи должны быть хэшируемыми, а изменяемые объекты, такие как список, такими не являются.'
+        explain: 'Ключи должны быть хэшируемыми. Кортеж подходит, только если хэшируемы все его элементы.'
       }
     ]
   },

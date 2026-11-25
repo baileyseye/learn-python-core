@@ -18,10 +18,12 @@ def format_receipt(items: list[tuple[str, int]]) -> str:
     """Выравнивание текста и чисел через f-строки."""
     lines = ["Товар            Цена"]
     lines.append("-" * 22)
+    total = 0
     for title, price in items:
+        total += price
         lines.append(f"{title:<16}{price:>6}")
     lines.append("-" * 22)
-    lines.append(f"{'Итого':<16}{sum(price for _, price in items):>6}")
+    lines.append(f"{'Итого':<16}{total:>6}")
     return "\n".join(lines)
 
 

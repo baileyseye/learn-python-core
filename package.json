@@ -11,7 +11,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "check:data": "node scripts/sync-course-data.mjs --check",
-    "check:practice": "node scripts/verify-practice.mjs"
+    "check:practice": "node scripts/verify-practice.mjs",
+    "check:pyodide": "node scripts/verify-pyodide.mjs"
   },
   "dependencies": {
     "@astrojs/starlight": "0.37.6",
@@ -27,5 +28,8 @@
     "@fontsource/jetbrains-mono": "^5.2.8",
     "@lezer/highlight": "^1.2.5",
     "astro": "5.16.6"
+  },
+  "devDependencies": {
+    "pyodide": "^0.27.7"
   }
 }

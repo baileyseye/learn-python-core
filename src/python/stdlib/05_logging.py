@@ -7,11 +7,10 @@ import sys
 def configure(level: int = logging.INFO) -> logging.Logger:
     logger = logging.getLogger("course.demo")
     logger.setLevel(level)
-    logger.handlers.clear()
-
-    handler = logging.StreamHandler(sys.stdout)
-    handler.setFormatter(logging.Formatter("%(levelname)s %(name)s: %(message)s"))
-    logger.addHandler(handler)
+    if not logger.handlers:
+        handler = logging.StreamHandler(sys.stdout)
+        handler.setFormatter(logging.Formatter("%(levelname)s %(name)s: %(message)s"))
+        logger.addHandler(handler)
     logger.propagate = False
     return logger
 

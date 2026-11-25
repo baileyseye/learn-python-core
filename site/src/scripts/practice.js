@@ -181,7 +181,15 @@ const PYODIDE_VERSION = '0.27.7';
 const PYODIDE_INDEX = `https://cdn.jsdelivr.net/pyodide/v${PYODIDE_VERSION}/full/`;
 
 const PYTHON_RUNNER = `
-import io, json, traceback, contextlib, ast, inspect
+import io, json, traceback, contextlib, ast, inspect, builtins
+
+def __browser_input(prompt=""):
+    raise RuntimeError(
+        "input() недоступен в браузерной практике. "
+        "Передайте данные аргументами функции или запустите файл локально."
+    )
+
+builtins.input = __browser_input
 
 async def __exec(code, namespace, filename):
     compiled = compile(code, filename, "exec", flags=ast.PyCF_ALLOW_TOP_LEVEL_AWAIT)

@@ -269,9 +269,9 @@ export default [
         {
           label: 'Шаг 2. Один обработчик',
           task: 'Напиши `once(name)` — логгер ровно с одним `StreamHandler`, даже при повторном вызове.',
-          hint: 'Перед добавлением очисти `logger.handlers`.',
+          hint: 'Добавляй обработчик только если `logger.handlers` пуст.',
           starter: 'import logging\n\n\ndef once(name):\n    pass\n',
-          solution: 'import logging\n\n\ndef once(name):\n    logger = logging.getLogger(name)\n    logger.handlers.clear()\n    logger.addHandler(logging.StreamHandler())\n    return logger\n',
+          solution: 'import logging\n\n\ndef once(name):\n    logger = logging.getLogger(name)\n    if not logger.handlers:\n        logger.addHandler(logging.StreamHandler())\n    return logger\n',
           tests: [
             'import logging\nfirst = once("test.once")\nsecond = once("test.once")\nassert len(first.handlers) == 1\nassert len(second.handlers) == 1'
           ]
@@ -279,10 +279,10 @@ export default [
       ],
       task:
         'Напиши `make_logger(name, level="INFO")`, возвращающий логгер с заданным уровнем и одним StreamHandler. Повторные вызовы не должны добавлять обработчики бесконечно.',
-      hint: 'Сопоставь строку с `logging.DEBUG` и т.п. Перед добавлением обработчика очисти `logger.handlers`.',
+      hint: 'Сопоставь строку с `logging.DEBUG` и т.п. Добавляй обработчик только если `logger.handlers` пуст, чтобы не затирать чужие обработчики.',
       starter: 'import logging\n\n\ndef make_logger(name, level="INFO"):\n    pass\n',
       solution:
-        'import logging\n\n\ndef make_logger(name, level="INFO"):\n    logger = logging.getLogger(name)\n    logger.setLevel(getattr(logging, level.upper()))\n    logger.handlers.clear()\n    logger.addHandler(logging.StreamHandler())\n    logger.propagate = False\n    return logger',
+        'import logging\n\n\ndef make_logger(name, level="INFO"):\n    logger = logging.getLogger(name)\n    logger.setLevel(getattr(logging, level.upper()))\n    if not logger.handlers:\n        logger.addHandler(logging.StreamHandler())\n    logger.propagate = False\n    return logger',
       tests: [
         'import logging\nlogger = make_logger("test.demo", "DEBUG")\nassert logger.name == "test.demo"\nassert logger.level == logging.DEBUG\nassert len(logger.handlers) == 1',
         'logger = make_logger("test.demo", "ERROR")\nassert logger.level == logging.ERROR\nassert len(logger.handlers) == 1'
