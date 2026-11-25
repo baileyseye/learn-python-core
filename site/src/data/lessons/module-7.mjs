@@ -361,6 +361,30 @@ export default [
       }
     ],
     practice: {
+      mainLabel: 'Шаг 3. JSON и полный модуль',
+      steps: [
+        {
+          label: 'Шаг 1. Добавить заметку',
+          task: 'Напиши `add_note(notes, title, text)` с проверкой пустого заголовка.',
+          hint: '`title.strip()`; пустой заголовок → `ValueError`.',
+          starter: 'def add_note(notes, title, text):\n    pass\n',
+          solution: 'def add_note(notes, title, text):\n    if not title.strip():\n        raise ValueError("заголовок не может быть пустым")\n    notes.append({"title": title.strip(), "text": text.strip()})\n    return notes\n',
+          tests: [
+            'notes = []\nadd_note(notes, "Python", "Читать код")\nassert notes == [{"title": "Python", "text": "Читать код"}]',
+            'try:\n    add_note([], "  ", "x")\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError("ожидалось ValueError")'
+          ]
+        },
+        {
+          label: 'Шаг 2. Найти заметки',
+          task: 'Напиши `find_notes(notes, query)` — поиск по заголовку и тексту без учёта регистра.',
+          hint: 'Приведи query и поля к нижнему регистру.',
+          starter: 'def find_notes(notes, query):\n    pass\n',
+          solution: 'def find_notes(notes, query):\n    query = query.lower()\n    return [\n        note\n        for note in notes\n        if query in note["title"].lower() or query in note["text"].lower()\n    ]\n',
+          tests: [
+            'notes = [{"title": "Python", "text": "Читать код"}, {"title": "SQL", "text": "Базы"}]\nassert find_notes(notes, "python") == [notes[0]]\nassert find_notes(notes, "код") == [notes[0]]\nassert find_notes(notes, "нет") == []'
+          ]
+        }
+      ],
       task: 'Собери модуль заметок: `add_note(notes, title, text)` (пустой заголовок → `ValueError`), `find_notes(notes, query)` (поиск по заголовку и тексту без учёта регистра), `to_json(notes)` и `from_json(text)`.',
       hint: 'Для поиска приведи query и поля к нижнему регистру. Для JSON используй `json.dumps(..., ensure_ascii=False)` и `json.loads`.',
       starter: 'import json\n\n\ndef add_note(notes, title, text):\n    pass\n\n\ndef find_notes(notes, query):\n    pass\n\n\ndef to_json(notes):\n    pass\n\n\ndef from_json(text):\n    pass\n',

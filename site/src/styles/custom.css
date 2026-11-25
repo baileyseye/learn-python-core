@@ -1679,6 +1679,98 @@ header.header {
   margin-bottom: 0.15rem;
 }
 
+/* ---------- Practice steps ---------- */
+
+.practice-stepnav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0.2rem 0 1rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--course-border);
+}
+
+.practice-stepnote {
+  margin: -0.35rem 0 1rem;
+  color: var(--course-muted);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.practice-step {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0 !important;
+  padding: 0.35rem 0.65rem;
+  border: 1px solid var(--course-border);
+  border-radius: 999px;
+  background: var(--course-soft);
+  color: var(--course-muted);
+  font: inherit;
+  font-size: 0.76rem;
+  font-weight: 650;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: color 150ms ease, background-color 150ms ease, border-color 150ms ease;
+}
+
+.practice-step:hover {
+  border-color: color-mix(in srgb, var(--course-accent) 45%, var(--course-border));
+  color: var(--course-ink);
+}
+
+.practice-step[aria-selected='true'] {
+  border-color: var(--course-accent);
+  background: color-mix(in srgb, var(--course-accent) 14%, transparent);
+  color: var(--course-accent-deep);
+}
+
+.practice-step:focus-visible {
+  outline: 2px solid var(--course-accent);
+  outline-offset: 2px;
+}
+
+.practice-step.is-solved {
+  border-color: color-mix(in srgb, var(--course-green) 50%, var(--course-border));
+}
+
+.practice-step-index {
+  display: grid;
+  place-items: center;
+  width: 1.15rem;
+  height: 1.15rem;
+  border-radius: 50%;
+  background: var(--course-card);
+  color: var(--course-muted);
+  font-size: 0.66rem;
+  font-weight: 700;
+}
+
+.practice-step[aria-selected='true'] .practice-step-index {
+  background: var(--course-accent);
+  color: #fff;
+}
+
+:root[data-theme='dark'] .practice-step[aria-selected='true'] .practice-step-index {
+  color: var(--course-bg);
+}
+
+.practice-step-mark {
+  display: inline-grid;
+  place-items: center;
+  min-width: 0.75rem;
+  color: var(--course-green);
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+[data-practice-step-task][hidden],
+[data-practice-step-details][hidden] {
+  display: none;
+}
+
 .practice-title {
   margin: 0;
   padding: 0 !important;

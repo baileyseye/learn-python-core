@@ -27,6 +27,30 @@ export default [
       }
     ],
     practice: {
+      mainLabel: 'Шаг 3. URL и статус',
+      steps: [
+        {
+          label: 'Шаг 1. Схема и хост',
+          task: 'Напиши `host_and_scheme(url)` → `(scheme, host)`.',
+          hint: '`urlparse(url)`; `parsed.scheme` и `parsed.hostname`.',
+          starter: 'def host_and_scheme(url):\n    pass\n',
+          solution: 'from urllib.parse import urlparse\n\n\ndef host_and_scheme(url):\n    parsed = urlparse(url)\n    return parsed.scheme, parsed.hostname\n',
+          tests: [
+            'assert host_and_scheme("https://example.com/api") == ("https", "example.com")'
+          ]
+        },
+        {
+          label: 'Шаг 2. Параметры',
+          task: 'Напиши `query_params(url)` — словарь параметров запроса.',
+          hint: '`parse_qs(urlparse(url).query)`.',
+          starter: 'def query_params(url):\n    pass\n',
+          solution: 'from urllib.parse import parse_qs, urlparse\n\n\ndef query_params(url):\n    return parse_qs(urlparse(url).query)\n',
+          tests: [
+            'assert query_params("https://example.com?page=2&limit=10") == {"page": ["2"], "limit": ["10"]}',
+            'assert query_params("https://example.com") == {}'
+          ]
+        }
+      ],
       task: 'Напиши `parse_url(url)` → словарь с `scheme`, `host`, `path` (по умолчанию `/`) и `query`, а также `is_success(status)` → `True` для 2xx.',
       hint: 'Используй `urlparse` и `parse_qs` из `urllib.parse`. Для успеха проверь `200 <= status < 300`.',
       starter: 'def parse_url(url):\n    pass\n\n\ndef is_success(status):\n    pass\n',
@@ -142,6 +166,31 @@ export default [
       }
     ],
     practice: {
+      mainLabel: 'Шаг 3. validate_user',
+      steps: [
+        {
+          label: 'Шаг 1. Email',
+          task: 'Напиши `check_email(email)` — вернуть email в нижнем регистре или `ValueError`, если нет `@`.',
+          hint: 'Проверь `"@" not in email` и нормализуй через `lower()`.',
+          starter: 'def check_email(email):\n    pass\n',
+          solution: 'def check_email(email):\n    if "@" not in email:\n        raise ValueError("email должен содержать @")\n    return email.lower()\n',
+          tests: [
+            'assert check_email("Anna@Example.com") == "anna@example.com"',
+            'try:\n    check_email("wrong")\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError("ожидалось ValueError")'
+          ]
+        },
+        {
+          label: 'Шаг 2. Возраст',
+          task: 'Напиши `check_age(age)` — вернуть возраст, если `0 < age < 150`, иначе `ValueError`.',
+          hint: 'Проверь границы и подними ошибку.',
+          starter: 'def check_age(age):\n    pass\n',
+          solution: 'def check_age(age):\n    if not 0 < age < 150:\n        raise ValueError("возраст должен быть от 1 до 149")\n    return age\n',
+          tests: [
+            'assert check_age(27) == 27',
+            'try:\n    check_age(200)\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError("ожидалось ValueError")'
+          ]
+        }
+      ],
       task: 'Напиши `validate_user(email, age, name)`: email должен содержать `@`, возраст быть от 1 до 149, имя непустым. Верни словарь с нормализованными данными, иначе ValueError.',
       hint: 'Нормализуй email к нижнему регистру, имя через strip. Проверяй условия по порядку.',
       starter: 'def validate_user(email, age, name):\n    pass\n',
@@ -200,6 +249,29 @@ export default [
       }
     ],
     practice: {
+      mainLabel: 'Шаг 3. Router',
+      steps: [
+        {
+          label: 'Шаг 1. Добавить маршрут',
+          task: 'Напиши `add_route(routes, method, path, handler)` — сохранить обработчик по ключу `(method.upper(), path)`.',
+          hint: 'Верни обновлённый словарь.',
+          starter: 'def add_route(routes, method, path, handler):\n    pass\n',
+          solution: 'def add_route(routes, method, path, handler):\n    routes[(method.upper(), path)] = handler\n    return routes\n',
+          tests: [
+            'routes = {}\nadd_route(routes, "get", "/health", lambda: "ok")\nassert routes[("GET", "/health")]() == "ok"'
+          ]
+        },
+        {
+          label: 'Шаг 2. Найти обработчик',
+          task: 'Напиши `resolve_route(routes, method, path)` — вернуть результат обработчика или `"404"`.',
+          hint: 'Найди по ключу и вызови handler, если он есть.',
+          starter: 'def resolve_route(routes, method, path):\n    pass\n',
+          solution: 'def resolve_route(routes, method, path):\n    handler = routes.get((method.upper(), path))\n    return handler() if handler else "404"\n',
+          tests: [
+            'routes = {("GET", "/health"): lambda: "ok"}\nassert resolve_route(routes, "get", "/health") == "ok"\nassert resolve_route(routes, "GET", "/missing") == "404"'
+          ]
+        }
+      ],
       task:
         'Напиши класс `Router` с методами `add(method, path, handler)` и `resolve(method, path)`. При совпадении верни результат handler, иначе `"404"`.',
       hint: 'Храни маршруты в словаре с ключом `(method.upper(), path)`. Handler может быть lambda без аргументов.',
@@ -253,6 +325,31 @@ export default [
       }
     ],
     practice: {
+      mainLabel: 'Шаг 3. build_insert',
+      steps: [
+        {
+          label: 'Шаг 1. Колонки',
+          task: 'Напиши `columns(data)` — имена колонок через запятую.',
+          hint: '`", ".join(data)`.',
+          starter: 'def columns(data):\n    pass\n',
+          solution: 'def columns(data):\n    return ", ".join(data)\n',
+          tests: [
+            'assert columns({"name": "A", "email": "b"}) == "name, email"',
+            'assert columns({"title": "x"}) == "title"'
+          ]
+        },
+        {
+          label: 'Шаг 2. Placeholders',
+          task: 'Напиши `placeholders(count)` — строку из `count` знаков `?` через запятую.',
+          hint: '`", ".join("?" for _ in range(count))`.',
+          starter: 'def placeholders(count):\n    pass\n',
+          solution: 'def placeholders(count):\n    return ", ".join("?" for _ in range(count))\n',
+          tests: [
+            'assert placeholders(2) == "?, ?"',
+            'assert placeholders(1) == "?"'
+          ]
+        }
+      ],
       task:
         'Напиши `build_insert(table, data)`, возвращающую пару `(sql, params)` для INSERT с placeholders `?`. Ключи data — колонки.',
       hint: 'Колонки — `", ".join(data)`, placeholders — `", ".join("?" for _ in data)`. Параметры — `tuple(data.values())`.',
@@ -311,6 +408,29 @@ export default [
       }
     ],
     practice: {
+      mainLabel: 'Шаг 3. Поиск и количество',
+      steps: [
+        {
+          label: 'Шаг 1. Все имена',
+          task: 'Напиши `all_names(connection)` — список имён из таблицы `users`.',
+          hint: '`SELECT name FROM users`, затем `fetchall()` и собери первые элементы.',
+          starter: 'def all_names(connection):\n    pass\n',
+          solution: 'def all_names(connection):\n    rows = connection.execute("SELECT name FROM users").fetchall()\n    return [row[0] for row in rows]\n',
+          tests: [
+            'import sqlite3\nconnection = sqlite3.connect(":memory:")\nconnection.execute("CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT NOT NULL)")\nconnection.executemany("INSERT INTO users (name) VALUES (?)", [("Анна",), ("Борис",)])\nassert all_names(connection) == ["Анна", "Борис"]\nconnection.close()'
+          ]
+        },
+        {
+          label: 'Шаг 2. Поиск по имени',
+          task: 'Напиши `find_user(connection, name)` → `(id, name)` или `None`.',
+          hint: '`SELECT id, name FROM users WHERE name = ?` и параметр `(name,)`.',
+          starter: 'def find_user(connection, name):\n    pass\n',
+          solution: 'def find_user(connection, name):\n    return connection.execute(\n        "SELECT id, name FROM users WHERE name = ?", (name,)\n    ).fetchone()\n',
+          tests: [
+            'import sqlite3\nconnection = sqlite3.connect(":memory:")\nconnection.execute("CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT NOT NULL)")\nconnection.executemany("INSERT INTO users (name) VALUES (?)", [("Анна",), ("Борис",)])\nassert find_user(connection, "Анна") == (1, "Анна")\nassert find_user(connection, "нет") is None\nconnection.close()'
+          ]
+        }
+      ],
       task: 'Дана таблица `users(id, name)`. Напиши `find_user(connection, name)` → `(id, name)` или `None` и `count_users(connection)` → количество строк. Используй параметры `?`.',
       hint: 'Для поиска: `SELECT id, name FROM users WHERE name = ?` и `(name,)`. Для количества: `SELECT COUNT(*) FROM users`.',
       starter: 'def find_user(connection, name):\n    pass\n\n\ndef count_users(connection):\n    pass\n',
@@ -369,6 +489,29 @@ export default [
       }
     ],
     practice: {
+      mainLabel: 'Шаг 3. fetch_user',
+      steps: [
+        {
+          label: 'Шаг 1. Первая корутина',
+          task: 'Напиши `async def tick()` — сделай `await asyncio.sleep(0)` и верни `"ok"`.',
+          hint: '`async def` + `await asyncio.sleep(0)`.',
+          starter: 'import asyncio\n\n\nasync def tick():\n    pass\n',
+          solution: 'import asyncio\n\n\nasync def tick():\n    await asyncio.sleep(0)\n    return "ok"\n',
+          tests: [
+            'assert await tick() == "ok"'
+          ]
+        },
+        {
+          label: 'Шаг 2. Корутина с данными',
+          task: 'Напиши `async def fetch_name(name)` — подожди `asyncio.sleep(0)` и верни `{"name": name}`.',
+          hint: 'Как в шаге 1, но возвращай словарь.',
+          starter: 'import asyncio\n\n\nasync def fetch_name(name):\n    pass\n',
+          solution: 'import asyncio\n\n\nasync def fetch_name(name):\n    await asyncio.sleep(0)\n    return {"name": name}\n',
+          tests: [
+            'assert await fetch_name("a") == {"name": "a"}'
+          ]
+        }
+      ],
       task:
         'Напиши `async def fetch_user(user_id)`, которая ждёт `asyncio.sleep(0)` и возвращает словарь `{"id": user_id, "name": f"user-{user_id}"}`.',
       hint: 'Не забудь `await asyncio.sleep(0)`. Проверка выполнит корутину через `await` в асинхронной среде.',
@@ -423,6 +566,29 @@ export default [
       }
     ],
     practice: {
+      mainLabel: 'Шаг 3. Все имена и таймаут',
+      steps: [
+        {
+          label: 'Шаг 1. Одна корутина',
+          task: 'Напиши `fetch_one(name)` — дождись `fetch(name)` и верни результат.',
+          hint: '`return await fetch(name)`.',
+          starter: 'import asyncio\n\n\nasync def fetch(name):\n    await asyncio.sleep(0)\n    return {"name": name}\n\n\nasync def fetch_one(name):\n    pass\n',
+          solution: 'import asyncio\n\n\nasync def fetch(name):\n    await asyncio.sleep(0)\n    return {"name": name}\n\n\nasync def fetch_one(name):\n    return await fetch(name)\n',
+          tests: [
+            'assert await fetch_one("a") == {"name": "a"}'
+          ]
+        },
+        {
+          label: 'Шаг 2. Две задачи',
+          task: 'Напиши `fetch_two(a, b)` — запусти два `fetch` через `gather`.',
+          hint: '`await asyncio.gather(fetch(a), fetch(b))`.',
+          starter: 'import asyncio\n\n\nasync def fetch(name):\n    await asyncio.sleep(0)\n    return {"name": name}\n\n\nasync def fetch_two(a, b):\n    pass\n',
+          solution: 'import asyncio\n\n\nasync def fetch(name):\n    await asyncio.sleep(0)\n    return {"name": name}\n\n\nasync def fetch_two(a, b):\n    return await asyncio.gather(fetch(a), fetch(b))\n',
+          tests: [
+            'assert await fetch_two("a", "b") == [{"name": "a"}, {"name": "b"}]'
+          ]
+        }
+      ],
       task: 'Напиши `fetch_all(names)` — запускает `fetch(name)` для всех имён через gather и возвращает список результатов, и `fetch_with_timeout(name, timeout)` — возвращает результат `fetch(name, delay=0.05)` или `None` при таймауте.',
       hint: 'Для gather распакуй корутины: `await asyncio.gather(*(fetch(name) for name in names))`. Для таймаута используй `asyncio.wait_for`.',
       starter: 'import asyncio\n\n\nasync def fetch(name, delay=0):\n    await asyncio.sleep(delay)\n    return {"name": name}\n\n\nasync def fetch_all(names):\n    pass\n\n\nasync def fetch_with_timeout(name, timeout):\n    pass\n',

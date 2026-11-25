@@ -123,6 +123,29 @@ export default [
       }
     ],
     practice: {
+      mainLabel: 'Шаг 3. count_calls с wraps',
+      steps: [
+        {
+          label: 'Шаг 1. Обёртка',
+          task: 'Напиши `trace(function)` — вернуть обёртку, которая вызывает функцию и возвращает результат.',
+          hint: 'Внутри создай `def wrapper(*args, **kwargs): return function(*args, **kwargs)` и верни её.',
+          starter: 'def trace(function):\n    pass\n',
+          solution: 'def trace(function):\n    def wrapper(*args, **kwargs):\n        return function(*args, **kwargs)\n\n    return wrapper\n',
+          tests: [
+            '@trace\ndef add(a, b):\n    return a + b\nassert add(2, 3) == 5'
+          ]
+        },
+        {
+          label: 'Шаг 2. Счётчик вызовов',
+          task: 'Сделай `track(function)` с атрибутом `calls`: первый вызов — 1, второй — 2.',
+          hint: 'Создай `wrapper.calls = 0` и увеличивай перед вызовом.',
+          starter: 'def track(function):\n    pass\n',
+          solution: 'def track(function):\n    def wrapper(*args, **kwargs):\n        wrapper.calls += 1\n        return function(*args, **kwargs)\n\n    wrapper.calls = 0\n    return wrapper\n',
+          tests: [
+            '@track\ndef add(a, b):\n    return a + b\nassert add(1, 2) == 3\nassert add.calls == 1\nassert add(2, 2) == 4\nassert add.calls == 2'
+          ]
+        }
+      ],
       task:
         'Напиши декоратор `count_calls`, который считает вызовы функции и сохраняет число в атрибуте `calls` у обёрнутой функции.',
       hint: 'Создай `wrapper.calls = 0`, увеличивай его при вызове и используй `functools.wraps`.',
@@ -177,6 +200,30 @@ export default [
       }
     ],
     practice: {
+      mainLabel: 'Шаг 3. repeat с wraps',
+      steps: [
+        {
+          label: 'Шаг 1. Функция возвращает функцию',
+          task: 'Напиши `make_prefix(prefix)` — вернуть функцию, которая добавляет префикс к тексту.',
+          hint: 'Внутри создай `def add(text): return prefix + text` и верни её.',
+          starter: 'def make_prefix(prefix):\n    pass\n',
+          solution: 'def make_prefix(prefix):\n    def add(text):\n        return prefix + text\n\n    return add\n',
+          tests: [
+            'assert make_prefix(">>")("x") == ">>x"',
+            'assert make_prefix("")("ok") == "ok"'
+          ]
+        },
+        {
+          label: 'Шаг 2. Декоратор без wraps',
+          task: 'Напиши `repeat(times)` — декоратор, который вызывает функцию `times` раз и возвращает последний результат.',
+          hint: 'Три уровня: times → function → wrapper; внутри `for _ in range(times)`.',
+          starter: 'def repeat(times):\n    pass\n',
+          solution: 'def repeat(times):\n    def decorator(function):\n        def wrapper(*args, **kwargs):\n            result = None\n            for _ in range(times):\n                result = function(*args, **kwargs)\n            return result\n\n        return wrapper\n\n    return decorator\n',
+          tests: [
+            'calls = []\n@repeat(3)\ndef record(value):\n    calls.append(value)\n    return value\nassert record("x") == "x"\nassert calls == ["x", "x", "x"]'
+          ]
+        }
+      ],
       task: 'Напиши `repeat(times)` — декоратор, который вызывает функцию `times` раз и возвращает последний результат. Сохрани имя функции через `functools.wraps`.',
       hint: 'Внешняя функция принимает `times`, средняя — `function`, внутренняя — `*args, **kwargs`. Результат сохраняй в переменной.',
       starter: 'import functools\n\n\ndef repeat(times):\n    pass\n',
@@ -236,6 +283,29 @@ export default [
       }
     ],
     practice: {
+      mainLabel: 'Шаг 3. Countdown',
+      steps: [
+        {
+          label: 'Шаг 1. __iter__',
+          task: 'Создай `Once` — объект, который возвращает себя из `__iter__`.',
+          hint: '`def __iter__(self): return self`.',
+          starter: 'class Once:\n    def __iter__(self):\n        pass\n',
+          solution: 'class Once:\n    def __iter__(self):\n        return self\n',
+          tests: [
+            'item = Once()\nassert item.__iter__() is item'
+          ]
+        },
+        {
+          label: 'Шаг 2. __next__',
+          task: 'Создай `Two` — итератор, который отдаёт 1, затем 2, затем `StopIteration`.',
+          hint: 'Храни `self.current`; увеличивай и проверяй `> 2`.',
+          starter: 'class Two:\n    def __init__(self):\n        self.current = 0\n\n    def __iter__(self):\n        return self\n\n    def __next__(self):\n        pass\n',
+          solution: 'class Two:\n    def __init__(self):\n        self.current = 0\n\n    def __iter__(self):\n        return self\n\n    def __next__(self):\n        self.current += 1\n        if self.current > 2:\n            raise StopIteration\n        return self.current\n',
+          tests: [
+            'assert list(Two()) == [1, 2]'
+          ]
+        }
+      ],
       task: 'Реализуй `Countdown(start)` — итератор, который отдаёт числа от `start` до `1`, затем поднимает `StopIteration`.',
       hint: 'Храни `self.current`. В `__next__` проверь `self.current <= 0`, иначе верни число и уменьши его.',
       starter: 'class Countdown:\n    def __init__(self, start):\n        pass\n\n    def __iter__(self):\n        pass\n\n    def __next__(self):\n        pass\n',
@@ -295,6 +365,31 @@ export default [
       }
     ],
     practice: {
+      mainLabel: 'Шаг 3. Фибоначчи',
+      steps: [
+        {
+          label: 'Шаг 1. countdown',
+          task: 'Напиши генератор `countdown(n)` — числа от `n` до 1.',
+          hint: 'В цикле `while n > 0` отдавай `n` через `yield` и уменьшай.',
+          starter: 'def countdown(n):\n    pass\n',
+          solution: 'def countdown(n):\n    while n > 0:\n        yield n\n        n -= 1\n',
+          tests: [
+            'assert list(countdown(3)) == [3, 2, 1]',
+            'assert list(countdown(0)) == []'
+          ]
+        },
+        {
+          label: 'Шаг 2. evens',
+          task: 'Напиши генератор `evens(limit)` — чётные числа от 0 до `limit` не включая.',
+          hint: '`for number in range(0, limit, 2): yield number`.',
+          starter: 'def evens(limit):\n    pass\n',
+          solution: 'def evens(limit):\n    for number in range(0, limit, 2):\n        yield number\n',
+          tests: [
+            'assert list(evens(7)) == [0, 2, 4, 6]',
+            'assert list(evens(0)) == []'
+          ]
+        }
+      ],
       task: 'Напиши генератор `fibonacci(limit)`, который возвращает числа Фибоначчи, меньшие limit, начиная с 0 и 1.',
       hint: 'Храни `a, b = 0, 1`, в цикле `while a < limit` отдавай `a` через yield и обновляй пару.',
       starter: 'def fibonacci(limit):\n    pass\n',
@@ -349,6 +444,30 @@ export default [
       }
     ],
     practice: {
+      mainLabel: 'Шаг 3. suppress_errors',
+      steps: [
+        {
+          label: 'Шаг 1. Свой with',
+          task: 'Напиши `tag(name)` через `@contextmanager`: до `yield` ничего не делай, верни `name`.',
+          hint: '`@contextmanager` превращает генератор в менеджер; значение после `yield` попадёт в `as`.',
+          starter: 'from contextlib import contextmanager\n\n\n@contextmanager\ndef tag(name):\n    pass\n',
+          solution: 'from contextlib import contextmanager\n\n\n@contextmanager\ndef tag(name):\n    yield name\n',
+          tests: [
+            'with tag("x") as value:\n    assert value == "x"'
+          ]
+        },
+        {
+          label: 'Шаг 2. Подавить ошибку',
+          task: 'Напиши `ignore(error_type)` — контекстный менеджер, который подавляет указанное исключение.',
+          hint: 'Внутри `try: yield`, затем `except error_type: pass`.',
+          starter: 'from contextlib import contextmanager\n\n\n@contextmanager\ndef ignore(error_type):\n    pass\n',
+          solution: 'from contextlib import contextmanager\n\n\n@contextmanager\ndef ignore(error_type):\n    try:\n        yield\n    except error_type:\n        pass\n',
+          tests: [
+            'with ignore(ValueError):\n    raise ValueError("boom")\nassert True',
+            'try:\n    with ignore(ValueError):\n        raise TypeError("no")\nexcept TypeError:\n    pass\nelse:\n    raise AssertionError("TypeError должен пройти дальше")'
+          ]
+        }
+      ],
       task: 'Напиши контекстный менеджер `suppress_errors(*types)`, который подавляет указанные исключения и возвращает объект с полем `error`.',
       hint: 'Используй `@contextmanager`. Сохрани исключение в списке или объекте, потому что после `yield` его можно перехватить через `try/except`.',
       starter: 'from contextlib import contextmanager\n\n\n@contextmanager\ndef suppress_errors(*types):\n    pass\n',

@@ -15,15 +15,67 @@ function inline(value) {
   return escapeHtml(value).replace(/`([^`]+)`/g, '<code>$1</code>');
 }
 
-const starter = practice.starter ?? '# Напиши решение здесь\n';
-const solution = practice.solution ?? '';
-const tests = practice.tests ?? [];
+const defaultStarter = '# Напиши решение здесь\n';
+const prerequisites = Array.isArray(practice.steps) ? practice.steps : [];
+
+const allSteps = prerequisites.length
+  ? [
+      ...prerequisites.map((step, index) => ({
+        ...step,
+        key: `${lessonId}--step-${index + 1}`,
+        label: step.label ?? `Шаг ${index + 1}`,
+        isMain: false,
+        task: step.task ?? '',
+        hint: step.hint ?? '',
+        starter: step.starter ?? defaultStarter,
+        solution: step.solution ?? '',
+        tests: step.tests ?? []
+      })),
+      {
+        ...practice,
+        steps: undefined,
+        key: lessonId,
+        label: practice.mainLabel ?? 'Основная задача',
+        isMain: true,
+        starter: practice.starter ?? defaultStarter,
+        solution: practice.solution ?? '',
+        tests: practice.tests ?? []
+      }
+    ]
+  : [
+      {
+        ...practice,
+        key: lessonId,
+        label: practice.mainLabel ?? 'Задача',
+        isMain: true,
+        starter: practice.starter ?? defaultStarter,
+        solution: practice.solution ?? '',
+        tests: practice.tests ?? []
+      }
+    ];
+
+const current = allSteps[0];
+const starter = current.starter;
+const solution = current.solution;
+const tests = current.tests;
+const hasSteps = allSteps.length > 1;
+
+const stepsJson = JSON.stringify(
+  allSteps.map((step) => ({
+    key: step.key,
+    label: step.label,
+    isMain: Boolean(step.isMain),
+    starter: step.starter,
+    tests: step.tests,
+    solution: step.solution
+  }))
+).replace(/</g, '\\u003c');
 const testsJson = JSON.stringify(tests).replace(/</g, '\\u003c');
 const solutionJson = JSON.stringify(solution).replace(/</g, '\\u003c');
 const starterJson = JSON.stringify(starter).replace(/</g, '\\u003c');
 ---
 
-<div class="practice-editor-card" data-practice data-lesson-id={lessonId}>
+<div class="practice-editor-card" data-practice data-lesson-id={lessonId} data-practice-key={current.key}>
   <div class="practice-header">
     <div>
       <p class="eyebrow">Интерактив</p>
@@ -32,9 +84,43 @@ const starterJson = JSON.stringify(starter).replace(/</g, '\\u003c');
     <span class="practice-badge" data-practice-status>черновик</span>
   </div>
 
-  <p class="practice-task" set:html={inline(practice.task)}></p>
+  {
+    hasSteps && (
+      <nav class="practice-stepnav" data-practice-stepnav aria-label="Шаги практики">
+        {allSteps.map((step, index) => (
+          <button
+            type="button"
+            class="practice-step"
+            data-practice-step={index}
+            aria-selected={index === 0 ? 'true' : 'false'}
+            aria-controls="practice-panel"
+          >
+            <span class="practice-step-index" aria-hidden="true">{index + 1}</span>
+            <span class="practice-step-label">{step.label}</span>
+            <span class="practice-step-mark" data-practice-step-mark={index} aria-hidden="true"></span>
+          </button>
+        ))}
+      </nav>
+    )
+  }
 
-  <div class="practice-editor">
+  {
+    hasSteps && (
+      <p class="practice-stepnote">
+        Сначала короткие шаги, потом основная задача. Основная задача отмечает урок пройденным.
+      </p>
+    )
+  }
+
+  {
+    allSteps.map((step, index) => (
+      <div data-practice-step-task={index} hidden={index !== 0}>
+        <p class="practice-task" set:html={inline(step.task)}></p>
+      </div>
+    ))
+  }
+
+  <div class="practice-editor" id="practice-panel">
     <div class="practice-editor-top">
       <span class="practice-editor-dots" aria-hidden="true"><i></i><i></i><i></i></span>
       <span class="practice-editor-file">solution.py</span>
@@ -56,24 +142,30 @@ const starterJson = JSON.stringify(starter).replace(/</g, '\\u003c');
 
   <div class="practice-result" data-practice-result hidden></div>
 
-  <div class="practice-details-grid">
-    <details class="practice-details">
-      <summary>Подсказка</summary>
-      <p set:html={inline(practice.hint)}></p>
-    </details>
+  {
+    allSteps.map((step, index) => (
+      <div data-practice-step-details={index} hidden={index !== 0}>
+        <div class="practice-details-grid">
+          {step.hint && (
+            <details class="practice-details">
+              <summary>Подсказка</summary>
+              <p set:html={inline(step.hint)}></p>
+            </details>
+          )}
 
-    {
-      solution && (
-        <details class="practice-details">
-          <summary>Показать решение</summary>
-          <p class="section-note">
-            Сначала попробуй сам. Решение — один из вариантов, а не единственно правильный.
-          </p>
-          <Code code={solution} lang="python" title="Решение" frame="code" showLineNumbers={false} wrap />
-        </details>
-      )
-    }
-  </div>
+          {step.solution && (
+            <details class="practice-details">
+              <summary>Показать решение</summary>
+              <p class="section-note">
+                Сначала попробуй сам. Решение — один из вариантов, а не единственно правильный.
+              </p>
+              <Code code={step.solution} lang="python" title="Решение" frame="code" showLineNumbers={false} wrap />
+            </details>
+          )}
+        </div>
+      </div>
+    ))
+  }
 
   <details class="practice-note">
     <summary>Как работает проверка</summary>
@@ -88,6 +180,7 @@ const starterJson = JSON.stringify(starter).replace(/</g, '\\u003c');
     </p>
   </details>
 
+  <script type="application/json" data-practice-steps set:html={stepsJson}></script>
   <script type="application/json" data-practice-starter set:html={starterJson}></script>
   <script type="application/json" data-practice-tests set:html={testsJson}></script>
   <script type="application/json" data-practice-solution set:html={solutionJson}></script>

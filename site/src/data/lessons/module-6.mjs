@@ -127,6 +127,31 @@ export default [
       }
     ],
     practice: {
+      mainLabel: 'Шаг 3. Email и телефон',
+      steps: [
+        {
+          label: 'Шаг 1. Найти email',
+          task: 'Напиши `find_emails(text)` — список email через `re.findall`.',
+          hint: 'Шаблон: `[\\w.+-]+@[\\w-]+\\.[\\w.]+`.',
+          starter: 'import re\n\n\ndef find_emails(text):\n    pass\n',
+          solution: 'import re\n\n\ndef find_emails(text):\n    return re.findall(r"[\\w.+-]+@[\\w-]+\\.[\\w.]+", text)\n',
+          tests: [
+            'assert find_emails("a@example.com и b@test.org") == ["a@example.com", "b@test.org"]',
+            'assert find_emails("нет почты") == []'
+          ]
+        },
+        {
+          label: 'Шаг 2. Только цифры',
+          task: 'Напиши `digits(text)` — оставить только цифры.',
+          hint: '`re.sub(r"\\D", "", text)`.',
+          starter: 'import re\n\n\ndef digits(text):\n    pass\n',
+          solution: 'import re\n\n\ndef digits(text):\n    return re.sub(r"\\D", "", text)\n',
+          tests: [
+            'assert digits("+7 (999) 123-45-67") == "79991234567"',
+            'assert digits("нет цифр") == ""'
+          ]
+        }
+      ],
       task:
         'Напиши `extract_emails(text)` — список email и `normalize_phone(text)` — только цифры из телефона.',
       hint: 'Для email подойдёт `[\\w.+-]+@[\\w-]+\\.[\\w.]+`. Для телефона замени всё нецифровое через `re.sub(r"\\D", "", text)`.',
@@ -229,6 +254,29 @@ export default [
       }
     ],
     practice: {
+      mainLabel: 'Шаг 3. make_logger',
+      steps: [
+        {
+          label: 'Шаг 1. Уровень логгера',
+          task: 'Напиши `configure(name, level)` — вернуть логгер с заданным уровнем.',
+          hint: '`logging.getLogger(name)` и `logger.setLevel(getattr(logging, level.upper()))`.',
+          starter: 'import logging\n\n\ndef configure(name, level):\n    pass\n',
+          solution: 'import logging\n\n\ndef configure(name, level):\n    logger = logging.getLogger(name)\n    logger.setLevel(getattr(logging, level.upper()))\n    return logger\n',
+          tests: [
+            'import logging\nlogger = configure("test.level", "DEBUG")\nassert logger.level == logging.DEBUG\nassert logger.name == "test.level"'
+          ]
+        },
+        {
+          label: 'Шаг 2. Один обработчик',
+          task: 'Напиши `once(name)` — логгер ровно с одним `StreamHandler`, даже при повторном вызове.',
+          hint: 'Перед добавлением очисти `logger.handlers`.',
+          starter: 'import logging\n\n\ndef once(name):\n    pass\n',
+          solution: 'import logging\n\n\ndef once(name):\n    logger = logging.getLogger(name)\n    logger.handlers.clear()\n    logger.addHandler(logging.StreamHandler())\n    return logger\n',
+          tests: [
+            'import logging\nfirst = once("test.once")\nsecond = once("test.once")\nassert len(first.handlers) == 1\nassert len(second.handlers) == 1'
+          ]
+        }
+      ],
       task:
         'Напиши `make_logger(name, level="INFO")`, возвращающий логгер с заданным уровнем и одним StreamHandler. Повторные вызовы не должны добавлять обработчики бесконечно.',
       hint: 'Сопоставь строку с `logging.DEBUG` и т.п. Перед добавлением обработчика очисти `logger.handlers`.',

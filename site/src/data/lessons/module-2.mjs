@@ -91,6 +91,33 @@ export default [
       }
     ],
     practice: {
+      mainLabel: 'Шаг 3. Разбить на куски',
+      steps: [
+        {
+          label: 'Шаг 1. Один срез',
+          task: 'Напиши `take(items, start, size)` — верни часть списка от `start` длиной `size`.',
+          hint: 'Это срез: `items[start:start + size]`.',
+          starter: 'def take(items, start, size):\n    pass\n',
+          solution: 'def take(items, start, size):\n    return items[start:start + size]\n',
+          tests: [
+            'assert take([1, 2, 3, 4], 0, 2) == [1, 2]',
+            'assert take([1, 2, 3], 1, 5) == [2, 3]',
+            'assert take([], 0, 3) == []'
+          ]
+        },
+        {
+          label: 'Шаг 2. Начала кусков',
+          task: 'Напиши `starts(length, size)` — индексы, с которых начинаются куски: `0, size, 2*size...`.',
+          hint: '`list(range(0, length, size))`.',
+          starter: 'def starts(length, size):\n    pass\n',
+          solution: 'def starts(length, size):\n    return list(range(0, length, size))\n',
+          tests: [
+            'assert starts(5, 2) == [0, 2, 4]',
+            'assert starts(6, 3) == [0, 3]',
+            'assert starts(0, 3) == []'
+          ]
+        }
+      ],
       task: 'Напиши `chunk(items, size)`, разбивающую список на части заданного размера. Последняя часть может быть короче.',
       hint: 'Используй срез `items[start:start + size]` и шаг `range(0, len(items), size)`.',
       starter: 'def chunk(items, size):\n    pass\n',
@@ -192,6 +219,32 @@ export default [
       }
     ],
     practice: {
+      mainLabel: 'Шаг 3. Частоты слов',
+      steps: [
+        {
+          label: 'Шаг 1. Разобрать текст',
+          task: 'Напиши `words(text)` — список слов в нижнем регистре.',
+          hint: '`text.lower().split()`.',
+          starter: 'def words(text):\n    pass\n',
+          solution: 'def words(text):\n    return text.lower().split()\n',
+          tests: [
+            'assert words("Кот Пёс Кот") == ["кот", "пёс", "кот"]',
+            'assert words("") == []'
+          ]
+        },
+        {
+          label: 'Шаг 2. Увеличить счётчик',
+          task: 'Напиши `add_count(counts, word)` — увеличь счётчик слова на 1. Если ключа нет, начни с нуля.',
+          hint: '`counts[word] = counts.get(word, 0) + 1`.',
+          starter: 'def add_count(counts, word):\n    pass\n',
+          solution: 'def add_count(counts, word):\n    counts[word] = counts.get(word, 0) + 1\n    return counts\n',
+          tests: [
+            'assert add_count({}, "кот") == {"кот": 1}',
+            'assert add_count({"кот": 1}, "кот") == {"кот": 2}',
+            'assert add_count({"кот": 1}, "пёс") == {"кот": 1, "пёс": 1}'
+          ]
+        }
+      ],
       task: 'Напиши `count_words(text)`, возвращающую словарь частот слов. Регистр не важен, слова разделены пробелами.',
       hint: 'Приводи текст к нижнему регистру, перебери `text.split()` и используй `counts.get(word, 0) + 1`.',
       starter: 'def count_words(text):\n    pass\n',
@@ -294,6 +347,31 @@ export default [
       }
     ],
     practice: {
+      mainLabel: 'Шаг 3. Чётные квадраты и flatten',
+      steps: [
+        {
+          label: 'Шаг 1. Чётные',
+          task: 'Напиши `evens(numbers)` — список чётных чисел через comprehension.',
+          hint: '`[n for n in numbers if n % 2 == 0]`.',
+          starter: 'def evens(numbers):\n    pass\n',
+          solution: 'def evens(numbers):\n    return [number for number in numbers if number % 2 == 0]\n',
+          tests: [
+            'assert evens([1, 2, 3, 4]) == [2, 4]',
+            'assert evens([]) == []'
+          ]
+        },
+        {
+          label: 'Шаг 2. Квадраты',
+          task: 'Напиши `squares(numbers)` — список квадратов через comprehension.',
+          hint: '`[n ** 2 for n in numbers]`.',
+          starter: 'def squares(numbers):\n    pass\n',
+          solution: 'def squares(numbers):\n    return [number ** 2 for number in numbers]\n',
+          tests: [
+            'assert squares([1, 2, 3]) == [1, 4, 9]',
+            'assert squares([]) == []'
+          ]
+        }
+      ],
       task:
         'Напиши `even_squares(numbers)` — квадраты чётных чисел, и `flatten(matrix)` — плоский список из списка списков.',
       hint: 'Фильтр: `if number % 2 == 0`. Для flatten: `[value for row in matrix for value in row]`.',
@@ -413,6 +491,31 @@ export default [
       }
     ],
     practice: {
+      mainLabel: 'Шаг 3. Оценка и имя',
+      steps: [
+        {
+          label: 'Шаг 1. Лучшая оценка',
+          task: 'Напиши `top_grade(students)` — максимальную оценку через `max(..., key=...)`.',
+          hint: '`max(students, key=lambda item: item["grade"])["grade"]`.',
+          starter: 'def top_grade(students):\n    pass\n',
+          solution: 'def top_grade(students):\n    return max(students, key=lambda item: item["grade"])["grade"]\n',
+          tests: [
+            'assert top_grade([{"name": "A", "grade": 75}, {"name": "B", "grade": 92}]) == 92',
+            'assert top_grade([{"name": "A", "grade": 60}]) == 60'
+          ]
+        },
+        {
+          label: 'Шаг 2. По убыванию',
+          task: 'Напиши `by_grade(students)` — отсортировать по оценке по убыванию.',
+          hint: '`sorted(students, key=lambda item: item["grade"], reverse=True)`.',
+          starter: 'def by_grade(students):\n    pass\n',
+          solution: 'def by_grade(students):\n    return sorted(students, key=lambda item: item["grade"], reverse=True)\n',
+          tests: [
+            'data = [{"grade": 75}, {"grade": 92}, {"grade": 60}]\nassert [item["grade"] for item in by_grade(data)] == [92, 75, 60]',
+            'assert by_grade([]) == []'
+          ]
+        }
+      ],
       task:
         'Напиши `sort_students(students)`, где students — список словарей с ключами `name` и `grade`. Отсортируй по убыванию grade, при равенстве — по имени.',
       hint: 'Верни `sorted(students, key=lambda item: (-item["grade"], item["name"]))`.',

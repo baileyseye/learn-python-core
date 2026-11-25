@@ -32,6 +32,7 @@ import { tags } from '@lezer/highlight';
 
 const DRAFT_KEY = 'lpc.practice.drafts.v1';
 const SOLVED_KEY = 'lpc.practice.solved.v1';
+const STEP_SOLVED_KEY = 'lpc.practice.steps.v1';
 
 const practiceTheme = EditorView.theme({
   '&': {
@@ -493,11 +494,52 @@ async function initCard(card) {
   const starter = readJson(card.querySelector('[data-practice-starter]'), '');
   const tests = readJson(card.querySelector('[data-practice-tests]'), []);
   const solution = readJson(card.querySelector('[data-practice-solution]'), '');
-  const drafts = readStore(DRAFT_KEY);
-  const solved = readStore(SOLVED_KEY);
-  const initial = drafts[lessonId] ?? starter;
+  const stepsRaw = readJson(card.querySelector('[data-practice-steps]'), null);
 
-  if (solved[lessonId]) setStatus(card, 'решено', 'solved');
+  const steps =
+    Array.isArray(stepsRaw) && stepsRaw.length
+      ? stepsRaw.map((step) => ({
+          ...step,
+          starter: step.starter ?? '',
+          tests: step.tests ?? [],
+          solution: step.solution ?? ''
+        }))
+      : [{ key: lessonId, label: 'Задача', isMain: true, starter, tests, solution }];
+
+  card._practiceSteps = steps;
+  card._practiceStepIndex = 0;
+
+  const drafts = readStore(DRAFT_KEY);
+  const initial = drafts[steps[0].key] ?? steps[0].starter;
+  const activeStep = () => steps[card._practiceStepIndex] ?? steps[0];
+  const readSolvedSteps = () => readStore(STEP_SOLVED_KEY);
+  const stepSolved = (step) =>
+    step?.isMain ? Boolean(readStore(SOLVED_KEY)[lessonId]) : Boolean(readSolvedSteps()[step?.key]);
+
+  const markStep = (index, done) => {
+    const button = card.querySelector(`[data-practice-step="${index}"]`);
+    if (!button) return;
+    button.classList.toggle('is-solved', done);
+    button.dataset.solved = done ? 'true' : 'false';
+    const mark = button.querySelector('[data-practice-step-mark]');
+    if (mark) mark.textContent = done ? '✓' : '';
+  };
+
+  const applyMarks = () => steps.forEach((step, index) => markStep(index, stepSolved(step)));
+
+  const setStatusFor = (step) => {
+    if (step.isMain && readStore(SOLVED_KEY)[lessonId]) {
+      setStatus(card, 'решено', 'solved');
+      return;
+    }
+    if (!step.isMain && readSolvedSteps()[step.key]) {
+      setStatus(card, 'шаг решён', 'solved');
+      return;
+    }
+    setStatus(card, 'черновик');
+  };
+
+  if (readStore(SOLVED_KEY)[lessonId]) setStatus(card, 'решено', 'solved');
 
   const mount = card.querySelector('[data-practice-codemirror]');
   if (!mount) return;
@@ -515,8 +557,9 @@ async function initCard(card) {
   card.dataset.ready = 'true';
 
   const save = (value) => {
+    const step = activeStep();
     const store = readStore(DRAFT_KEY);
-    store[lessonId] = value;
+    store[step.key] = value;
     writeStore(DRAFT_KEY, store);
   };
 
@@ -595,21 +638,70 @@ async function initCard(card) {
   window.addEventListener('load', () => view.requestMeasure(), { once: true });
   document.fonts?.ready.then(() => view.requestMeasure()).catch(() => {});
 
-  card.querySelector('[data-practice-check]')?.addEventListener('click', () => check(card));
-  card.querySelector('[data-practice-reset]')?.addEventListener('click', () => {
-    view.dispatch({ changes: { from: 0, to: view.state.doc.length, insert: starter } });
-    save(starter);
+  const setStepView = (index) => {
+    card.querySelectorAll('[data-practice-step-task]').forEach((element) => {
+      element.hidden = Number(element.dataset.practiceStepTask) !== index;
+    });
+    card.querySelectorAll('[data-practice-step-details]').forEach((element) => {
+      element.hidden = Number(element.dataset.practiceStepDetails) !== index;
+    });
+    card.querySelectorAll('[data-practice-step]').forEach((button, buttonIndex) => {
+      button.setAttribute('aria-selected', String(buttonIndex === index));
+    });
+  };
+
+  const loadStepDoc = () => {
+    const step = activeStep();
+    const store = readStore(DRAFT_KEY);
+    const doc = typeof store[step.key] === 'string' ? store[step.key] : step.starter;
+    card.dataset.practiceKey = step.key;
+    view.dispatch({ changes: { from: 0, to: view.state.doc.length, insert: doc } });
+    view.requestMeasure();
+  };
+
+  const clearResult = () => {
     const panel = card.querySelector('[data-practice-result]');
     if (panel) {
       panel.hidden = true;
       panel.replaceChildren();
     }
-    const solvedNow = readStore(SOLVED_KEY)[lessonId];
+  };
+
+  const switchStep = (index) => {
+    const stepList = card._practiceSteps;
+    if (!stepList || index < 0 || index >= stepList.length || index === card._practiceStepIndex) return;
+    save(view.state.doc.toString());
+    card._practiceStepIndex = index;
+    setStepView(index);
+    loadStepDoc();
+    clearResult();
+    setFeedback(card, '', '');
+    setStatusFor(activeStep());
+  };
+
+  card.querySelectorAll('[data-practice-step]').forEach((button) => {
+    button.addEventListener('click', () => switchStep(Number(button.dataset.practiceStep)));
+  });
+
+  setStepView(0);
+  applyMarks();
+  setStatusFor(activeStep());
+  card.dataset.practiceKey = activeStep().key;
+
+  card.querySelector('[data-practice-check]')?.addEventListener('click', () => check(card));
+  card.querySelector('[data-practice-reset]')?.addEventListener('click', () => {
+    const step = activeStep();
+    view.dispatch({ changes: { from: 0, to: view.state.doc.length, insert: step.starter } });
+    save(step.starter);
+    clearResult();
     setFeedback(card, 'Черновик сброшен.', '');
-    setStatus(card, solvedNow ? 'решено' : 'черновик', solvedNow ? 'solved' : '');
+    setStatusFor(step);
   });
 
   async function runCheck() {
+    const step = activeStep();
+    const stepTests = step.tests ?? [];
+    const stepSolution = step.solution ?? '';
     const code = view.state.doc.toString();
     const panel = card.querySelector('[data-practice-result]');
     const button = card.querySelector('[data-practice-check]');
@@ -629,19 +721,32 @@ async function initCard(card) {
     setFeedback(card, 'Код отправлен в браузерную среду Python.', '');
 
     try {
-      const result = await runPython(code, tests);
-      renderResult(card, result, tests);
+      const result = await runPython(code, stepTests);
+      renderResult(card, result, stepTests);
       const passed = result.results?.filter((item) => item.ok).length ?? 0;
       const total = result.results?.length ?? 0;
       if (result.error) {
         setStatus(card, 'ошибка', 'error');
         setFeedback(card, 'Исправьте ошибку и запустите снова.', 'error');
       } else if (total && passed === total) {
-        const store = readStore(SOLVED_KEY);
-        store[lessonId] = true;
-        writeStore(SOLVED_KEY, store);
-        setStatus(card, 'решено', 'solved');
-        setFeedback(card, `Все проверки пройдены: ${passed}/${total}.`, 'success');
+        if (step.isMain) {
+          const store = readStore(SOLVED_KEY);
+          store[lessonId] = true;
+          writeStore(SOLVED_KEY, store);
+          setStatus(card, 'решено', 'solved');
+          setFeedback(card, `Все проверки пройдены: ${passed}/${total}.`, 'success');
+        } else {
+          const store = readStore(STEP_SOLVED_KEY);
+          store[step.key] = true;
+          writeStore(STEP_SOLVED_KEY, store);
+          setStatus(card, 'шаг решён', 'solved');
+          setFeedback(
+            card,
+            `Шаг ${card._practiceStepIndex + 1} пройден: ${passed}/${total}. Переходите к следующему.`,
+            'success'
+          );
+        }
+        applyMarks();
       } else if (total) {
         setStatus(card, 'есть ошибки', 'error');
         setFeedback(card, `Пройдено ${passed} из ${total}. Посмотрите сообщения под тестами.`, 'error');
@@ -651,7 +756,7 @@ async function initCard(card) {
       }
     } catch (error) {
       pyodideUnavailable = true;
-      const problems = staticReview(code, solution);
+      const problems = staticReview(code, stepSolution);
       renderStatic(card, problems, problems.length === 0);
       setStatus(card, 'статическая проверка', 'static');
       setFeedback(

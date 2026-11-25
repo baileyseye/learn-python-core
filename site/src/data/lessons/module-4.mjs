@@ -80,6 +80,31 @@ export default [
       }
     ],
     practice: {
+      mainLabel: 'Шаг 3. Полная проверка возраста',
+      steps: [
+        {
+          label: 'Шаг 1. Своя ошибка',
+          task: 'Объяви `ValidationError` и `check_type(age)`: если возраст не `int`, подними `ValidationError`, иначе верни возраст.',
+          hint: '`isinstance(age, int)`; ошибку поднимай через `raise ValidationError("...")`.',
+          starter: 'class ValidationError(Exception):\n    pass\n\n\ndef check_type(age):\n    pass\n',
+          solution: 'class ValidationError(Exception):\n    pass\n\n\ndef check_type(age):\n    if not isinstance(age, int):\n        raise ValidationError("возраст должен быть целым числом")\n    return age\n',
+          tests: [
+            'assert check_type(27) == 27',
+            'try:\n    check_type("27")\nexcept ValidationError:\n    pass\nelse:\n    raise AssertionError("ожидалось ValidationError")'
+          ]
+        },
+        {
+          label: 'Шаг 2. Диапазон',
+          task: 'Напиши `check_range(age)` — вернуть возраст, если `0 < age < 150`, иначе `ValidationError`.',
+          hint: 'Сначала проверь диапазон, потом возвращай.',
+          starter: 'class ValidationError(Exception):\n    pass\n\n\ndef check_range(age):\n    pass\n',
+          solution: 'class ValidationError(Exception):\n    pass\n\n\ndef check_range(age):\n    if not 0 < age < 150:\n        raise ValidationError("возраст должен быть от 1 до 149")\n    return age\n',
+          tests: [
+            'assert check_range(27) == 27',
+            'try:\n    check_range(200)\nexcept ValidationError:\n    pass\nelse:\n    raise AssertionError("ожидалось ValidationError")'
+          ]
+        }
+      ],
       task: 'Объяви `ValidationError(Exception)` и напиши `validate_age(age)`, который возвращает age, если 0 < age < 150, иначе поднимает ValidationError с понятным сообщением.',
       hint: 'Проверь тип и диапазон. Для поднятия используй `raise ValidationError("...")`.',
       starter: 'class ValidationError(Exception):\n    pass\n\n\ndef validate_age(age):\n    pass\n',
@@ -140,6 +165,31 @@ export default [
       }
     ],
     practice: {
+      mainLabel: 'Шаг 3. Book с тегами',
+      steps: [
+        {
+          label: 'Шаг 1. Поля dataclass',
+          task: 'Создай dataclass `Point(x, y)`.',
+          hint: '`@dataclass` над классом и аннотации полей.',
+          starter: 'from dataclasses import dataclass\n\n\n@dataclass\nclass Point:\n    pass\n',
+          solution: 'from dataclasses import dataclass\n\n\n@dataclass\nclass Point:\n    x: int\n    y: int\n',
+          tests: [
+            'assert Point(1, 2) == Point(1, 2)',
+            'assert Point(1, 2).x == 1'
+          ]
+        },
+        {
+          label: 'Шаг 2. Список по умолчанию',
+          task: 'Создай dataclass `Bag(items)` со списком по умолчанию.',
+          hint: '`field(default_factory=list)`.',
+          starter: 'from dataclasses import dataclass, field\n\n\n@dataclass\nclass Bag:\n    pass\n',
+          solution: 'from dataclasses import dataclass, field\n\n\n@dataclass\nclass Bag:\n    items: list = field(default_factory=list)\n',
+          tests: [
+            'assert Bag().items == []',
+            'first = Bag(); second = Bag(); first.items.append("x"); assert second.items == []'
+          ]
+        }
+      ],
       task:
         'Создай dataclass `Book` с полями `title`, `author`, `tags` (список, по умолчанию пустой) и методом `add_tag(tag)`.',
       hint: 'Импортируй `dataclass` и `field`. Для списка используй `field(default_factory=list)`.',
@@ -190,6 +240,30 @@ export default [
       }
     ],
     practice: {
+      mainLabel: 'Шаг 3. Temperature',
+      steps: [
+        {
+          label: 'Шаг 1. Свойство без проверки',
+          task: 'Создай `Positive` с property `value` и внутренним `_value`.',
+          hint: '`@property` для чтения и `@value.setter` для записи.',
+          starter: 'class Positive:\n    @property\n    def value(self):\n        pass\n\n    @value.setter\n    def value(self, value):\n        pass\n',
+          solution: 'class Positive:\n    @property\n    def value(self):\n        return self._value\n\n    @value.setter\n    def value(self, value):\n        self._value = value\n',
+          tests: [
+            'item = Positive(); item.value = 5; assert item.value == 5'
+          ]
+        },
+        {
+          label: 'Шаг 2. Проверка в setter',
+          task: 'Добавь в setter проверку: отрицательное значение → `ValueError`.',
+          hint: 'Проверяй `value < 0` до присваивания.',
+          starter: 'class Positive:\n    @property\n    def value(self):\n        return self._value\n\n    @value.setter\n    def value(self, value):\n        pass\n',
+          solution: 'class Positive:\n    @property\n    def value(self):\n        return self._value\n\n    @value.setter\n    def value(self, value):\n        if value < 0:\n            raise ValueError("значение должно быть неотрицательным")\n        self._value = value\n',
+          tests: [
+            'item = Positive(); item.value = 5; assert item.value == 5',
+            'try:\n    item = Positive(); item.value = -1\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError("ожидалось ValueError")'
+          ]
+        }
+      ],
       task:
         'Напиши класс `Temperature` со свойством `celsius`. Значения ниже -273.15 должны вызывать ValueError. Добавь свойство `fahrenheit`.',
       hint: 'Храни значение в `self._celsius`, а в setter проверяй диапазон. Формула: `celsius * 9 / 5 + 32`.',
@@ -241,6 +315,30 @@ export default [
       }
     ],
     practice: {
+      mainLabel: 'Шаг 3. Shape и Rectangle',
+      steps: [
+        {
+          label: 'Шаг 1. Базовый метод',
+          task: 'Создай класс `Base` с методом `area()`, который возвращает 0.',
+          hint: 'Обычный класс и метод с `return 0`.',
+          starter: 'class Base:\n    pass\n',
+          solution: 'class Base:\n    def area(self):\n        return 0\n',
+          tests: [
+            'assert Base().area() == 0'
+          ]
+        },
+        {
+          label: 'Шаг 2. Наследник',
+          task: 'Создай `Square(side)` — наследника `Base`, который переопределяет `area()` как `side * side`.',
+          hint: 'Наследуйся от `Base`, сохрани `side` в `__init__` и переопредели метод.',
+          starter: 'class Base:\n    def area(self):\n        return 0\n\n\nclass Square(Base):\n    pass\n',
+          solution: 'class Base:\n    def area(self):\n        return 0\n\n\nclass Square(Base):\n    def __init__(self, side):\n        self.side = side\n\n    def area(self):\n        return self.side * self.side\n',
+          tests: [
+            'assert Square(4).area() == 16',
+            'assert isinstance(Square(1), Base)'
+          ]
+        }
+      ],
       task:
         'Создай базовый класс `Shape` с методом `area()`, возвращающим 0, и класс `Rectangle(width, height)`, переопределяющий `area()`.',
       hint: 'В дочернем классе вызови `super().__init__()` при необходимости и верни `width * height`.',
@@ -354,6 +452,30 @@ export default [
       }
     ],
     practice: {
+      mainLabel: 'Шаг 3. Money',
+      steps: [
+        {
+          label: 'Шаг 1. repr',
+          task: 'Создай `Point(x, y)` с `__repr__`, который печатает `Point(1, 2)`.',
+          hint: '`return f"Point({self.x}, {self.y})"`.',
+          starter: 'class Point:\n    def __init__(self, x, y):\n        self.x = x\n        self.y = y\n\n    def __repr__(self):\n        pass\n',
+          solution: 'class Point:\n    def __init__(self, x, y):\n        self.x = x\n        self.y = y\n\n    def __repr__(self):\n        return f"Point({self.x}, {self.y})"\n',
+          tests: [
+            'assert repr(Point(1, 2)) == "Point(1, 2)"'
+          ]
+        },
+        {
+          label: 'Шаг 2. eq',
+          task: 'Добавь в `Point` метод `__eq__`: равны, если совпадают координаты; для другого типа верни `NotImplemented`.',
+          hint: 'Сначала `isinstance(other, Point)`, затем сравни поля.',
+          starter: 'class Point:\n    def __init__(self, x, y):\n        self.x = x\n        self.y = y\n\n    def __eq__(self, other):\n        pass\n',
+          solution: 'class Point:\n    def __init__(self, x, y):\n        self.x = x\n        self.y = y\n\n    def __eq__(self, other):\n        if not isinstance(other, Point):\n            return NotImplemented\n        return self.x == other.x and self.y == other.y\n',
+          tests: [
+            'assert Point(1, 2) == Point(1, 2)',
+            'assert (Point(1, 2) == Point(2, 1)) is False'
+          ]
+        }
+      ],
       task:
         'Создай класс `Money(amount, currency)` с `__repr__`, `__eq__` и `__add__`. Складывать можно только одинаковые валюты, иначе ValueError.',
       hint: '`__add__` возвращает новый объект `Money`. Сравнение проверяй через `isinstance`.',
