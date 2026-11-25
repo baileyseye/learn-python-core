@@ -154,7 +154,27 @@ const json = `${JSON.stringify(payload, null, 2)}\n`;
 if (CHECK) {
   if (!fs.existsSync(OUT)) fail(`Нет ${path.relative(ROOT, OUT)}. Запустите npm run sync.`);
   const current = fs.readFileSync(OUT, 'utf8');
-  if (current !== json) {
+
+  // Вывод программ зависит от версии Python и окружения (например, урок про venv).
+  // Проверяем структуру, код и успешность запуска, но не сравниваем сам stdout.
+  const withoutOutputs = (value) => ({
+    ...value,
+    files: Object.fromEntries(
+      Object.entries(value.files ?? {}).map(([file, entry]) => {
+        const { output, error, ...rest } = entry;
+        return [file, rest];
+      })
+    )
+  });
+
+  let parsed;
+  try {
+    parsed = JSON.parse(current);
+  } catch {
+    fail(`${path.relative(ROOT, OUT)} содержит некорректный JSON. Запустите npm run sync.`);
+  }
+
+  if (JSON.stringify(withoutOutputs(parsed)) !== JSON.stringify(withoutOutputs(payload))) {
     fail(
       `Данные курса устарели: ${path.relative(ROOT, OUT)} отличается от исходников. ` +
         'Запустите npm run sync и закоммитьте изменения.'

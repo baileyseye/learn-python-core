@@ -30,6 +30,6 @@
     "astro": "5.16.6"
   },
   "devDependencies": {
-    "pyodide": "^0.27.7"
+    "pyodide": "0.27.7"
   }
 }
