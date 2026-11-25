@@ -21,12 +21,16 @@ def apply_twice(function, value):
     return function(function(value))
 
 
+def double(value: int) -> int:
+    return value * 2
+
+
 def main() -> None:
     print(add(2, 3))
     print(greet("Анна"))
     print(greet("Ли", greeting="Добрый день"))
     print(min_max([4, 1, 9, 2]))
-    print("apply_twice:", apply_twice(lambda x: x * 2, 5))
+    print("apply_twice:", apply_twice(double, 5))
     print("docstring:", add.__doc__)
 
 
