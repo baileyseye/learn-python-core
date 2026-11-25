@@ -392,23 +392,6 @@ header.header {
   gap: clamp(2rem, 4vw, 4.5rem);
   align-items: center;
   padding: clamp(3rem, 7vw, 6rem) 0 clamp(2.5rem, 5vw, 4rem);
-  overflow: clip;
-}
-
-/*
- * Свечение героя должно затухать до границ блока: иначе overflow: clip
- * обрезает градиент по прямоугольнику и вокруг героя появляется контур.
- */
-.course-hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background:
-    radial-gradient(closest-side at 20% 32%, color-mix(in srgb, var(--course-accent) 16%, transparent), transparent 72%),
-    radial-gradient(closest-side at 84% 74%, color-mix(in srgb, var(--course-accent-2) 14%, transparent), transparent 72%);
-  filter: blur(10px);
-  pointer-events: none;
 }
 
 .hero-copy h1 {
@@ -577,6 +560,7 @@ header.header {
 .lesson-source-head > *,
 .source-toc > *,
 .module-grid > *,
+.module-card > *,
 .lesson-loop > *,
 .home-principles > *,
 .home-progress > *,

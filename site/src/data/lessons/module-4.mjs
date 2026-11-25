@@ -49,6 +49,74 @@ export default [
     ]
   },
   {
+    id: 'custom-exceptions',
+    title: 'Свои исключения',
+    summary: 'Иерархия ошибок приложения и цепочки причин.',
+    minutes: 8,
+    goal: 'Создавать собственные исключения, чтобы вызывающий код мог различать ошибки домена, а не разбирать текст сообщения.',
+    ideas: [
+      'Своё исключение — обычный класс, унаследованный от `Exception`.',
+      'Базовый класс приложения позволяет ловить все свои ошибки одним `except`.',
+      '`raise ... from error` сохраняет первопричину в `__cause__`.',
+      'Сообщение должно объяснять, что произошло, а не просто повторять имя класса.'
+    ],
+    sources: [
+      {
+        file: 'errors/02_custom_exceptions.py',
+        focus: [
+          {
+            function: 'validate_username',
+            note: 'Доменная проверка через ValidationError.'
+          },
+          {
+            function: 'find_user',
+            note: 'Своё исключение и цепочка from.'
+          },
+          {
+            function: 'UserNotFoundError',
+            note: 'Исключение с дополнительным полем.'
+          }
+        ]
+      }
+    ],
+    practice: {
+      task: 'Объяви `ValidationError(Exception)` и напиши `validate_age(age)`, который возвращает age, если 0 < age < 150, иначе поднимает ValidationError с понятным сообщением.',
+      hint: 'Проверь тип и диапазон. Для поднятия используй `raise ValidationError("...")`.',
+      starter: 'class ValidationError(Exception):\n    pass\n\n\ndef validate_age(age):\n    pass\n',
+      solution: 'class ValidationError(Exception):\n    pass\n\n\ndef validate_age(age):\n    if not isinstance(age, int):\n        raise ValidationError("возраст должен быть целым числом")\n    if not 0 < age < 150:\n        raise ValidationError("возраст должен быть от 1 до 149")\n    return age',
+      tests: [
+        'assert validate_age(27) == 27',
+        'try:\n    validate_age(200)\nexcept ValidationError:\n    pass\nelse:\n    raise AssertionError("ожидалось ValidationError")',
+        'try:\n    validate_age("27")\nexcept ValidationError:\n    pass\nelse:\n    raise AssertionError("ожидалось ValidationError для строки")'
+      ]
+    },
+    quiz: [
+      {
+        q: 'Зачем наследовать своё исключение от общего базового класса?',
+        options: [
+          'Чтобы ускорить обработку',
+          'Чтобы ловить все ошибки домена одним except',
+          'Чтобы исключение стало unchecked',
+          'Это обязательно'
+        ],
+        answer: 1,
+        explain: 'Иерархия позволяет различать группы ошибок и при этом обрабатывать их общим обработчиком.'
+      },
+      {
+        q: 'Что делает `raise NewError(...) from error`?',
+        options: [
+          'Удаляет старое исключение',
+          'Сохраняет исходную причину',
+          'Делает исключение глобальным',
+          'Печатает traceback'
+        ],
+        answer: 1,
+        explain: 'Исходное исключение остаётся доступным через `__cause__` и попадает в traceback.'
+      }
+    ]
+  },
+
+  {
     id: 'dataclasses',
     title: 'dataclass',
     summary: 'Данные без шаблонного кода: поля, значения по умолчанию, frozen.',
@@ -197,6 +265,69 @@ export default [
         options: ['Когда класс «является» частным случаем', 'Когда класс «содержит» другой объект', 'Всегда', 'Никогда'],
         answer: 1,
         explain: 'Если отношение не является наследованием, композиция обычно гибче и меньше связывает классы.'
+      }
+    ]
+  },
+  {
+    id: 'composition',
+    title: 'Композиция',
+    summary: 'Объект содержит другой объект и делегирует ему работу.',
+    minutes: 8,
+    goal: 'Отличать «является» от «содержит» и собирать классы из маленьких зависимостей.',
+    ideas: [
+      'Композиция — это отношение «содержит»: объект хранит другой объект.',
+      'Делегирование — метод вызывает метод вложенного объекта.',
+      'Композиция гибче наследования, когда нет отношения «является».',
+      'Зависимость можно заменить, не меняя код класса.'
+    ],
+    sources: [
+      {
+        file: 'oop/07_composition.py',
+        focus: [
+          {
+            function: 'Engine',
+            note: 'Маленькая зависимость с поведением.'
+          },
+          {
+            function: 'Car',
+            note: 'Хранит Engine и делегирует запуск.'
+          }
+        ]
+      }
+    ],
+    practice: {
+      task: 'Создай `Logger` с методом `log(message)` → `[LOG] <message>` и `Service(name, logger)` с методом `run()`, который возвращает `<name>: <лог о запуске>`. Используй композицию.',
+      hint: 'Service хранит logger в `self.logger`, а `run` вызывает `self.logger.log("started")`.',
+      starter: 'class Logger:\n    pass\n\n\nclass Service:\n    def __init__(self, name, logger):\n        pass\n\n    def run(self):\n        pass\n',
+      solution: 'class Logger:\n    def log(self, message):\n        return f"[LOG] {message}"\n\n\nclass Service:\n    def __init__(self, name, logger):\n        self.name = name\n        self.logger = logger\n\n    def run(self):\n        return f"{self.name}: {self.logger.log(\'started\')}"\n',
+      tests: [
+        'assert Service("api", Logger()).run() == "api: [LOG] started"',
+        'class Fake:\n    def log(self, message):\n        return message.upper()\nassert Service("x", Fake()).run() == "x: STARTED"',
+        'assert isinstance(Service("x", Logger()).logger, Logger)'
+      ]
+    },
+    quiz: [
+      {
+        q: 'Какое отношение описывает композиция?',
+        options: [
+          '«является»',
+          '«содержит»',
+          '«наследует»',
+          '«копирует»'
+        ],
+        answer: 1,
+        explain: 'Композиция — объект содержит другой объект и использует его поведение.'
+      },
+      {
+        q: 'Когда композиция лучше наследования?',
+        options: [
+          'Когда классы связаны отношением «является»',
+          'Когда один объект должен использовать поведение другого',
+          'Когда нужно запретить замену зависимости',
+          'Всегда'
+        ],
+        answer: 1,
+        explain: 'Если отношение не «является», композиция обычно гибче и меньше связывает классы.'
       }
     ]
   },

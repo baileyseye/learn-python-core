@@ -103,6 +103,79 @@ export default [
     ]
   },
   {
+    id: 'write-tests',
+    title: 'Пишем тесты',
+    summary: 'Обычный случай, границы и проверка того, что тест ловит поломку.',
+    minutes: 9,
+    goal: 'Научиться писать тесты, которые проверяют поведение и действительно падают при ошибке.',
+    ideas: [
+      'Тест — функция `test_*` с `assert` внутри.',
+      'Покрой обычный случай, границу и ошибочный ввод.',
+      'Хороший тест падает, если поведение сломали, а не просто выполняется без ошибок.',
+      'Проверяй наблюдаемый результат, а не внутренние переменные.'
+    ],
+    sources: [
+      {
+        file: 'testing/06_write_tests.py',
+        focus: [
+          {
+            function: 'slugify',
+            note: 'Функция, которую тестируем.'
+          },
+          {
+            function: 'test_slugify_simple',
+            note: 'Обычный случай.'
+          },
+          {
+            function: 'test_slugify_spaces',
+            note: 'Граница с пробелами.'
+          },
+          {
+            function: 'test_slugify_empty',
+            note: 'Пустая строка.'
+          }
+        ]
+      }
+    ],
+    practice: {
+      task: 'Функция `slugify` уже написана. Заполни три теста: обычный заголовок, лишние пробелы и пустую строку. Проверка затем специально сломает `slugify` — тесты должны это заметить.',
+      hint: 'В каждом тесте вызови `slugify` и сравни результат через `assert`. Для пустой строки ожидается пустая строка.',
+      starter: 'def slugify(title):\n    return "-".join(title.lower().split())\n\n\ndef test_slugify_basic():\n    pass\n\n\ndef test_slugify_spaces():\n    pass\n\n\ndef test_slugify_empty():\n    pass\n',
+      solution: 'def slugify(title):\n    return "-".join(title.lower().split())\n\n\ndef test_slugify_basic():\n    assert slugify("Learn Python Core") == "learn-python-core"\n\n\ndef test_slugify_spaces():\n    assert slugify("  A  B  ") == "a-b"\n\n\ndef test_slugify_empty():\n    assert slugify("") == ""\n',
+      tests: [
+        'test_slugify_basic()',
+        'test_slugify_spaces()',
+        'test_slugify_empty()',
+        'original = slugify\n\ndef broken(title):\n    return title\n\nslugify = broken\ncaught = False\nfor test in (test_slugify_basic, test_slugify_spaces, test_slugify_empty):\n    try:\n        test()\n    except AssertionError:\n        caught = True\nif not caught:\n    raise AssertionError("тесты не поймали поломку")\nslugify = original'
+      ]
+    },
+    quiz: [
+      {
+        q: 'Что проверяет хороший тест?',
+        options: [
+          'Каждую строку реализации',
+          'Наблюдаемое поведение',
+          'Скорость интерпретатора',
+          'Стиль кода'
+        ],
+        answer: 1,
+        explain: 'Тест фиксирует результат, который важен пользователю функции, а не детали реализации.'
+      },
+      {
+        q: 'Зачем проверять, что тест падает на сломанной версии?',
+        options: [
+          'Чтобы ускорить тесты',
+          'Чтобы убедиться, что тест действительно что-то проверяет',
+          'Чтобы уменьшить покрытие',
+          'Это требование Python'
+        ],
+        answer: 1,
+        explain: 'Тест, который проходит всегда, бесполезен; он должен замечать изменение поведения.'
+      }
+    ]
+  },
+
+  {
     id: 'typing',
     title: 'Аннотации типов',
     summary: 'Подсказки типов, TypedDict, Protocol и проверка mypy.',
@@ -251,5 +324,78 @@ export default [
         explain: 'Это стандартный файл конфигурации современного Python-проекта.'
       }
     ]
-  }
+  },
+  {
+    id: 'notes-project',
+    title: 'Мини-проект: заметки',
+    summary: 'Функции, исключения, JSON и поиск в одном маленьком модуле.',
+    minutes: 10,
+    goal: 'Собрать изученные инструменты в небольшой модуль с понятными функциями и проверяемым поведением.',
+    ideas: [
+      'Проект собирается из маленьких функций с одной ответственностью.',
+      'Ошибочный ввод отсекается на границе: пустой заголовок — `ValueError`.',
+      'Внутри программы удобны списки и словари, а JSON — формат хранения.',
+      '`ensure_ascii=False` сохраняет кириллицу читаемой.'
+    ],
+    sources: [
+      {
+        file: 'testing/07_notes_project.py',
+        focus: [
+          {
+            function: 'add_note',
+            note: 'Добавление с проверкой входа.'
+          },
+          {
+            function: 'find_notes',
+            note: 'Поиск без учёта регистра.'
+          },
+          {
+            function: 'to_json',
+            note: 'Сохранение в JSON.'
+          },
+          {
+            function: 'from_json',
+            note: 'Загрузка из JSON.'
+          }
+        ]
+      }
+    ],
+    practice: {
+      task: 'Собери модуль заметок: `add_note(notes, title, text)` (пустой заголовок → `ValueError`), `find_notes(notes, query)` (поиск по заголовку и тексту без учёта регистра), `to_json(notes)` и `from_json(text)`.',
+      hint: 'Для поиска приведи query и поля к нижнему регистру. Для JSON используй `json.dumps(..., ensure_ascii=False)` и `json.loads`.',
+      starter: 'import json\n\n\ndef add_note(notes, title, text):\n    pass\n\n\ndef find_notes(notes, query):\n    pass\n\n\ndef to_json(notes):\n    pass\n\n\ndef from_json(text):\n    pass\n',
+      solution: 'import json\n\n\ndef add_note(notes, title, text):\n    if not title.strip():\n        raise ValueError("заголовок не может быть пустым")\n    notes.append({"title": title.strip(), "text": text.strip()})\n    return notes\n\n\ndef find_notes(notes, query):\n    query = query.lower()\n    return [\n        note\n        for note in notes\n        if query in note["title"].lower() or query in note["text"].lower()\n    ]\n\n\ndef to_json(notes):\n    return json.dumps(notes, ensure_ascii=False)\n\n\ndef from_json(text):\n    return json.loads(text)\n',
+      tests: [
+        'notes = []\nadd_note(notes, "Python", "Читать код")\nassert notes == [{"title": "Python", "text": "Читать код"}]',
+        'notes = [{"title": "Python", "text": "Читать код"}]\nassert find_notes(notes, "python") == notes\nassert find_notes(notes, "код") == notes\nassert find_notes(notes, "sql") == []',
+        'try:\n    add_note([], "  ", "x")\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError("ожидалось ValueError")',
+        'notes = [{"title": "Python", "text": "Читать код"}]\nassert "Python" in to_json(notes)\nassert from_json(to_json(notes)) == notes'
+      ]
+    },
+    quiz: [
+      {
+        q: 'Где проверять пустой заголовок заметки?',
+        options: [
+          'При каждом чтении JSON',
+          'На границе добавления заметки',
+          'Только в тестах',
+          'В `print`'
+        ],
+        answer: 1,
+        explain: 'Проверка на границе не пускает некорректные данные внутрь программы.'
+      },
+      {
+        q: 'Зачем в `json.dumps` нужен `ensure_ascii=False`?',
+        options: [
+          'Чтобы ускорить сериализацию',
+          'Чтобы кириллица осталась читаемой',
+          'Чтобы JSON стал короче',
+          'Чтобы сохранить даты'
+        ],
+        answer: 1,
+        explain: 'По умолчанию кириллица превращается в `\\uXXXX`; с `ensure_ascii=False` строка остаётся читаемой.'
+      }
+    ]
+  },
+
 ];

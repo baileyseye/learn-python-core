@@ -1,5 +1,68 @@
 export default [
   {
+    id: 'http-client',
+    title: 'HTTP-клиент',
+    summary: 'URL, статус-коды и JSON-ответ.',
+    minutes: 8,
+    goal: 'Разобрать, из чего состоит HTTP-запрос и ответ, и научиться читать URL и статус.',
+    ideas: [
+      'URL состоит из схемы, хоста, пути и параметров запроса.',
+      '`urlparse` разбирает адрес, `parse_qs` превращает строку параметров в словарь.',
+      'Статусы 2xx — успех, 4xx — ошибка клиента, 5xx — ошибка сервера.',
+      'Ответ API часто приходит в JSON и превращается в словарь или список.'
+    ],
+    sources: [
+      {
+        file: 'web/00_http_client.py',
+        focus: [
+          {
+            function: 'parse_url',
+            note: 'Схема, хост, путь и query.'
+          },
+          {
+            function: 'is_success',
+            note: 'Проверка статуса 2xx.'
+          }
+        ]
+      }
+    ],
+    practice: {
+      task: 'Напиши `parse_url(url)` → словарь с `scheme`, `host`, `path` (по умолчанию `/`) и `query`, а также `is_success(status)` → `True` для 2xx.',
+      hint: 'Используй `urlparse` и `parse_qs` из `urllib.parse`. Для успеха проверь `200 <= status < 300`.',
+      starter: 'def parse_url(url):\n    pass\n\n\ndef is_success(status):\n    pass\n',
+      solution: 'from urllib.parse import parse_qs, urlparse\n\n\ndef parse_url(url):\n    parsed = urlparse(url)\n    return {\n        "scheme": parsed.scheme,\n        "host": parsed.hostname,\n        "path": parsed.path or "/",\n        "query": parse_qs(parsed.query),\n    }\n\n\ndef is_success(status):\n    return 200 <= status < 300\n',
+      tests: [
+        'data = parse_url("https://example.com/api?page=2&limit=10")\nassert data["scheme"] == "https"\nassert data["host"] == "example.com"\nassert data["path"] == "/api"\nassert data["query"] == {"page": ["2"], "limit": ["10"]}',
+        'assert parse_url("https://example.com")["path"] == "/"',
+        'assert is_success(200) is True\nassert is_success(204) is True\nassert is_success(404) is False\nassert is_success(500) is False'
+      ]
+    },
+    quiz: [
+      {
+        q: 'Что означает статус 404?',
+        options: [
+          'Успех',
+          'Ошибка клиента: ресурс не найден',
+          'Ошибка сервера',
+          'Перенаправление'
+        ],
+        answer: 1,
+        explain: '4xx — ошибки на стороне клиента; 404 — конкретный ресурс не найден.'
+      },
+      {
+        q: 'Зачем разбирать URL на части?',
+        options: [
+          'Чтобы получить хост, путь и параметры по отдельности',
+          'Чтобы ускорить сеть',
+          'Чтобы зашифровать запрос',
+          'Это требование JSON'
+        ],
+        answer: 0,
+        explain: 'Из частей URL собирают запросы, проверяют домен и читают параметры.'
+      }
+    ]
+  },
+  {
     id: 'http-basics',
     title: 'HTTP своими руками',
     summary: 'Метод, путь, маршрут и ответ — что скрывает фреймворк.',
@@ -48,6 +111,69 @@ export default [
         options: ['Имя файла', 'Переменную часть пути', 'HTTP-заголовок', 'Статус-код'],
         answer: 1,
         explain: 'Фреймворк извлекает значение из URL и передаёт его в обработчик.'
+      }
+    ]
+  },
+  {
+    id: 'pydantic',
+    title: 'Pydantic и валидация',
+    summary: 'Модели данных, типы и понятные ошибки.',
+    minutes: 10,
+    goal: 'Валидировать входные данные декларативно и понимать, какую работу Pydantic делает за разработчика.',
+    ideas: [
+      'Модель Pydantic — класс с аннотированными полями, который проверяет данные при создании.',
+      '`Field(gt=0, lt=150)` задаёт ограничения на число.',
+      'При ошибке выбрасывается `ValidationError` с перечнем проблем.',
+      'Валидация на границе приложения защищает внутренний код от грязных данных.'
+    ],
+    sources: [
+      {
+        file: 'web/03_pydantic.py',
+        focus: [
+          {
+            function: 'validate_user',
+            note: 'Ручная валидация без зависимостей.'
+          },
+          {
+            function: 'try_pydantic',
+            note: 'Та же идея через Pydantic, если он установлен.'
+          }
+        ]
+      }
+    ],
+    practice: {
+      task: 'Напиши `validate_user(email, age, name)`: email должен содержать `@`, возраст быть от 1 до 149, имя непустым. Верни словарь с нормализованными данными, иначе ValueError.',
+      hint: 'Нормализуй email к нижнему регистру, имя через strip. Проверяй условия по порядку.',
+      starter: 'def validate_user(email, age, name):\n    pass\n',
+      solution: 'def validate_user(email, age, name):\n    if "@" not in email:\n        raise ValueError("email должен содержать @")\n    if not 0 < age < 150:\n        raise ValueError("возраст должен быть от 1 до 149")\n    if not name.strip():\n        raise ValueError("имя не может быть пустым")\n    return {"email": email.lower(), "age": age, "name": name.strip()}',
+      tests: [
+        'assert validate_user("Anna@Example.com", 27, " Анна ") == {"email": "anna@example.com", "age": 27, "name": "Анна"}',
+        'try:\n    validate_user("wrong", 20, "Анна")\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError("ожидалось ValueError")',
+        'try:\n    validate_user("a@b.c", 200, "Анна")\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError("ожидалось ValueError")'
+      ]
+    },
+    quiz: [
+      {
+        q: 'Когда Pydantic проверяет данные?',
+        options: [
+          'При импорте модуля',
+          'При создании модели',
+          'Только при сериализации в JSON',
+          'Раз в минуту'
+        ],
+        answer: 1,
+        explain: 'Валидация выполняется в момент создания объекта модели.'
+      },
+      {
+        q: 'Что лучше валидировать на границе приложения?',
+        options: [
+          'Внутренние переменные циклов',
+          'Входные данные API',
+          'Имена функций',
+          'Комментарии'
+        ],
+        answer: 1,
+        explain: 'После проверки внутри можно работать с уже проверенными данными.'
       }
     ]
   },
@@ -101,56 +227,7 @@ export default [
       }
     ]
   },
-  {
-    id: 'pydantic',
-    title: 'Pydantic и валидация',
-    summary: 'Модели данных, типы и понятные ошибки.',
-    minutes: 10,
-    goal:
-      'Валидировать входные данные декларативно и понимать, какую работу Pydantic делает за разработчика.',
-    ideas: [
-      'Модель Pydantic — класс с аннотированными полями, который проверяет данные при создании.',
-      '`Field(gt=0, lt=150)` задаёт ограничения на число.',
-      'При ошибке выбрасывается `ValidationError` с перечнем проблем.',
-      'Валидация на границе приложения защищает внутренний код от грязных данных.'
-    ],
-    sources: [
-      {
-        file: 'web/03_pydantic.py',
-        focus: [
-          { function: 'validate_user', note: 'Ручная валидация без зависимостей.' },
-          { function: 'try_pydantic', note: 'Та же идея через Pydantic, если он установлен.' }
-        ]
-      }
-    ],
-    practice: {
-      task:
-        'Напиши `validate_user(email, age, name)`: email должен содержать `@`, возраст быть от 1 до 149, имя непустым. Верни словарь с нормализованными данными, иначе ValueError.',
-      hint: 'Нормализуй email к нижнему регистру, имя через strip. Проверяй условия по порядку.',
-      starter: 'def validate_user(email, age, name):\n    pass\n',
-      solution:
-        'def validate_user(email, age, name):\n    if "@" not in email:\n        raise ValueError("email должен содержать @")\n    if not 0 < age < 150:\n        raise ValueError("возраст должен быть от 1 до 149")\n    if not name.strip():\n        raise ValueError("имя не может быть пустым")\n    return {"email": email.lower(), "age": age, "name": name.strip()}',
-      tests: [
-        'assert validate_user("Anna@Example.com", 27, " Анна ") == {"email": "anna@example.com", "age": 27, "name": "Анна"}',
-        'try:\n    validate_user("wrong", 20, "Анна")\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError("ожидалось ValueError")',
-        'try:\n    validate_user("a@b.c", 200, "Анна")\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError("ожидалось ValueError")'
-      ]
-    },
-    quiz: [
-      {
-        q: 'Когда Pydantic проверяет данные?',
-        options: ['При импорте модуля', 'При создании модели', 'Только при сериализации в JSON', 'Раз в минуту'],
-        answer: 1,
-        explain: 'Валидация выполняется в момент создания объекта модели.'
-      },
-      {
-        q: 'Что лучше валидировать на границе приложения?',
-        options: ['Внутренние переменные циклов', 'Входные данные API', 'Имена функций', 'Комментарии'],
-        answer: 1,
-        explain: 'После проверки внутри можно работать с уже проверенными данными.'
-      }
-    ]
-  },
+
   {
     id: 'sqlite',
     title: 'SQLite',
@@ -203,6 +280,72 @@ export default [
     ]
   },
   {
+    id: 'sql-practice',
+    title: 'SQL-практикум',
+    summary: 'SELECT, параметры и чтение результата через sqlite3.',
+    minutes: 10,
+    goal: 'Выполнять реальные SQL-запросы из Python и безопасно передавать значения через параметры.',
+    ideas: [
+      '`connection.execute(sql, params)` выполняет запрос и возвращает курсор.',
+      '`?` подставляет значение безопасно; не склеивай SQL через f-строку.',
+      '`fetchone()` возвращает одну строку или `None`, `fetchall()` — все.',
+      '`executemany()` вставляет несколько строк за один вызов.'
+    ],
+    sources: [
+      {
+        file: 'web/06_sql_practice.py',
+        focus: [
+          {
+            function: 'setup',
+            note: 'Создание таблицы и пакетная вставка.'
+          },
+          {
+            function: 'find_user',
+            note: 'SELECT с параметром.'
+          },
+          {
+            function: 'count_users',
+            note: 'Агрегатный запрос.'
+          }
+        ]
+      }
+    ],
+    practice: {
+      task: 'Дана таблица `users(id, name)`. Напиши `find_user(connection, name)` → `(id, name)` или `None` и `count_users(connection)` → количество строк. Используй параметры `?`.',
+      hint: 'Для поиска: `SELECT id, name FROM users WHERE name = ?` и `(name,)`. Для количества: `SELECT COUNT(*) FROM users`.',
+      starter: 'def find_user(connection, name):\n    pass\n\n\ndef count_users(connection):\n    pass\n',
+      solution: 'def find_user(connection, name):\n    return connection.execute(\n        "SELECT id, name FROM users WHERE name = ?", (name,)\n    ).fetchone()\n\n\ndef count_users(connection):\n    return connection.execute("SELECT COUNT(*) FROM users").fetchone()[0]\n',
+      tests: [
+        'import sqlite3\nconnection = sqlite3.connect(":memory:")\nconnection.execute("CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT NOT NULL)")\nconnection.executemany("INSERT INTO users (name) VALUES (?)", [("Анна",), ("Борис",)])\nassert find_user(connection, "Анна") == (1, "Анна")\nassert find_user(connection, "нет") is None\nassert count_users(connection) == 2\nconnection.close()'
+      ]
+    },
+    quiz: [
+      {
+        q: 'Почему значения передают через `?`, а не через f-строку?',
+        options: [
+          'Это быстрее',
+          'Это защищает от SQL-инъекций',
+          'SQLite не понимает f-строки',
+          'Так короче'
+        ],
+        answer: 1,
+        explain: 'Параметры отделяют данные от SQL-кода и не дают подставить опасную конструкцию.'
+      },
+      {
+        q: 'Что вернёт `fetchone()`, если строк нет?',
+        options: [
+          'Пустой список',
+          'None',
+          '0',
+          'Ошибку'
+        ],
+        answer: 1,
+        explain: '`fetchone` возвращает `None`, когда результатов больше нет.'
+      }
+    ]
+  },
+
+  {
     id: 'async',
     title: 'async/await',
     summary: 'Конкурентный ввод-вывод без потоков и лишней сложности.',
@@ -251,5 +394,69 @@ export default [
         explain: 'Async выигрывает там, где программа большую часть времени ждёт внешние операции.'
       }
     ]
-  }
+  },
+  {
+    id: 'async-gather',
+    title: 'async: gather и таймауты',
+    summary: 'Конкурентный запуск корутин и ограничение ожидания.',
+    minutes: 9,
+    goal: 'Запускать несколько асинхронных операций одновременно и не ждать зависшую операцию бесконечно.',
+    ideas: [
+      '`asyncio.gather(*tasks)` запускает корутины конкурентно и возвращает результаты в исходном порядке.',
+      '`asyncio.wait_for(coroutine, timeout)` ограничивает время ожидания.',
+      'При таймауте поднимается `asyncio.TimeoutError`; его можно обработать и вернуть запасной результат.',
+      '`gather` удобен для параллельных запросов, но не ускоряет CPU-вычисления.'
+    ],
+    sources: [
+      {
+        file: 'web/07_async_gather.py',
+        focus: [
+          {
+            function: 'fetch_all',
+            note: 'gather для нескольких имён.'
+          },
+          {
+            function: 'fetch_with_timeout',
+            note: 'wait_for и TimeoutError.'
+          }
+        ]
+      }
+    ],
+    practice: {
+      task: 'Напиши `fetch_all(names)` — запускает `fetch(name)` для всех имён через gather и возвращает список результатов, и `fetch_with_timeout(name, timeout)` — возвращает результат `fetch(name, delay=0.05)` или `None` при таймауте.',
+      hint: 'Для gather распакуй корутины: `await asyncio.gather(*(fetch(name) for name in names))`. Для таймаута используй `asyncio.wait_for`.',
+      starter: 'import asyncio\n\n\nasync def fetch(name, delay=0):\n    await asyncio.sleep(delay)\n    return {"name": name}\n\n\nasync def fetch_all(names):\n    pass\n\n\nasync def fetch_with_timeout(name, timeout):\n    pass\n',
+      solution: 'import asyncio\n\n\nasync def fetch(name, delay=0):\n    await asyncio.sleep(delay)\n    return {"name": name}\n\n\nasync def fetch_all(names):\n    return await asyncio.gather(*(fetch(name) for name in names))\n\n\nasync def fetch_with_timeout(name, timeout):\n    try:\n        return await asyncio.wait_for(fetch(name, delay=0.05), timeout)\n    except asyncio.TimeoutError:\n        return None\n',
+      tests: [
+        'assert await fetch_all(["a", "b"]) == [{"name": "a"}, {"name": "b"}]',
+        'assert await fetch_with_timeout("ok", 1) == {"name": "ok"}',
+        'assert await fetch_with_timeout("slow", 0.001) is None'
+      ]
+    },
+    quiz: [
+      {
+        q: 'Что делает `asyncio.gather`?',
+        options: [
+          'Запускает корутины по очереди',
+          'Запускает корутины конкурентно и собирает результаты',
+          'Создаёт новый поток',
+          'Ускоряет CPU-вычисления'
+        ],
+        answer: 1,
+        explain: 'Gather передаёт управление задачам, пока они ждут ввода-вывода, и собирает результаты.'
+      },
+      {
+        q: 'Какое исключение поднимает `asyncio.wait_for` при таймауте?',
+        options: [
+          'TimeoutError',
+          'asyncio.TimeoutError',
+          'ValueError',
+          'StopIteration'
+        ],
+        answer: 1,
+        explain: 'В asyncio используется `asyncio.TimeoutError`; в новых версиях он совместим со встроенным `TimeoutError`.'
+      }
+    ]
+  },
+
 ];

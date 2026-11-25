@@ -1,5 +1,63 @@
 export default [
   {
+    id: 'read-code',
+    title: 'Как читать программу',
+    summary: 'Комментарии, строки, отступы и первое чтение ошибок.',
+    minutes: 5,
+    goal: 'Научиться читать простую программу по строкам, отличать комментарий от кода и не пугаться `SyntaxError`.',
+    ideas: [
+      'Комментарий начинается с `#` и нужен людям: Python его не выполняет.',
+      'Текст в кавычках — строка; кавычки должны быть парными.',
+      'Python выполняет файл сверху вниз, строка за строкой.',
+      '`SyntaxError` указывает на строку, где сломалась запись; начинай разбор оттуда.'
+    ],
+    sources: [
+      {
+        file: 'basics/00_reading.py',
+        focus: [
+          {
+            function: 'main',
+            note: 'Комментарии, две строки вывода и точка входа.'
+          }
+        ]
+      }
+    ],
+    practice: {
+      task: 'В стартовом коде есть опечатка в имени функции и незакрытая кавычка. Исправь программу, чтобы она вывела `Привет, Python!` и `Я читаю код`.',
+      hint: 'Сравни каждую строку с рабочей: правильное имя `print`, парные кавычки, без лишних отступов.',
+      starter: '# Исправь программу: она должна вывести две строки.\nprnt("Привет, Python!")\nprint("Я читаю код)\n',
+      solution: 'print("Привет, Python!")\nprint("Я читаю код")\n',
+      tests: [
+        'assert "Привет, Python!" in stdout',
+        'assert "Я читаю код" in stdout'
+      ]
+    },
+    quiz: [
+      {
+        q: 'Что делает строка, начинающаяся с `#`?',
+        options: [
+          'Выводит текст',
+          'Объясняет код и не выполняется',
+          'Создаёт переменную',
+          'Запускает функцию'
+        ],
+        answer: 1,
+        explain: 'Комментарий нужен читателю; интерпретатор его пропускает.'
+      },
+      {
+        q: 'На что смотреть в первую очередь при `SyntaxError`?',
+        options: [
+          'На последнюю строку файла',
+          'На строку, указанную в сообщении',
+          'На имя переменной окружения',
+          'На размер файла'
+        ],
+        answer: 1,
+        explain: 'Сообщение содержит файл и номер строки, где Python не смог разобрать код.'
+      }
+    ]
+  },
+  {
     id: 'hello-python',
     title: 'Первая программа',
     summary: 'Как запускается Python-файл, зачем нужен __main__ и как вывести текст.',
@@ -22,11 +80,10 @@ export default [
       }
     ],
     practice: {
-      task: 'Выведи две строки: `Hello, Python!` и любое приветствие от себя. Затем оберни вывод в функцию `main()` и вызови её.',
+      task: 'Выведи две строки: `Hello, Python!` и любое приветствие от себя.',
       hint: 'Каждый `print()` выводит отдельную строку. Проверка смотрит на реальный stdout.',
       starter: 'print("Hello, Python!")\n',
-      solution:
-        'def main() -> None:\n    print("Hello, Python!")\n    print("Я учу Python")\n\n\nif __name__ == "__main__":\n    main()',
+      solution: 'print("Hello, Python!")\nprint("Я учу Python")\n',
       tests: [
         'assert "Hello, Python!" in stdout',
         'assert len([line for line in stdout.splitlines() if line.strip()]) >= 2'
@@ -47,6 +104,74 @@ export default [
       }
     ]
   },
+  {
+    id: 'functions-basics',
+    title: 'Функции: первый взгляд',
+    summary: 'def, параметры, return и вызов функции.',
+    minutes: 6,
+    goal: 'Понять, как объявить функцию, передать ей значения и вернуть результат, чтобы уверенно читать и писать практики курса.',
+    ideas: [
+      '`def greet(name):` объявляет функцию; тело пишется с отступом.',
+      'Параметры — имена внутри скобок; при вызове им передаются значения.',
+      '`return` возвращает результат и завершает функцию; без `return` получается `None`.',
+      'Функцию нужно вызвать: объявление само по себе ничего не выполняет.'
+    ],
+    sources: [
+      {
+        file: 'basics/01_functions.py',
+        focus: [
+          {
+            function: 'greet',
+            note: 'Параметр и возврат строки.'
+          },
+          {
+            function: 'add',
+            note: 'Два параметра и сумма.'
+          },
+          {
+            function: 'main',
+            note: 'Вызов функций и печать результата.'
+          }
+        ]
+      }
+    ],
+    practice: {
+      task: 'Напиши `greet(name)`, возвращающую `Привет, <name>!`, и `add(a, b)`, возвращающую сумму. В `main()` выведи `greet("мир")`.',
+      hint: 'Внутри функции используй `return`. В `main` вызови `print(greet("мир"))`.',
+      starter: 'def greet(name):\n    pass\n\n\ndef add(a, b):\n    pass\n\n\ndef main():\n    pass\n\n\nmain()\n',
+      solution: 'def greet(name):\n    return f"Привет, {name}!"\n\n\ndef add(a, b):\n    return a + b\n\n\ndef main():\n    print(greet("мир"))\n\n\nmain()\n',
+      tests: [
+        'assert greet("Анна") == "Привет, Анна!"',
+        'assert add(2, 3) == 5',
+        'assert "Привет, мир!" in stdout'
+      ]
+    },
+    quiz: [
+      {
+        q: 'Что вернёт функция без `return`?',
+        options: [
+          '0',
+          'Пустую строку',
+          'None',
+          'Ошибку'
+        ],
+        answer: 2,
+        explain: 'Если `return` не указан, функция неявно возвращает `None`.'
+      },
+      {
+        q: 'Что произойдёт после `def greet(name): ...`, если не вызвать `greet()`?',
+        options: [
+          'Функция выполнится один раз',
+          'Ничего не выполнится',
+          'Появится ошибка',
+          'Python вызовет её автоматически'
+        ],
+        answer: 1,
+        explain: 'Объявление только создаёт функцию; для выполнения нужен вызов.'
+      }
+    ]
+  },
+
   {
     id: 'variables',
     title: 'Переменные и типы',
@@ -103,6 +228,70 @@ export default [
         options: ['int', 'str', '42', 'string'],
         answer: 1,
         explain: 'Кавычки создают строку, даже если внутри цифры.'
+      }
+    ]
+  },
+  {
+    id: 'dicts-basics',
+    title: 'Словари: первый взгляд',
+    summary: 'Ключи, значения и безопасный get.',
+    minutes: 6,
+    goal: 'Научиться хранить именованные данные в словаре и безопасно читать значение по ключу.',
+    ideas: [
+      'Словарь `{"name": "Анна"}` хранит пары «ключ — значение».',
+      'Доступ `data["key"]` падает с `KeyError`, если ключа нет.',
+      '`data.get("key", default)` возвращает значение или запасной вариант.',
+      'Новое поле добавляется присваиванием: `data["city"] = "Москва"`.'
+    ],
+    sources: [
+      {
+        file: 'basics/02_dicts.py',
+        focus: [
+          {
+            function: 'make_profile',
+            note: 'Словарь из двух полей.'
+          },
+          {
+            function: 'get_age',
+            note: 'Безопасное чтение через get.'
+          }
+        ]
+      }
+    ],
+    practice: {
+      task: 'Напиши `make_profile(name, age)`, возвращающую словарь с ключами `name` и `age`, и `get_age(profile, default=0)`, возвращающую возраст или `default`.',
+      hint: 'Для создания словаря используй фигурные скобки. Для чтения — `profile.get("age", default)`.',
+      starter: 'def make_profile(name, age):\n    pass\n\n\ndef get_age(profile, default=0):\n    pass\n',
+      solution: 'def make_profile(name, age):\n    return {"name": name, "age": age}\n\n\ndef get_age(profile, default=0):\n    return profile.get("age", default)\n',
+      tests: [
+        'assert make_profile("Анна", 27) == {"name": "Анна", "age": 27}',
+        'assert get_age({"age": 30}) == 30',
+        'assert get_age({}, 18) == 18',
+        'assert get_age({"name": "x"}, -1) == -1'
+      ]
+    },
+    quiz: [
+      {
+        q: 'Чем `data.get("age")` отличается от `data["age"]` при отсутствии ключа?',
+        options: [
+          'get возвращает None, доступ по ключу падает с KeyError',
+          'get падает, доступ возвращает None',
+          'Оба падают',
+          'Оба возвращают 0'
+        ],
+        answer: 0,
+        explain: '`get` возвращает значение по умолчанию, а `[]` выбрасывает `KeyError`.'
+      },
+      {
+        q: 'Как добавить в словарь ключ `city`?',
+        options: [
+          'data.add("city")',
+          'data["city"] = "Москва"',
+          'data.append("city")',
+          'data.get("city")'
+        ],
+        answer: 1,
+        explain: 'Присваивание по новому ключу добавляет поле.'
       }
     ]
   },
@@ -182,15 +371,14 @@ export default [
     ],
     practice: {
       task:
-        'Напиши `normalize(name)`, которая убирает пробелы по краям и приводит имя к виду «Анна Петрова», и `initials(full_name)`, возвращающую инициалы через точку: `А.П.`.',
-      hint: '`strip()` убирает пробелы, `title()` делает заглавные буквы. Для инициалов удобен `split()` и генератор.',
-      starter: 'def normalize(name):\n    pass\n\n\ndef initials(full_name):\n    pass\n',
-      solution:
-        'def normalize(name):\n    return name.strip().title()\n\n\ndef initials(full_name):\n    parts = full_name.split()\n    return ".".join(part[0].upper() for part in parts) + "."',
+        'Напиши `normalize(name)` — убрать пробелы по краям и сделать заглавные буквы, `first_char(text)` — первый символ и `replace_spaces(text)` — заменить пробелы на дефисы.',
+      hint: '`strip()` убирает пробелы, `title()` делает заглавные. Первый символ — `text[0]`. Замена — `text.replace(" ", "-")`.',
+      starter: 'def normalize(name):\n    pass\n\n\ndef first_char(text):\n    pass\n\n\ndef replace_spaces(text):\n    pass\n',
+      solution: 'def normalize(name):\n    return name.strip().title()\n\n\ndef first_char(text):\n    return text[0]\n\n\ndef replace_spaces(text):\n    return text.replace(" ", "-")\n',
       tests: [
         'assert normalize("  анна петрова ") == "Анна Петрова"',
-        'assert initials("анна петрова") == "А.П."',
-        'assert initials("борис") == "Б."'
+        'assert first_char("Python") == "P"',
+        'assert replace_spaces("learn python core") == "learn-python-core"'
       ]
     },
     quiz: [
@@ -344,7 +532,7 @@ export default [
       solution:
         'def apply_twice(function, value):\n    return function(function(value))\n\n\ndef min_max(numbers):\n    return min(numbers), max(numbers)',
       tests: [
-        'assert apply_twice(lambda x: x * 2, 3) == 12',
+        'def double(value):\n    return value * 2\nassert apply_twice(double, 3) == 12',
         'assert apply_twice(str.upper, "ab") == "AB"',
         'assert min_max([4, 1, 9, 2]) == (1, 9)'
       ]
@@ -388,15 +576,15 @@ export default [
     ],
     practice: {
       task:
-        'Напиши `format_receipt(items)`, где items — список пар (название, цена). Верни многострочный чек с заголовком `Итого` и суммой.',
-      hint: 'Собери строки в список и соедини через `"\\n".join(lines)`. Сумма — `sum(price for _, price in items)`.',
-      starter: 'def format_receipt(items):\n    pass\n',
-      solution:
-        'def format_receipt(items):\n    lines = ["Товар            Цена", "-" * 22]\n    for title, price in items:\n        lines.append(f"{title:<16}{price:>6}")\n    lines.append("-" * 22)\n    lines.append(f"{\'Итого\':<16}{sum(price for _, price in items):>6}")\n    return "\\n".join(lines)',
+        'Напиши `format_price(amount)` — цену с пробелом между тысячами и знаком `₽`, и `format_row(label, value)` — строку, где label занимает 12 символов слева, а value — 6 символов справа.',
+      hint: 'Для цены подойдёт f-строка с `:,`, затем замени запятую на пробел. Для строки — `f"{label:<12}{value:>6}"`.',
+      starter: 'def format_price(amount):\n    pass\n\n\ndef format_row(label, value):\n    pass\n',
+      solution: 'def format_price(amount):\n    return f"{amount:,}".replace(",", " ") + " ₽"\n\n\ndef format_row(label, value):\n    return f"{label:<12}{value:>6}"\n',
       tests: [
-        'assert "Итого" in format_receipt([("Книга", 1200)])',
-        'assert "6100" in format_receipt([("Книга", 1200), ("Курс", 4900)])',
-        'assert format_receipt([]).splitlines()[-1].strip().endswith("0")'
+        'assert format_price(1200) == "1 200 ₽"',
+        'assert format_price(0) == "0 ₽"',
+        'assert format_row("Итого", 6100) == "Итого         6100"',
+        'assert format_row("Книга", 1200).endswith("  1200")'
       ]
     },
     quiz: [

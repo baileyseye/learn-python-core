@@ -227,6 +227,11 @@ self.onmessage = async (event) => {
       importScripts(INDEX_URL + 'pyodide.js');
       self.pyodide = await loadPyodide({ indexURL: INDEX_URL });
     }
+    const needsSqlite =
+      /\\bimport\\s+sqlite3\\b/.test(code) || /\\bimport\\s+sqlite3\\b/.test(JSON.stringify(tests));
+    if (needsSqlite) {
+      await self.pyodide.loadPackage('sqlite3');
+    }
     self.pyodide.globals.set('__user_code', code);
     self.pyodide.globals.set('__tests_json', JSON.stringify(tests));
     const raw = await self.pyodide.runPythonAsync(RUNNER);

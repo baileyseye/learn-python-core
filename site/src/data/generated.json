@@ -1,14 +1,98 @@
 {
   "stats": {
-    "files": 45,
-    "lines": 2204,
-    "methods": 248,
-    "classes": 27,
-    "outputs": 45,
-    "lessons": 45,
-    "usedFiles": 45
+    "files": 58,
+    "lines": 2566,
+    "methods": 300,
+    "classes": 30,
+    "outputs": 58,
+    "lessons": 58,
+    "usedFiles": 58
   },
   "files": {
+    "basics/00_reading.py": {
+      "path": "basics/00_reading.py",
+      "lines": 12,
+      "code": "\"\"\"Как читать программу: комментарии, строки и вывод.\"\"\"\n\n\n# Комментарий объясняет, зачем нужна строка, и не выполняется.\ndef main() -> None:\n    print(\"Привет, Python!\")  # print выводит текст\n    print(\"Эта строка тоже выполнится\")\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 5,
+          "end": 7,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 5,
+          "end": 7,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "Привет, Python!\nЭта строка тоже выполнится",
+      "ok": true,
+      "error": ""
+    },
+    "basics/01_functions.py": {
+      "path": "basics/01_functions.py",
+      "lines": 19,
+      "code": "\"\"\"Функции: параметры, return и вызов.\"\"\"\n\n\ndef greet(name: str) -> str:\n    return f\"Привет, {name}!\"\n\n\ndef add(a: int, b: int) -> int:\n    return a + b\n\n\ndef main() -> None:\n    print(greet(\"мир\"))\n    print(add(2, 3))\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "greet",
+          "kind": "function",
+          "start": 4,
+          "end": 5,
+          "signature": "def greet(name: str) -> str:"
+        },
+        {
+          "name": "add",
+          "kind": "function",
+          "start": 8,
+          "end": 9,
+          "signature": "def add(a: int, b: int) -> int:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 12,
+          "end": 14,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "greet",
+          "kind": "function",
+          "start": 4,
+          "end": 5,
+          "signature": "def greet(name: str) -> str:"
+        },
+        {
+          "name": "add",
+          "kind": "function",
+          "start": 8,
+          "end": 9,
+          "signature": "def add(a: int, b: int) -> int:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 12,
+          "end": 14,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "Привет, мир!\n5",
+      "ok": true,
+      "error": ""
+    },
     "basics/01_hello.py": {
       "path": "basics/01_hello.py",
       "lines": 22,
@@ -48,6 +132,62 @@
       ],
       "has_main": true,
       "output": "Hello, Python!\nПривет, мир!\nПривет, Анна!\nPython читается почти как обычный текст.",
+      "ok": true,
+      "error": ""
+    },
+    "basics/02_dicts.py": {
+      "path": "basics/02_dicts.py",
+      "lines": 21,
+      "code": "\"\"\"Словари: ключи, значения и get.\"\"\"\n\n\ndef make_profile(name: str, age: int) -> dict:\n    return {\"name\": name, \"age\": age}\n\n\ndef get_age(profile: dict, default: int = 0) -> int:\n    return profile.get(\"age\", default)\n\n\ndef main() -> None:\n    profile = make_profile(\"Анна\", 27)\n    print(profile)\n    print(get_age(profile))\n    print(get_age({}, 18))\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "make_profile",
+          "kind": "function",
+          "start": 4,
+          "end": 5,
+          "signature": "def make_profile(name: str, age: int) -> dict:"
+        },
+        {
+          "name": "get_age",
+          "kind": "function",
+          "start": 8,
+          "end": 9,
+          "signature": "def get_age(profile: dict, default: int = 0) -> int:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 12,
+          "end": 16,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "make_profile",
+          "kind": "function",
+          "start": 4,
+          "end": 5,
+          "signature": "def make_profile(name: str, age: int) -> dict:"
+        },
+        {
+          "name": "get_age",
+          "kind": "function",
+          "start": 8,
+          "end": 9,
+          "signature": "def get_age(profile: dict, default: int = 0) -> int:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 12,
+          "end": 16,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "{'name': 'Анна', 'age': 27}\n27\n18",
       "ok": true,
       "error": ""
     },
@@ -569,6 +709,76 @@
       "ok": true,
       "error": ""
     },
+    "collections/00_slices.py": {
+      "path": "collections/00_slices.py",
+      "lines": 25,
+      "code": "\"\"\"Срезы: start, stop, step и копия.\"\"\"\n\n\ndef first_last(items):\n    return items[0], items[-1]\n\n\ndef every_second(items):\n    return items[::2]\n\n\ndef reverse(items):\n    return items[::-1]\n\n\ndef main() -> None:\n    numbers = [10, 20, 30, 40, 50]\n    print(first_last(numbers))\n    print(every_second(numbers))\n    print(reverse(numbers))\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "first_last",
+          "kind": "function",
+          "start": 4,
+          "end": 5,
+          "signature": "def first_last(items):"
+        },
+        {
+          "name": "every_second",
+          "kind": "function",
+          "start": 8,
+          "end": 9,
+          "signature": "def every_second(items):"
+        },
+        {
+          "name": "reverse",
+          "kind": "function",
+          "start": 12,
+          "end": 13,
+          "signature": "def reverse(items):"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 16,
+          "end": 20,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "first_last",
+          "kind": "function",
+          "start": 4,
+          "end": 5,
+          "signature": "def first_last(items):"
+        },
+        {
+          "name": "every_second",
+          "kind": "function",
+          "start": 8,
+          "end": 9,
+          "signature": "def every_second(items):"
+        },
+        {
+          "name": "reverse",
+          "kind": "function",
+          "start": 12,
+          "end": 13,
+          "signature": "def reverse(items):"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 16,
+          "end": 20,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "(10, 50)\n[10, 30, 50]\n[50, 40, 30, 20, 10]",
+      "ok": true,
+      "error": ""
+    },
     "collections/01_lists.py": {
       "path": "collections/01_lists.py",
       "lines": 44,
@@ -1057,6 +1267,76 @@
       ],
       "has_main": true,
       "output": "sorted: [1, 3, 5, 9]\nпо убыванию: [9, 5, 3, 1]\nисходный список: [5, 1, 9, 3]\n['c', 'go', 'java', 'python']\nпо второму элементу: [('b', 1), ('a', 3)]\nStudent(name='Вера', grade=95)\nStudent(name='Анна', grade=90)\nStudent(name='Борис', grade=90)",
+      "ok": true,
+      "error": ""
+    },
+    "collections/07_key_functions.py": {
+      "path": "collections/07_key_functions.py",
+      "lines": 24,
+      "code": "\"\"\"key, lambda и сортировка по правилу.\"\"\"\n\n\ndef sort_by_length(words):\n    return sorted(words, key=len)\n\n\ndef sort_by_abs(numbers):\n    return sorted(numbers, key=abs)\n\n\ndef max_by(items, key):\n    return max(items, key=key)\n\n\ndef main() -> None:\n    print(sort_by_length([\"python\", \"go\", \"rust\"]))\n    print(sort_by_abs([-5, 2, -1]))\n    print(max_by([\"анна\", \"борис\"], key=len))\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "sort_by_length",
+          "kind": "function",
+          "start": 4,
+          "end": 5,
+          "signature": "def sort_by_length(words):"
+        },
+        {
+          "name": "sort_by_abs",
+          "kind": "function",
+          "start": 8,
+          "end": 9,
+          "signature": "def sort_by_abs(numbers):"
+        },
+        {
+          "name": "max_by",
+          "kind": "function",
+          "start": 12,
+          "end": 13,
+          "signature": "def max_by(items, key):"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 16,
+          "end": 19,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "sort_by_length",
+          "kind": "function",
+          "start": 4,
+          "end": 5,
+          "signature": "def sort_by_length(words):"
+        },
+        {
+          "name": "sort_by_abs",
+          "kind": "function",
+          "start": 8,
+          "end": 9,
+          "signature": "def sort_by_abs(numbers):"
+        },
+        {
+          "name": "max_by",
+          "kind": "function",
+          "start": 12,
+          "end": 13,
+          "signature": "def max_by(items, key):"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 16,
+          "end": 19,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "['go', 'rust', 'python']\n[-1, 2, -5]\nборис",
       "ok": true,
       "error": ""
     },
@@ -1902,6 +2182,140 @@
       "ok": true,
       "error": ""
     },
+    "functional/06_iterators.py": {
+      "path": "functional/06_iterators.py",
+      "lines": 25,
+      "code": "\"\"\"Итераторы: __iter__ и __next__.\"\"\"\n\n\nclass Countdown:\n    def __init__(self, start: int) -> None:\n        self.current = start\n\n    def __iter__(self):\n        return self\n\n    def __next__(self) -> int:\n        if self.current <= 0:\n            raise StopIteration\n        value = self.current\n        self.current -= 1\n        return value\n\n\ndef main() -> None:\n    print(list(Countdown(3)))\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "Countdown",
+          "kind": "class",
+          "start": 4,
+          "end": 16,
+          "signature": "class Countdown:"
+        },
+        {
+          "name": "Countdown.__init__",
+          "kind": "method",
+          "start": 5,
+          "end": 6,
+          "signature": "def __init__(self, start: int) -> None:"
+        },
+        {
+          "name": "Countdown.__iter__",
+          "kind": "method",
+          "start": 8,
+          "end": 9,
+          "signature": "def __iter__(self):"
+        },
+        {
+          "name": "Countdown.__next__",
+          "kind": "method",
+          "start": 11,
+          "end": 16,
+          "signature": "def __next__(self) -> int:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 19,
+          "end": 20,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [
+        {
+          "name": "Countdown",
+          "kind": "class",
+          "start": 4,
+          "end": 16,
+          "signature": "class Countdown:"
+        }
+      ],
+      "functions": [
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 19,
+          "end": 20,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "[3, 2, 1]",
+      "ok": true,
+      "error": ""
+    },
+    "functional/07_decorator_params.py": {
+      "path": "functional/07_decorator_params.py",
+      "lines": 48,
+      "code": "\"\"\"Декораторы с параметрами.\"\"\"\n\nimport functools\n\n\ndef repeat(times: int):\n    def decorator(function):\n        @functools.wraps(function)\n        def wrapper(*args, **kwargs):\n            result = None\n            for _ in range(times):\n                result = function(*args, **kwargs)\n            return result\n\n        return wrapper\n\n    return decorator\n\n\ndef retry(times: int):\n    def decorator(function):\n        @functools.wraps(function)\n        def wrapper(*args, **kwargs):\n            last_error = None\n            for _ in range(times):\n                try:\n                    return function(*args, **kwargs)\n                except Exception as error:\n                    last_error = error\n            raise last_error\n\n        return wrapper\n\n    return decorator\n\n\n@repeat(2)\ndef shout(text: str) -> str:\n    return text.upper()\n\n\ndef main() -> None:\n    print(shout(\"python\"))\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "repeat",
+          "kind": "function",
+          "start": 6,
+          "end": 17,
+          "signature": "def repeat(times: int):"
+        },
+        {
+          "name": "retry",
+          "kind": "function",
+          "start": 20,
+          "end": 34,
+          "signature": "def retry(times: int):"
+        },
+        {
+          "name": "shout",
+          "kind": "function",
+          "start": 37,
+          "end": 39,
+          "signature": "def shout(text: str) -> str:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 42,
+          "end": 43,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "repeat",
+          "kind": "function",
+          "start": 6,
+          "end": 17,
+          "signature": "def repeat(times: int):"
+        },
+        {
+          "name": "retry",
+          "kind": "function",
+          "start": 20,
+          "end": 34,
+          "signature": "def retry(times: int):"
+        },
+        {
+          "name": "shout",
+          "kind": "function",
+          "start": 37,
+          "end": 39,
+          "signature": "def shout(text: str) -> str:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 42,
+          "end": 43,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "PYTHON",
+      "ok": true,
+      "error": ""
+    },
     "oop/01_classes.py": {
       "path": "oop/01_classes.py",
       "lines": 41,
@@ -2598,6 +3012,91 @@
       ],
       "has_main": true,
       "output": "карта: списано 1500 ₽\nналичные: принято 300 ₽\n['Python', 'FastAPI']\nABC: Can't instantiate abstract class Repository without an implementation for abstract methods 'all', 'save'",
+      "ok": true,
+      "error": ""
+    },
+    "oop/07_composition.py": {
+      "path": "oop/07_composition.py",
+      "lines": 28,
+      "code": "\"\"\"Композиция: объект содержит другой объект.\"\"\"\n\n\nclass Engine:\n    def __init__(self, power: int) -> None:\n        self.power = power\n\n    def start(self) -> str:\n        return f\"двигатель {self.power} л.с. запущен\"\n\n\nclass Car:\n    def __init__(self, name: str, engine: Engine) -> None:\n        self.name = name\n        self.engine = engine\n\n    def start(self) -> str:\n        return f\"{self.name}: {self.engine.start()}\"\n\n\ndef main() -> None:\n    car = Car(\"Core\", Engine(120))\n    print(car.start())\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "Engine",
+          "kind": "class",
+          "start": 4,
+          "end": 9,
+          "signature": "class Engine:"
+        },
+        {
+          "name": "Engine.__init__",
+          "kind": "method",
+          "start": 5,
+          "end": 6,
+          "signature": "def __init__(self, power: int) -> None:"
+        },
+        {
+          "name": "Engine.start",
+          "kind": "method",
+          "start": 8,
+          "end": 9,
+          "signature": "def start(self) -> str:"
+        },
+        {
+          "name": "Car",
+          "kind": "class",
+          "start": 12,
+          "end": 18,
+          "signature": "class Car:"
+        },
+        {
+          "name": "Car.__init__",
+          "kind": "method",
+          "start": 13,
+          "end": 15,
+          "signature": "def __init__(self, name: str, engine: Engine) -> None:"
+        },
+        {
+          "name": "Car.start",
+          "kind": "method",
+          "start": 17,
+          "end": 18,
+          "signature": "def start(self) -> str:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 21,
+          "end": 23,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [
+        {
+          "name": "Engine",
+          "kind": "class",
+          "start": 4,
+          "end": 9,
+          "signature": "class Engine:"
+        },
+        {
+          "name": "Car",
+          "kind": "class",
+          "start": 12,
+          "end": 18,
+          "signature": "class Car:"
+        }
+      ],
+      "functions": [
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 21,
+          "end": 23,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "Core: двигатель 120 л.с. запущен",
       "ok": true,
       "error": ""
     },
@@ -3428,6 +3927,230 @@
       "ok": true,
       "error": ""
     },
+    "testing/06_write_tests.py": {
+      "path": "testing/06_write_tests.py",
+      "lines": 26,
+      "code": "\"\"\"Пишем тесты: поведение, границы и ошибки.\"\"\"\n\n\ndef slugify(title: str) -> str:\n    return \"-\".join(title.lower().split())\n\n\ndef test_slugify_simple() -> None:\n    assert slugify(\"Learn Python Core\") == \"learn-python-core\"\n\n\ndef test_slugify_spaces() -> None:\n    assert slugify(\"  A  B  \") == \"a-b\"\n\n\ndef test_slugify_empty() -> None:\n    assert slugify(\"\") == \"\"\n\n\ndef main() -> None:\n    print(slugify(\"Learn Python Core\"))\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "slugify",
+          "kind": "function",
+          "start": 4,
+          "end": 5,
+          "signature": "def slugify(title: str) -> str:"
+        },
+        {
+          "name": "test_slugify_simple",
+          "kind": "function",
+          "start": 8,
+          "end": 9,
+          "signature": "def test_slugify_simple() -> None:"
+        },
+        {
+          "name": "test_slugify_spaces",
+          "kind": "function",
+          "start": 12,
+          "end": 13,
+          "signature": "def test_slugify_spaces() -> None:"
+        },
+        {
+          "name": "test_slugify_empty",
+          "kind": "function",
+          "start": 16,
+          "end": 17,
+          "signature": "def test_slugify_empty() -> None:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 20,
+          "end": 21,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "slugify",
+          "kind": "function",
+          "start": 4,
+          "end": 5,
+          "signature": "def slugify(title: str) -> str:"
+        },
+        {
+          "name": "test_slugify_simple",
+          "kind": "function",
+          "start": 8,
+          "end": 9,
+          "signature": "def test_slugify_simple() -> None:"
+        },
+        {
+          "name": "test_slugify_spaces",
+          "kind": "function",
+          "start": 12,
+          "end": 13,
+          "signature": "def test_slugify_spaces() -> None:"
+        },
+        {
+          "name": "test_slugify_empty",
+          "kind": "function",
+          "start": 16,
+          "end": 17,
+          "signature": "def test_slugify_empty() -> None:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 20,
+          "end": 21,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "learn-python-core",
+      "ok": true,
+      "error": ""
+    },
+    "testing/07_notes_project.py": {
+      "path": "testing/07_notes_project.py",
+      "lines": 40,
+      "code": "\"\"\"Мини-проект: заметки в JSON.\"\"\"\n\nimport json\n\n\ndef add_note(notes: list, title: str, text: str) -> list:\n    if not title.strip():\n        raise ValueError(\"заголовок не может быть пустым\")\n    notes.append({\"title\": title.strip(), \"text\": text.strip()})\n    return notes\n\n\ndef find_notes(notes: list, query: str) -> list:\n    query = query.lower()\n    return [\n        note\n        for note in notes\n        if query in note[\"title\"].lower() or query in note[\"text\"].lower()\n    ]\n\n\ndef to_json(notes: list) -> str:\n    return json.dumps(notes, ensure_ascii=False)\n\n\ndef from_json(text: str) -> list:\n    return json.loads(text)\n\n\ndef main() -> None:\n    notes = []\n    add_note(notes, \"Python\", \"Читать код каждый день\")\n    add_note(notes, \"План\", \"Сделать мини-проект\")\n    print(find_notes(notes, \"python\"))\n    print(to_json(notes))\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "add_note",
+          "kind": "function",
+          "start": 6,
+          "end": 10,
+          "signature": "def add_note(notes: list, title: str, text: str) -> list:"
+        },
+        {
+          "name": "find_notes",
+          "kind": "function",
+          "start": 13,
+          "end": 19,
+          "signature": "def find_notes(notes: list, query: str) -> list:"
+        },
+        {
+          "name": "to_json",
+          "kind": "function",
+          "start": 22,
+          "end": 23,
+          "signature": "def to_json(notes: list) -> str:"
+        },
+        {
+          "name": "from_json",
+          "kind": "function",
+          "start": 26,
+          "end": 27,
+          "signature": "def from_json(text: str) -> list:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 30,
+          "end": 35,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "add_note",
+          "kind": "function",
+          "start": 6,
+          "end": 10,
+          "signature": "def add_note(notes: list, title: str, text: str) -> list:"
+        },
+        {
+          "name": "find_notes",
+          "kind": "function",
+          "start": 13,
+          "end": 19,
+          "signature": "def find_notes(notes: list, query: str) -> list:"
+        },
+        {
+          "name": "to_json",
+          "kind": "function",
+          "start": 22,
+          "end": 23,
+          "signature": "def to_json(notes: list) -> str:"
+        },
+        {
+          "name": "from_json",
+          "kind": "function",
+          "start": 26,
+          "end": 27,
+          "signature": "def from_json(text: str) -> list:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 30,
+          "end": 35,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "[{'title': 'Python', 'text': 'Читать код каждый день'}]\n[{\"title\": \"Python\", \"text\": \"Читать код каждый день\"}, {\"title\": \"План\", \"text\": \"Сделать мини-проект\"}]",
+      "ok": true,
+      "error": ""
+    },
+    "web/00_http_client.py": {
+      "path": "web/00_http_client.py",
+      "lines": 27,
+      "code": "\"\"\"HTTP-клиент: URL, статус и JSON.\"\"\"\n\nfrom urllib.parse import parse_qs, urlparse\n\n\ndef parse_url(url: str) -> dict:\n    parsed = urlparse(url)\n    return {\n        \"scheme\": parsed.scheme,\n        \"host\": parsed.hostname,\n        \"path\": parsed.path or \"/\",\n        \"query\": parse_qs(parsed.query),\n    }\n\n\ndef is_success(status: int) -> bool:\n    return 200 <= status < 300\n\n\ndef main() -> None:\n    print(parse_url(\"https://example.com/api?page=2&limit=10\"))\n    print(is_success(200), is_success(404))\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "parse_url",
+          "kind": "function",
+          "start": 6,
+          "end": 13,
+          "signature": "def parse_url(url: str) -> dict:"
+        },
+        {
+          "name": "is_success",
+          "kind": "function",
+          "start": 16,
+          "end": 17,
+          "signature": "def is_success(status: int) -> bool:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 20,
+          "end": 22,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "parse_url",
+          "kind": "function",
+          "start": 6,
+          "end": 13,
+          "signature": "def parse_url(url: str) -> dict:"
+        },
+        {
+          "name": "is_success",
+          "kind": "function",
+          "start": 16,
+          "end": 17,
+          "signature": "def is_success(status: int) -> bool:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 20,
+          "end": 22,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "{'scheme': 'https', 'host': 'example.com', 'path': '/api', 'query': {'page': ['2'], 'limit': ['10']}}\nTrue False",
+      "ok": true,
+      "error": ""
+    },
     "web/01_http_server.py": {
       "path": "web/01_http_server.py",
       "lines": 66,
@@ -3804,6 +4527,146 @@
       ],
       "has_main": true,
       "output": "пользователи: [{'id': 1, 'name': 'user-1'}, {'id': 2, 'name': 'user-2'}, {'id': 3, 'name': 'user-3'}]\ntimeout: {'error': 'timeout'}",
+      "ok": true,
+      "error": ""
+    },
+    "web/06_sql_practice.py": {
+      "path": "web/06_sql_practice.py",
+      "lines": 38,
+      "code": "\"\"\"SQL-практикум: запросы и параметры.\"\"\"\n\nimport sqlite3\n\n\ndef setup() -> sqlite3.Connection:\n    connection = sqlite3.connect(\":memory:\")\n    connection.execute(\n        \"CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT NOT NULL)\"\n    )\n    connection.executemany(\n        \"INSERT INTO users (name) VALUES (?)\", [(\"Анна\",), (\"Борис\",)]\n    )\n    return connection\n\n\ndef find_user(connection: sqlite3.Connection, name: str):\n    row = connection.execute(\n        \"SELECT id, name FROM users WHERE name = ?\", (name,)\n    ).fetchone()\n    return row\n\n\ndef count_users(connection: sqlite3.Connection) -> int:\n    row = connection.execute(\"SELECT COUNT(*) FROM users\").fetchone()\n    return row[0]\n\n\ndef main() -> None:\n    connection = setup()\n    print(find_user(connection, \"Анна\"))\n    print(count_users(connection))\n    connection.close()\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "setup",
+          "kind": "function",
+          "start": 6,
+          "end": 14,
+          "signature": "def setup() -> sqlite3.Connection:"
+        },
+        {
+          "name": "find_user",
+          "kind": "function",
+          "start": 17,
+          "end": 21,
+          "signature": "def find_user(connection: sqlite3.Connection, name: str):"
+        },
+        {
+          "name": "count_users",
+          "kind": "function",
+          "start": 24,
+          "end": 26,
+          "signature": "def count_users(connection: sqlite3.Connection) -> int:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 29,
+          "end": 33,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "setup",
+          "kind": "function",
+          "start": 6,
+          "end": 14,
+          "signature": "def setup() -> sqlite3.Connection:"
+        },
+        {
+          "name": "find_user",
+          "kind": "function",
+          "start": 17,
+          "end": 21,
+          "signature": "def find_user(connection: sqlite3.Connection, name: str):"
+        },
+        {
+          "name": "count_users",
+          "kind": "function",
+          "start": 24,
+          "end": 26,
+          "signature": "def count_users(connection: sqlite3.Connection) -> int:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 29,
+          "end": 33,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "(1, 'Анна')\n2",
+      "ok": true,
+      "error": ""
+    },
+    "web/07_async_gather.py": {
+      "path": "web/07_async_gather.py",
+      "lines": 29,
+      "code": "\"\"\"async: gather и таймауты.\"\"\"\n\nimport asyncio\n\n\nasync def fetch(name: str, delay: float = 0) -> dict:\n    await asyncio.sleep(delay)\n    return {\"name\": name}\n\n\nasync def fetch_all(names: list[str]) -> list[dict]:\n    return await asyncio.gather(*(fetch(name) for name in names))\n\n\nasync def fetch_with_timeout(name: str, timeout: float):\n    try:\n        return await asyncio.wait_for(fetch(name, delay=0.05), timeout)\n    except asyncio.TimeoutError:\n        return None\n\n\nasync def main() -> None:\n    print(await fetch_all([\"a\", \"b\"]))\n    print(await fetch_with_timeout(\"slow\", 0.001))\n\n\nif __name__ == \"__main__\":\n    asyncio.run(main())",
+      "methods": [
+        {
+          "name": "fetch",
+          "kind": "function",
+          "start": 6,
+          "end": 8,
+          "signature": "async def fetch(name: str, delay: float = 0) -> dict:"
+        },
+        {
+          "name": "fetch_all",
+          "kind": "function",
+          "start": 11,
+          "end": 12,
+          "signature": "async def fetch_all(names: list[str]) -> list[dict]:"
+        },
+        {
+          "name": "fetch_with_timeout",
+          "kind": "function",
+          "start": 15,
+          "end": 19,
+          "signature": "async def fetch_with_timeout(name: str, timeout: float):"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 22,
+          "end": 24,
+          "signature": "async def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "fetch",
+          "kind": "function",
+          "start": 6,
+          "end": 8,
+          "signature": "async def fetch(name: str, delay: float = 0) -> dict:"
+        },
+        {
+          "name": "fetch_all",
+          "kind": "function",
+          "start": 11,
+          "end": 12,
+          "signature": "async def fetch_all(names: list[str]) -> list[dict]:"
+        },
+        {
+          "name": "fetch_with_timeout",
+          "kind": "function",
+          "start": 15,
+          "end": 19,
+          "signature": "async def fetch_with_timeout(name: str, timeout: float):"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 22,
+          "end": 24,
+          "signature": "async def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "[{'name': 'a'}, {'name': 'b'}]\nNone",
       "ok": true,
       "error": ""
     }

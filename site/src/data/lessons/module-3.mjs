@@ -51,57 +51,7 @@ export default [
       }
     ]
   },
-  {
-    id: 'custom-exceptions',
-    title: 'Свои исключения',
-    summary: 'Иерархия ошибок приложения и цепочки причин.',
-    minutes: 8,
-    goal:
-      'Создавать собственные исключения, чтобы вызывающий код мог различать ошибки домена, а не разбирать текст сообщения.',
-    ideas: [
-      'Своё исключение — обычный класс, унаследованный от `Exception`.',
-      'Базовый класс приложения позволяет ловить все свои ошибки одним `except`.',
-      '`raise ... from error` сохраняет первопричину в `__cause__`.',
-      'Сообщение должно объяснять, что произошло, а не просто повторять имя класса.'
-    ],
-    sources: [
-      {
-        file: 'errors/02_custom_exceptions.py',
-        focus: [
-          { function: 'validate_username', note: 'Доменная проверка через ValidationError.' },
-          { function: 'find_user', note: 'Своё исключение и цепочка from.' },
-          { function: 'UserNotFoundError', note: 'Исключение с дополнительным полем.' }
-        ]
-      }
-    ],
-    practice: {
-      task:
-        'Объяви `ValidationError(Exception)` и напиши `validate_age(age)`, который возвращает age, если 0 < age < 150, иначе поднимает ValidationError с понятным сообщением.',
-      hint: 'Проверь тип и диапазон. Для поднятия используй `raise ValidationError("...")`.',
-      starter: 'class ValidationError(Exception):\n    pass\n\n\ndef validate_age(age):\n    pass\n',
-      solution:
-        'class ValidationError(Exception):\n    pass\n\n\ndef validate_age(age):\n    if not isinstance(age, int):\n        raise ValidationError("возраст должен быть целым числом")\n    if not 0 < age < 150:\n        raise ValidationError("возраст должен быть от 1 до 149")\n    return age',
-      tests: [
-        'assert validate_age(27) == 27',
-        'try:\n    validate_age(200)\nexcept ValidationError:\n    pass\nelse:\n    raise AssertionError("ожидалось ValidationError")',
-        'try:\n    validate_age("27")\nexcept ValidationError:\n    pass\nelse:\n    raise AssertionError("ожидалось ValidationError для строки")'
-      ]
-    },
-    quiz: [
-      {
-        q: 'Зачем наследовать своё исключение от общего базового класса?',
-        options: ['Чтобы ускорить обработку', 'Чтобы ловить все ошибки домена одним except', 'Чтобы исключение стало unchecked', 'Это обязательно'],
-        answer: 1,
-        explain: 'Иерархия позволяет различать группы ошибок и при этом обрабатывать их общим обработчиком.'
-      },
-      {
-        q: 'Что делает `raise NewError(...) from error`?',
-        options: ['Удаляет старое исключение', 'Сохраняет исходную причину', 'Делает исключение глобальным', 'Печатает traceback'],
-        answer: 1,
-        explain: 'Исходное исключение остаётся доступным через `__cause__` и попадает в traceback.'
-      }
-    ]
-  },
+
   {
     id: 'files',
     title: 'Файлы',
@@ -126,15 +76,14 @@ export default [
       }
     ],
     practice: {
-      task: 'Напиши `line_stats(text)`, возвращающую кортеж `(строки, слова, символы)` для переданного текста.',
-      hint: '`splitlines()` даёт строки, `split()` — слова, `len(text)` — символы.',
-      starter: 'def line_stats(text):\n    pass\n',
-      solution:
-        'def line_stats(text):\n    return len(text.splitlines()), len(text.split()), len(text)',
+      task: 'Напиши `count_lines(handle)` — количество непустых строк в файловом объекте, и `longest_line(handle)` — самую длинную строку без символа перевода строки.',
+      hint: 'Файловый объект можно перебирать в `for line in handle`. Для длины строки убери `"\\n"` через `rstrip`.',
+      starter: 'def count_lines(handle):\n    pass\n\n\ndef longest_line(handle):\n    pass\n',
+      solution: 'def count_lines(handle):\n    count = 0\n    for line in handle:\n        if line.strip():\n            count += 1\n    return count\n\n\ndef longest_line(handle):\n    lines = [line.rstrip("\\n") for line in handle]\n    return max(lines, key=len) if lines else ""\n',
       tests: [
-        'assert line_stats("one two\\nthree") == (2, 3, 13)',
-        'assert line_stats("") == (0, 0, 0)',
-        'assert line_stats("  \\n") == (1, 0, 3)'
+        'import io\nassert count_lines(io.StringIO("one\\n\\ntwo\\n")) == 2',
+        'assert longest_line(io.StringIO("one\\nlonger\\ntwo\\n")) == "longer"',
+        'assert longest_line(io.StringIO("")) == ""'
       ]
     },
     quiz: [
@@ -177,15 +126,15 @@ export default [
     ],
     practice: {
       task:
-        'Напиши `to_json(data)` с читаемой кириллицей и `from_json(text)`, возвращающую объект Python.',
-      hint: 'Используй `json.dumps(data, ensure_ascii=False)` и `json.loads(text)`.',
-      starter: 'import json\n\n\ndef to_json(data):\n    pass\n\n\ndef from_json(text):\n    pass\n',
-      solution:
-        'import json\n\n\ndef to_json(data):\n    return json.dumps(data, ensure_ascii=False)\n\n\ndef from_json(text):\n    return json.loads(text)',
+        'Напиши `to_json(data)` с читаемой кириллицей, `from_json(text)` и `parse_csv(text)` — список словарей из CSV с заголовком.',
+      hint: 'Для JSON используй `json.dumps(..., ensure_ascii=False)` и `json.loads`. Для CSV — `csv.DictReader(io.StringIO(text))`.',
+      starter: 'import csv\nimport io\nimport json\n\n\ndef to_json(data):\n    pass\n\n\ndef from_json(text):\n    pass\n\n\ndef parse_csv(text):\n    pass\n',
+      solution: 'import csv\nimport io\nimport json\n\n\ndef to_json(data):\n    return json.dumps(data, ensure_ascii=False)\n\n\ndef from_json(text):\n    return json.loads(text)\n\n\ndef parse_csv(text):\n    return list(csv.DictReader(io.StringIO(text)))\n',
       tests: [
         'assert from_json(to_json({"name": "Анна"})) == {"name": "Анна"}',
         'assert "Анна" in to_json({"name": "Анна"})',
-        'assert from_json("[1, 2, 3]") == [1, 2, 3]'
+        'assert parse_csv("name,age\\nАнна,27\\n") == [{"name": "Анна", "age": "27"}]',
+        'assert parse_csv("") == []'
       ]
     },
     quiz: [
@@ -202,55 +151,6 @@ export default [
         explain: 'JSON Lines позволяет читать и писать по одной записи, не загружая всё в память.'
       }
     ]
-  },
-  {
-    id: 'context-managers',
-    title: 'Контекстные менеджеры',
-    summary: 'with, __enter__/__exit__ и contextlib.contextmanager.',
-    minutes: 8,
-    goal:
-      'Управлять ресурсами через `with` и писать свои контекстные менеджеры для повторяющейся подготовки и очистки.',
-    ideas: [
-      '`with` гарантирует вызов `__exit__` даже при исключении.',
-      '`__exit__` получает тип, значение и traceback исключения.',
-      'Возврат `True` из `__exit__` подавляет исключение.',
-      '`@contextmanager` позволяет написать менеджер как генератор: до `yield` — вход, после — выход.'
-    ],
-    sources: [
-      {
-        file: 'errors/05_context_managers.py',
-        focus: [
-          { function: 'Timer', note: 'Класс с __enter__ и __exit__.' },
-          { function: 'section', note: 'Контекстный менеджер через генератор.' }
-        ]
-      }
-    ],
-    practice: {
-      task:
-        'Напиши контекстный менеджер `suppress_errors(*types)`, который подавляет указанные исключения и возвращает объект с полем `error`.',
-      hint: 'Используй `@contextmanager`. Сохрани исключение в списке или объекте, потому что после `yield` его можно перехватить через `try/except`.',
-      starter: 'from contextlib import contextmanager\n\n\n@contextmanager\ndef suppress_errors(*types):\n    pass\n',
-      solution:
-        'from contextlib import contextmanager\n\n\nclass _Catcher:\n    def __init__(self):\n        self.error = None\n\n\n@contextmanager\ndef suppress_errors(*types):\n    catcher = _Catcher()\n    try:\n        yield catcher\n    except types as error:\n        catcher.error = error',
-      tests: [
-        'with suppress_errors(ValueError) as caught:\n    raise ValueError("boom")\nassert isinstance(caught.error, ValueError)',
-        'with suppress_errors(ValueError) as caught:\n    pass\nassert caught.error is None',
-        'try:\n    with suppress_errors(ValueError):\n        raise TypeError("not caught")\nexcept TypeError:\n    pass\nelse:\n    raise AssertionError("TypeError должен пройти дальше")'
-      ]
-    },
-    quiz: [
-      {
-        q: 'Что произойдёт, если `__exit__` вернёт True?',
-        options: ['Исключение будет подавлено', 'Исключение поднимется выше', 'Программа завершится', 'Будет SyntaxError'],
-        answer: 0,
-        explain: 'Истинное значение из `__exit__` означает, что исключение обработано.'
-      },
-      {
-        q: 'Что делает `@contextmanager`?',
-        options: ['Превращает генератор в контекстный менеджер', 'Закрывает файлы', 'Создаёт поток', 'Ускоряет with'],
-        answer: 0,
-        explain: 'Декоратор оборачивает генератор: код до `yield` — вход, после — выход.'
-      }
-    ]
   }
+
 ];

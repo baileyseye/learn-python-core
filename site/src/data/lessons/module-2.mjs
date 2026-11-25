@@ -1,5 +1,73 @@
 export default [
   {
+    id: 'slices',
+    title: 'Срезы и копии',
+    summary: 'start:stop:step, обратный порядок и поверхностная копия.',
+    minutes: 8,
+    goal: 'Брать часть последовательности срезом, не путать границы и понимать, что срез создаёт новый объект.',
+    ideas: [
+      '`items[start:stop]` берёт элементы с `start` до `stop`, не включая `stop`.',
+      '`items[:3]` — с начала, `items[2:]` — до конца, `items[:]` — копия.',
+      'Третий параметр задаёт шаг: `items[::2]`, `items[::-1]` — разворот.',
+      'Срез не меняет исходный список; он создаёт новый.'
+    ],
+    sources: [
+      {
+        file: 'collections/00_slices.py',
+        focus: [
+          {
+            function: 'first_last',
+            note: 'Первый и последний элементы.'
+          },
+          {
+            function: 'every_second',
+            note: 'Шаг среза.'
+          },
+          {
+            function: 'reverse',
+            note: 'Обратный порядок без изменения исходника.'
+          }
+        ]
+      }
+    ],
+    practice: {
+      task: 'Напиши `first_last(items)` → `(первый, последний)`, `every_second(items)` → каждый второй элемент и `reverse(items)` → последовательность в обратном порядке.',
+      hint: 'Используй `items[0]`, `items[-1]`, `items[::2]` и `items[::-1]`.',
+      starter: 'def first_last(items):\n    pass\n\n\ndef every_second(items):\n    pass\n\n\ndef reverse(items):\n    pass\n',
+      solution: 'def first_last(items):\n    return items[0], items[-1]\n\n\ndef every_second(items):\n    return items[::2]\n\n\ndef reverse(items):\n    return items[::-1]\n',
+      tests: [
+        'assert first_last([1, 2, 3]) == (1, 3)',
+        'assert every_second([1, 2, 3, 4]) == [1, 3]',
+        'assert reverse("abc") == "cba"',
+        'items = [1, 2, 3]\nreverse(items)\nassert items == [1, 2, 3]'
+      ]
+    },
+    quiz: [
+      {
+        q: 'Что вернёт `[10, 20, 30, 40][1:3]`?',
+        options: [
+          '[10, 20, 30]',
+          '[20, 30]',
+          '[20, 30, 40]',
+          '[30, 40]'
+        ],
+        answer: 1,
+        explain: 'Индексы 1 и 2; элемент с индексом 3 не включается.'
+      },
+      {
+        q: 'Что делает `items[::-1]`?',
+        options: [
+          'Удаляет последний элемент',
+          'Сортирует список',
+          'Возвращает копию в обратном порядке',
+          'Меняет исходный список'
+        ],
+        answer: 2,
+        explain: 'Отрицательный шаг идёт с конца, а срез создаёт новый объект.'
+      }
+    ]
+  },
+  {
     id: 'lists',
     title: 'Списки',
     summary: 'Изменяемая последовательность, методы и ловушка копирования.',
@@ -250,6 +318,74 @@ export default [
         options: ['Оставляет положительные элементы', 'Заменяет отрицательные', 'Сортирует список', 'Считает сумму'],
         answer: 0,
         explain: 'Условие после `if` фильтрует элементы.'
+      }
+    ]
+  },
+  {
+    id: 'key-functions',
+    title: 'lambda и ключ сортировки',
+    summary: 'Функция как правило: key, lambda, sorted и max.',
+    minutes: 8,
+    goal: 'Понять, что `key` — это функция, и научиться задавать правило сортировки коротко и читаемо.',
+    ideas: [
+      '`key` получает элемент и возвращает критерий, по которому его сравнивают.',
+      '`lambda x: ...` — короткая функция без имени для одного выражения.',
+      '`sorted(items, key=len)` сортирует по длине, не меняя исходный список.',
+      '`min` и `max` тоже принимают `key`.'
+    ],
+    sources: [
+      {
+        file: 'collections/07_key_functions.py',
+        focus: [
+          {
+            function: 'sort_by_length',
+            note: 'key=len.'
+          },
+          {
+            function: 'sort_by_abs',
+            note: 'key=abs.'
+          },
+          {
+            function: 'max_by',
+            note: 'Передача функции как аргумента.'
+          }
+        ]
+      }
+    ],
+    practice: {
+      task: 'Напиши `sort_by_length(words)` — сортировка по длине, `sort_by_abs(numbers)` — по модулю и `max_by(items, key)` — максимум по переданному ключу.',
+      hint: 'Передай функцию в `key`: `len`, `abs` или `lambda`. Для `max_by` верни `max(items, key=key)`.',
+      starter: 'def sort_by_length(words):\n    pass\n\n\ndef sort_by_abs(numbers):\n    pass\n\n\ndef max_by(items, key):\n    pass\n',
+      solution: 'def sort_by_length(words):\n    return sorted(words, key=len)\n\n\ndef sort_by_abs(numbers):\n    return sorted(numbers, key=abs)\n\n\ndef max_by(items, key):\n    return max(items, key=key)\n',
+      tests: [
+        'assert sort_by_length(["python", "go", "rust"]) == ["go", "rust", "python"]',
+        'assert sort_by_abs([-5, 2, -1]) == [-1, 2, -5]',
+        'assert max_by([{"n": 1}, {"n": 5}], key=lambda item: item["n"]) == {"n": 5}',
+        'assert max_by(["aa", "b"], key=len) == "aa"'
+      ]
+    },
+    quiz: [
+      {
+        q: 'Что получает функция в `key`?',
+        options: [
+          'Индекс элемента',
+          'Сам элемент',
+          'Весь список',
+          'Длину списка'
+        ],
+        answer: 1,
+        explain: '`key` вызывается для каждого элемента и возвращает критерий сравнения.'
+      },
+      {
+        q: 'Когда `lambda` уместна?',
+        options: [
+          'Для длинной функции с ветвлениями',
+          'Для короткого правила в `key`',
+          'Вместо любого `def`',
+          'Только для чисел'
+        ],
+        answer: 1,
+        explain: 'Lambda хороша для одного короткого выражения; сложную логику лучше вынести в именованную функцию.'
       }
     ]
   },

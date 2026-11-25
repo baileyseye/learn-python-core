@@ -150,6 +150,128 @@ export default [
     ]
   },
   {
+    id: 'decorator-params',
+    title: 'Декораторы с параметрами',
+    summary: 'Три уровня, functools.wraps и повторные вызовы.',
+    minutes: 8,
+    goal: 'Писать декораторы, которым можно передать настройки, и не терять метаданные функции.',
+    ideas: [
+      'Декоратор с параметрами — три уровня: `repeat(times)` → `decorator(function)` → `wrapper`.',
+      'Внешняя функция запоминает настройки, а внутренняя оборачивает конкретную функцию.',
+      '`functools.wraps` сохраняет имя и docstring.',
+      'Так устроены `retry`, `repeat`, `cache` и другие полезные обёртки.'
+    ],
+    sources: [
+      {
+        file: 'functional/07_decorator_params.py',
+        focus: [
+          {
+            function: 'repeat',
+            note: 'Декоратор с количеством повторов.'
+          },
+          {
+            function: 'retry',
+            note: 'Повтор при исключении.'
+          }
+        ]
+      }
+    ],
+    practice: {
+      task: 'Напиши `repeat(times)` — декоратор, который вызывает функцию `times` раз и возвращает последний результат. Сохрани имя функции через `functools.wraps`.',
+      hint: 'Внешняя функция принимает `times`, средняя — `function`, внутренняя — `*args, **kwargs`. Результат сохраняй в переменной.',
+      starter: 'import functools\n\n\ndef repeat(times):\n    pass\n',
+      solution: 'import functools\n\n\ndef repeat(times):\n    def decorator(function):\n        @functools.wraps(function)\n        def wrapper(*args, **kwargs):\n            result = None\n            for _ in range(times):\n                result = function(*args, **kwargs)\n            return result\n\n        return wrapper\n\n    return decorator\n',
+      tests: [
+        'calls = []\n@repeat(3)\ndef record(value):\n    calls.append(value)\n    return value\nassert record("x") == "x"\nassert calls == ["x", "x", "x"]',
+        '@repeat(1)\ndef identity(value):\n    return value\nassert identity(5) == 5\nassert identity.__name__ == "identity"'
+      ]
+    },
+    quiz: [
+      {
+        q: 'Сколько уровней функций у декоратора с параметрами?',
+        options: [
+          'Один',
+          'Два',
+          'Три',
+          'Четыре'
+        ],
+        answer: 2,
+        explain: 'Параметры → декоратор функции → обёртка вызова.'
+      },
+      {
+        q: 'Зачем нужен `functools.wraps`?',
+        options: [
+          'Ускоряет вызов',
+          'Сохраняет имя и docstring исходной функции',
+          'Добавляет аргументы',
+          'Запрещает повторный вызов'
+        ],
+        answer: 1,
+        explain: 'Без `wraps` обёрнутая функция потеряет имя и документацию оригинала.'
+      }
+    ]
+  },
+
+  {
+    id: 'iterators',
+    title: 'Итераторы',
+    summary: '__iter__, __next__ и StopIteration.',
+    minutes: 8,
+    goal: 'Понять, как `for` получает элементы, и написать собственный итератор.',
+    ideas: [
+      'Итератор — объект с методами `__iter__` и `__next__`.',
+      '`for` вызывает `iter()`, затем `next()` до `StopIteration`.',
+      '`__iter__` обычно возвращает `self`.',
+      'Генераторы — более короткий способ создать итератор.'
+    ],
+    sources: [
+      {
+        file: 'functional/06_iterators.py',
+        focus: [
+          {
+            function: 'Countdown',
+            note: '__iter__, __next__ и StopIteration.'
+          }
+        ]
+      }
+    ],
+    practice: {
+      task: 'Реализуй `Countdown(start)` — итератор, который отдаёт числа от `start` до `1`, затем поднимает `StopIteration`.',
+      hint: 'Храни `self.current`. В `__next__` проверь `self.current <= 0`, иначе верни число и уменьши его.',
+      starter: 'class Countdown:\n    def __init__(self, start):\n        pass\n\n    def __iter__(self):\n        pass\n\n    def __next__(self):\n        pass\n',
+      solution: 'class Countdown:\n    def __init__(self, start):\n        self.current = start\n\n    def __iter__(self):\n        return self\n\n    def __next__(self):\n        if self.current <= 0:\n            raise StopIteration\n        value = self.current\n        self.current -= 1\n        return value\n',
+      tests: [
+        'assert list(Countdown(3)) == [3, 2, 1]',
+        'assert list(Countdown(0)) == []',
+        'iterator = Countdown(1)\nassert next(iterator) == 1\ntry:\n    next(iterator)\nexcept StopIteration:\n    pass\nelse:\n    raise AssertionError("ожидалось StopIteration")'
+      ]
+    },
+    quiz: [
+      {
+        q: 'Какой метод вызывается при `next(iterator)`?',
+        options: [
+          '__iter__',
+          '__next__',
+          '__getitem__',
+          '__len__'
+        ],
+        answer: 1,
+        explain: '`next()` обращается к `__next__`, пока не получит `StopIteration`.'
+      },
+      {
+        q: 'Что обычно возвращает `__iter__`?',
+        options: [
+          'self',
+          'Новый список',
+          'None',
+          'Последний элемент'
+        ],
+        answer: 0,
+        explain: 'Итератор сам является своим итератором, поэтому чаще всего возвращает `self`.'
+      }
+    ]
+  },
+  {
     id: 'generators',
     title: 'Генераторы',
     summary: 'yield, ленивые вычисления и генераторные выражения.',
@@ -199,6 +321,70 @@ export default [
       }
     ]
   },
+  {
+    id: 'context-managers',
+    title: 'Контекстные менеджеры',
+    summary: 'with, __enter__/__exit__ и contextlib.contextmanager.',
+    minutes: 8,
+    goal: 'Управлять ресурсами через `with` и писать свои контекстные менеджеры для повторяющейся подготовки и очистки.',
+    ideas: [
+      '`with` гарантирует вызов `__exit__` даже при исключении.',
+      '`__exit__` получает тип, значение и traceback исключения.',
+      'Возврат `True` из `__exit__` подавляет исключение.',
+      '`@contextmanager` позволяет написать менеджер как генератор: до `yield` — вход, после — выход.'
+    ],
+    sources: [
+      {
+        file: 'errors/05_context_managers.py',
+        focus: [
+          {
+            function: 'Timer',
+            note: 'Класс с __enter__ и __exit__.'
+          },
+          {
+            function: 'section',
+            note: 'Контекстный менеджер через генератор.'
+          }
+        ]
+      }
+    ],
+    practice: {
+      task: 'Напиши контекстный менеджер `suppress_errors(*types)`, который подавляет указанные исключения и возвращает объект с полем `error`.',
+      hint: 'Используй `@contextmanager`. Сохрани исключение в списке или объекте, потому что после `yield` его можно перехватить через `try/except`.',
+      starter: 'from contextlib import contextmanager\n\n\n@contextmanager\ndef suppress_errors(*types):\n    pass\n',
+      solution: 'from contextlib import contextmanager\n\n\nclass _Catcher:\n    def __init__(self):\n        self.error = None\n\n\n@contextmanager\ndef suppress_errors(*types):\n    catcher = _Catcher()\n    try:\n        yield catcher\n    except types as error:\n        catcher.error = error',
+      tests: [
+        'with suppress_errors(ValueError) as caught:\n    raise ValueError("boom")\nassert isinstance(caught.error, ValueError)',
+        'with suppress_errors(ValueError) as caught:\n    pass\nassert caught.error is None',
+        'try:\n    with suppress_errors(ValueError):\n        raise TypeError("not caught")\nexcept TypeError:\n    pass\nelse:\n    raise AssertionError("TypeError должен пройти дальше")'
+      ]
+    },
+    quiz: [
+      {
+        q: 'Что произойдёт, если `__exit__` вернёт True?',
+        options: [
+          'Исключение будет подавлено',
+          'Исключение поднимется выше',
+          'Программа завершится',
+          'Будет SyntaxError'
+        ],
+        answer: 0,
+        explain: 'Истинное значение из `__exit__` означает, что исключение обработано.'
+      },
+      {
+        q: 'Что делает `@contextmanager`?',
+        options: [
+          'Превращает генератор в контекстный менеджер',
+          'Закрывает файлы',
+          'Создаёт поток',
+          'Ускоряет with'
+        ],
+        answer: 0,
+        explain: 'Декоратор оборачивает генератор: код до `yield` — вход, после — выход.'
+      }
+    ]
+  },
+
   {
     id: 'functional-tools',
     title: 'Функциональные инструменты',
