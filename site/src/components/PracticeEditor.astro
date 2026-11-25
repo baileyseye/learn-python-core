@@ -1,7 +1,7 @@
 ---
 import { Code } from 'astro-expressive-code/components';
 
-const { lessonId, practice } = Astro.props;
+const { lessonId, practice, showHelp = false } = Astro.props;
 
 function escapeHtml(value) {
   return String(value)
@@ -167,23 +167,27 @@ const starterJson = JSON.stringify(starter).replace(/</g, '\\u003c');
     ))
   }
 
-  <details class="practice-note">
-    <summary>Как работает проверка</summary>
-    <p>
-      Код выполняется прямо в браузере через <strong>Pyodide</strong> — это Python, скомпилированный
-      в WebAssembly. Первый запуск скачивает среду с CDN и занимает несколько секунд, дальше всё
-      работает локально. Никакой код не отправляется на сервер.
-    </p>
-    <p>
-      После выполнения запускаются тесты из урока. Если Pyodide недоступен (например, нет интернета),
-      остаётся структурная проверка: скобки, TODO и близость к эталону. Она не выполняет код.
-    </p>
-    <p>
-      В браузере нет вашего терминала и файлов с компьютера: <code>input()</code>, сеть и реальные
-      файлы недоступны. Передавайте данные аргументами функции и запускайте такие примеры локально;
-      для текста можно использовать <code>io.StringIO</code>.
-    </p>
-  </details>
+  {
+    showHelp && (
+      <details class="practice-note">
+        <summary>Как работает проверка</summary>
+        <p>
+          Код выполняется прямо в браузере через <strong>Pyodide</strong> — это Python, скомпилированный
+          в WebAssembly. Первый запуск скачивает среду с CDN и занимает несколько секунд, дальше всё
+          работает локально. Никакой код не отправляется на сервер.
+        </p>
+        <p>
+          После выполнения запускаются тесты из урока. Если Pyodide недоступен (например, нет интернета),
+          остаётся структурная проверка: скобки, TODO и близость к эталону. Она не выполняет код.
+        </p>
+        <p>
+          В браузере нет вашего терминала и файлов с компьютера: <code>input()</code>, сеть и реальные
+          файлы недоступны. Передавайте данные аргументами функции и запускайте такие примеры локально;
+          для текста можно использовать <code>io.StringIO</code>.
+        </p>
+      </details>
+    )
+  }
 
   <script type="application/json" data-practice-steps set:html={stepsJson}></script>
   <script type="application/json" data-practice-starter set:html={starterJson}></script>

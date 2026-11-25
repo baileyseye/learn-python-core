@@ -131,7 +131,7 @@ function inline(value) {
   }
 
   <section class="lesson-section practice-section">
-    <PracticeEditor lessonId={lesson.id} practice={lesson.practice} />
+    <PracticeEditor lessonId={lesson.id} practice={lesson.practice} showHelp={lesson.order === 1} />
   </section>
 
   <section class="lesson-section quiz-section">
