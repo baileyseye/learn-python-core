@@ -1371,17 +1371,43 @@ header.header {
   font-weight: 400;
 }
 
-.lesson-complete {
+.lesson-footer {
   margin-top: 1.6rem;
   padding-top: 1.6rem;
   border-top: 1px solid var(--course-border);
+}
+
+.lesson-footer.is-first {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 1rem;
+  align-items: center;
+}
+
+.lesson-footer.is-first .lesson-nav {
+  grid-template-columns: 1fr;
+  margin-top: 0;
+}
+
+.lesson-footer.is-first .lesson-nav-link.is-empty {
+  display: none;
+}
+
+.lesson-footer.is-first .lesson-nav-next {
+  text-align: start;
+}
+
+.lesson-complete {
+  margin: 0;
+  padding: 0;
+  border: 0;
 }
 
 .lesson-nav {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.8rem;
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 
 .lesson-nav-link {
@@ -2720,6 +2746,10 @@ header.header {
 
   .module-nav,
   .lesson-nav {
+    grid-template-columns: 1fr;
+  }
+
+  .lesson-footer.is-first {
     grid-template-columns: 1fr;
   }
 

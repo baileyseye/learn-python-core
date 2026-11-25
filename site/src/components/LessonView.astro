@@ -151,9 +151,10 @@ function inline(value) {
     )
   }
 
-  <div class="lesson-complete">
-    <ProgressToggle lessonId={lesson.id} />
+  <div class:list={['lesson-footer', !prev && 'is-first']}>
+    <div class="lesson-complete">
+      <ProgressToggle lessonId={lesson.id} />
+    </div>
+    <LessonNav prev={prev} next={next} />
   </div>
-
-  <LessonNav prev={prev} next={next} />
 </div>
