@@ -1,0 +1,35 @@
+---
+const stages = [
+  { id: 'goal', href: '#goal', label: 'Цель', short: 'Цель' },
+  { id: 'code', href: '#code', label: 'Код', short: 'Код' },
+  { id: 'practice', href: '#practice', label: 'Практика', short: 'Практика' },
+  { id: 'quiz', href: '#quiz', label: 'Самопроверка', short: 'Проверка' }
+];
+---
+
+<nav class="lesson-rail" data-lesson-rail aria-label="Этапы урока">
+  <div class="lesson-rail-inner">
+    <span class="lesson-rail-line" aria-hidden="true"></span>
+    <span class="lesson-rail-fill" data-rail-fill aria-hidden="true"></span>
+    <ol class="lesson-rail-list">
+      {
+        stages.map((stage, index) => (
+          <li class="lesson-rail-step" data-rail-step data-stage={stage.id}>
+            <a
+              class="lesson-rail-link"
+              href={stage.href}
+              aria-label={`Этап ${index + 1} из ${stages.length}: ${stage.label}`}
+              aria-current={index === 0 ? 'step' : undefined}
+            >
+              <span class="lesson-rail-dot" aria-hidden="true">{index + 1}</span>
+              <span class="lesson-rail-label">
+                <span class="lesson-rail-label-full">{stage.label}</span>
+                <span class="lesson-rail-label-short">{stage.short}</span>
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</nav>
