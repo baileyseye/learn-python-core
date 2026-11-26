@@ -4,7 +4,7 @@ import CourseManifest from './CourseManifest.astro';
 import ModuleCard from './ModuleCard.astro';
 import ProgressSummary from './ProgressSummary.astro';
 import generated from '../data/generated.json';
-import { lessons, modules, lessonsOfModule, courseStats } from '../data/course.mjs';
+import { lessons, modules, lessonsOfModule, lessonCountLabel } from '../data/course.mjs';
 import { url } from '../utils/url.js';
 
 const lessonIds = lessons.map((lesson) => lesson.id);
@@ -34,7 +34,7 @@ const interactiveCount = lessons.filter((lesson) => lesson.practice?.tests?.leng
       <p class="eyebrow"><span class="eyebrow-dot"></span>Python Core · курс по реальному коду</p>
       <h1>Python, который<br /><span class="hero-gradient">можно читать</span></h1>
       <p class="hero-lead">
-        {modules.length} модулей, {lessons.length} коротких уроков и исходники из этого же репозитория.
+        {modules.length} модулей, {lessons.length} коротких {lessonCountLabel(lessons.length)} и исходники из этого же репозитория.
         Не «40 часов видео», а понятная идея, живой код, запуск и практика — по 10–15 минут в день.
       </p>
       <div class="hero-actions">
@@ -126,7 +126,7 @@ const interactiveCount = lessons.filter((lesson) => lesson.practice?.tests?.leng
     <div class="section-head">
       <div>
         <p class="eyebrow">Программа</p>
-        <h2>Восемь модулей — от нуля до API</h2>
+        <h2>Девять модулей — от нуля до API и дальше</h2>
       </div>
       <p class="section-lead">
         От первого <code>print</code> до FastAPI и SQLite. Внутри каждого модуля уроки идут по порядку,

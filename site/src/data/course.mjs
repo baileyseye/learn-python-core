@@ -7,8 +7,9 @@ import module5 from './lessons/module-5.mjs';
 import module6 from './lessons/module-6.mjs';
 import module7 from './lessons/module-7.mjs';
 import module8 from './lessons/module-8.mjs';
+import module9 from './lessons/module-9.mjs';
 
-const groups = [module1, module2, module3, module4, module5, module6, module7, module8];
+const groups = [module1, module2, module3, module4, module5, module6, module7, module8, module9];
 
 let runningOrder = 0;
 export const lessons = groups.flatMap((group, index) =>

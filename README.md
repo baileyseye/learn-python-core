@@ -1,10 +1,10 @@
 # Learn Python Core
 
-Курс по Python с нуля до первого веб-API: **8 модулей, 58 уроков, 58 запускаемых файлов**. Внутри — реальные исходники из этого же репозитория, интерактивная практика с запуском Python в браузере, прогресс и самопроверка.
+Курс по Python с нуля до первого веб-API: **9 модулей, 62 урока, 62 запускаемых файлов**. Внутри — реальные исходники из этого же репозитория, интерактивная практика с запуском Python в браузере, прогресс и самопроверка.
 
 Сайт: **https://baileyseye.github.io/learn-python-core/**
 
-| [![Главная страница](screenshots/home.jpg)](screenshots/home-full.jpg) **Главная** — маршрут, прогресс и восемь карточек модулей | [![Страница урока](screenshots/lesson.jpg)](screenshots/lesson.jpg) **Урок** — цель, идеи, реальный код, вывод программы, практика и квиз |
+| [![Главная страница](screenshots/home.jpg)](screenshots/home-full.jpg) **Главная** — маршрут, прогресс и девять карточек модулей | [![Страница урока](screenshots/lesson.jpg)](screenshots/lesson.jpg) **Урок** — цель, идеи, реальный код, вывод программы, практика и квиз |
 | --- | --- |
 | [![Практика](screenshots/practice.jpg)](screenshots/practice.jpg) **Редактор** — подсветка Python, подсказки, сохранение черновика | [![Результат проверки](screenshots/practice-result.jpg)](screenshots/practice-result.jpg) **Проверка** — реальный запуск через Pyodide и тесты по каждому условию |
 
@@ -30,6 +30,7 @@
 | 6 | Стандартная библиотека | datetime, collections, re, random/statistics, logging |
 | 7 | Тесты и качество | venv, pytest, практика тестов, типы, отладка, структура проекта, мини-проект |
 | 8 | Веб и фреймворки | HTTP-клиент, HTTP-сервер, Pydantic, FastAPI, SQLite, SQL-практикум, async/await, gather |
+| 9 | За пределами ядра | потоки, процессы и async, GIL и внутреннее устройство, фикстуры и mock, алгоритмы и структуры данных |
 
 ## Быстрый старт
 
@@ -130,7 +131,7 @@ Python-исходники в `src/python` — единственный исто�
 
 ```text
 learn-python-core/
-├── src/python/                 # 58 учебных файлов
+├── src/python/                 # 62 учебных файла
 │   ├── basics/
 │   ├── collections/
 │   ├── errors/
@@ -138,13 +139,14 @@ learn-python-core/
 │   ├── functional/
 │   ├── stdlib/
 │   ├── testing/
-│   └── web/
+│   ├── web/
+│   └── advanced/
 ├── site/src/
 │   ├── components/             # Astro-компоненты
 │   ├── content/docs/           # старт, справочник, «что дальше»
 │   ├── data/
 │   │   ├── modules.mjs
-│   │   ├── lessons/module-1..8.mjs
+│   │   ├── lessons/module-1..9.mjs
 │   │   ├── course.mjs
 │   │   ├── sidebar.mjs
 │   │   └── generated.json      # генерируется

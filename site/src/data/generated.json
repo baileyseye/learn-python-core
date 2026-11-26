@@ -1,14 +1,414 @@
 {
   "stats": {
-    "files": 58,
-    "lines": 2571,
-    "methods": 301,
-    "classes": 30,
-    "outputs": 58,
-    "lessons": 58,
-    "usedFiles": 58
+    "files": 62,
+    "lines": 2838,
+    "methods": 328,
+    "classes": 34,
+    "outputs": 62,
+    "lessons": 62,
+    "usedFiles": 62
   },
   "files": {
+    "advanced/01_concurrency.py": {
+      "path": "advanced/01_concurrency.py",
+      "lines": 72,
+      "code": "\"\"\"Потоки, процессы и async — минимальное знакомство.\n\nПравило большого пальца:\n- ждём сеть или файлы -> async (или потоки);\n- считаем на процессоре -> процессы;\n- простой скрипт -> обычный последовательный код.\n\nВажно: это только карта местности. Для конкурентных задач нужны\nотдельные книги и практика.\n\"\"\"\n\nimport asyncio\nimport threading\nimport time\n\n\ndef io_task(name: str, delay: float = 0.05) -> str:\n    \"\"\"Имитация ожидания: sleep не нагружает процессор.\"\"\"\n    time.sleep(delay)\n    return f\"{name}: готово\"\n\n\ndef run_threads(names: list[str]) -> list[str]:\n    \"\"\"Потоки ждут одновременно, поэтому общее время меньше суммы.\"\"\"\n    results: list[str] = []\n\n    def worker(name: str) -> None:\n        results.append(io_task(name))\n\n    threads = [threading.Thread(target=worker, args=(name,)) for name in names]\n    started = time.perf_counter()\n    for thread in threads:\n        thread.start()\n    for thread in threads:\n        thread.join()\n    elapsed = time.perf_counter() - started\n    return sorted(results) + [f\"потоки: {elapsed:.2f} с\"]\n\n\nasync def async_task(name: str, delay: float = 0.05) -> str:\n    \"\"\"Корутина: пока ждёт, event loop может выполнять другие задачи.\"\"\"\n    await asyncio.sleep(delay)\n    return f\"{name}: готово\"\n\n\nasync def run_async(names: list[str]) -> list[str]:\n    started = time.perf_counter()\n    results = await asyncio.gather(*(async_task(name) for name in names))\n    elapsed = time.perf_counter() - started\n    return [*results, f\"async: {elapsed:.2f} с\"]\n\n\ndef pick_mode(kind: str) -> str:\n    \"\"\"Очень грубый совет: только чтобы запомнить идею.\"\"\"\n    if kind == \"io\":\n        return \"async или потоки\"\n    if kind == \"cpu\":\n        return \"процессы\"\n    raise ValueError(\"kind: ожидается 'io' или 'cpu'\")\n\n\ndef main() -> None:\n    print(\"потоки:\", run_threads([\"A\", \"B\"]))\n    print(\"async:\", asyncio.run(run_async([\"A\", \"B\"])))\n    print(\"сеть и файлы:\", pick_mode(\"io\"))\n    print(\"тяжёлые расчёты:\", pick_mode(\"cpu\"))\n    print(\"GIL: потоки не ускоряют чистый Python-код с вычислениями.\")\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "io_task",
+          "kind": "function",
+          "start": 17,
+          "end": 20,
+          "signature": "def io_task(name: str, delay: float = 0.05) -> str:"
+        },
+        {
+          "name": "run_threads",
+          "kind": "function",
+          "start": 23,
+          "end": 37,
+          "signature": "def run_threads(names: list[str]) -> list[str]:"
+        },
+        {
+          "name": "async_task",
+          "kind": "function",
+          "start": 40,
+          "end": 43,
+          "signature": "async def async_task(name: str, delay: float = 0.05) -> str:"
+        },
+        {
+          "name": "run_async",
+          "kind": "function",
+          "start": 46,
+          "end": 50,
+          "signature": "async def run_async(names: list[str]) -> list[str]:"
+        },
+        {
+          "name": "pick_mode",
+          "kind": "function",
+          "start": 53,
+          "end": 59,
+          "signature": "def pick_mode(kind: str) -> str:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 62,
+          "end": 67,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "io_task",
+          "kind": "function",
+          "start": 17,
+          "end": 20,
+          "signature": "def io_task(name: str, delay: float = 0.05) -> str:"
+        },
+        {
+          "name": "run_threads",
+          "kind": "function",
+          "start": 23,
+          "end": 37,
+          "signature": "def run_threads(names: list[str]) -> list[str]:"
+        },
+        {
+          "name": "async_task",
+          "kind": "function",
+          "start": 40,
+          "end": 43,
+          "signature": "async def async_task(name: str, delay: float = 0.05) -> str:"
+        },
+        {
+          "name": "run_async",
+          "kind": "function",
+          "start": 46,
+          "end": 50,
+          "signature": "async def run_async(names: list[str]) -> list[str]:"
+        },
+        {
+          "name": "pick_mode",
+          "kind": "function",
+          "start": 53,
+          "end": 59,
+          "signature": "def pick_mode(kind: str) -> str:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 62,
+          "end": 67,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "потоки: ['A: готово', 'B: готово', 'потоки: 0.05 с']\nasync: ['A: готово', 'B: готово', 'async: 0.06 с']\nсеть и файлы: async или потоки\nтяжёлые расчёты: процессы\nGIL: потоки не ускоряют чистый Python-код с вычислениями.",
+      "ok": true,
+      "error": ""
+    },
+    "advanced/02_internals.py": {
+      "path": "advanced/02_internals.py",
+      "lines": 83,
+      "code": "\"\"\"Один короткий взгляд внутрь Python.\n\nЗдесь нет глубокой теории. Цель — узнать слова, которые встретятся\nв документации и на собеседованиях: GIL, сборка мусора, дескриптор,\nметакласс.\n\"\"\"\n\nimport gc\n\n\nclass Positive:\n    \"\"\"Дескриптор: правило для одного атрибута.\n\n    __get__ вызывается при чтении, __set__ — при записи.\n    \"\"\"\n\n    def __set_name__(self, owner, name: str) -> None:\n        self.name = f\"_{name}\"\n\n    def __get__(self, instance, owner=None):\n        if instance is None:\n            return self\n        return getattr(instance, self.name, 0)\n\n    def __set__(self, instance, value: int) -> None:\n        if value < 0:\n            raise ValueError(\"значение должно быть >= 0\")\n        setattr(instance, self.name, value)\n\n\nclass Wallet:\n    balance = Positive()\n\n    def __init__(self, balance: int = 0) -> None:\n        self.balance = balance\n\n\nclass ModelMeta(type):\n    \"\"\"Метакласс создаёт классы. Здесь он просто добавляет имя таблицы.\"\"\"\n\n    def __new__(mcls, name, bases, namespace):\n        cls = super().__new__(mcls, name, bases, namespace)\n        cls.table = name.lower() + \"s\"\n        return cls\n\n\nclass User(metaclass=ModelMeta):\n    pass\n\n\ndef same_object() -> bool:\n    \"\"\"Две переменные могут указывать на один и тот же объект.\"\"\"\n    first = [1, 2, 3]\n    second = first\n    return first is second\n\n\ndef memory_demo() -> None:\n    \"\"\"del убирает одну ссылку; объект жив, пока есть другие.\"\"\"\n    items = [1, 2, 3]\n    alias = items\n    del alias\n    print(\"после del alias список жив:\", items)\n\n\ndef main() -> None:\n    wallet = Wallet(100)\n    print(\"баланс:\", wallet.balance)\n    try:\n        wallet.balance = -1\n    except ValueError as error:\n        print(\"ошибка:\", error)\n\n    print(\"таблица User:\", User.table)\n    print(\"first is second:\", same_object())\n    memory_demo()\n    print(\"сборка мусора прошла:\", gc.collect() >= 0)\n    print(\"GIL: в каждый момент байт-код исполняет один поток.\")\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "Positive",
+          "kind": "class",
+          "start": 11,
+          "end": 28,
+          "signature": "class Positive:"
+        },
+        {
+          "name": "Positive.__set_name__",
+          "kind": "method",
+          "start": 17,
+          "end": 18,
+          "signature": "def __set_name__(self, owner, name: str) -> None:"
+        },
+        {
+          "name": "Positive.__get__",
+          "kind": "method",
+          "start": 20,
+          "end": 23,
+          "signature": "def __get__(self, instance, owner=None):"
+        },
+        {
+          "name": "Positive.__set__",
+          "kind": "method",
+          "start": 25,
+          "end": 28,
+          "signature": "def __set__(self, instance, value: int) -> None:"
+        },
+        {
+          "name": "Wallet",
+          "kind": "class",
+          "start": 31,
+          "end": 35,
+          "signature": "class Wallet:"
+        },
+        {
+          "name": "Wallet.__init__",
+          "kind": "method",
+          "start": 34,
+          "end": 35,
+          "signature": "def __init__(self, balance: int = 0) -> None:"
+        },
+        {
+          "name": "ModelMeta",
+          "kind": "class",
+          "start": 38,
+          "end": 44,
+          "signature": "class ModelMeta(type):"
+        },
+        {
+          "name": "ModelMeta.__new__",
+          "kind": "method",
+          "start": 41,
+          "end": 44,
+          "signature": "def __new__(mcls, name, bases, namespace):"
+        },
+        {
+          "name": "User",
+          "kind": "class",
+          "start": 47,
+          "end": 48,
+          "signature": "class User(metaclass=ModelMeta):"
+        },
+        {
+          "name": "same_object",
+          "kind": "function",
+          "start": 51,
+          "end": 55,
+          "signature": "def same_object() -> bool:"
+        },
+        {
+          "name": "memory_demo",
+          "kind": "function",
+          "start": 58,
+          "end": 63,
+          "signature": "def memory_demo() -> None:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 66,
+          "end": 78,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [
+        {
+          "name": "Positive",
+          "kind": "class",
+          "start": 11,
+          "end": 28,
+          "signature": "class Positive:"
+        },
+        {
+          "name": "Wallet",
+          "kind": "class",
+          "start": 31,
+          "end": 35,
+          "signature": "class Wallet:"
+        },
+        {
+          "name": "ModelMeta",
+          "kind": "class",
+          "start": 38,
+          "end": 44,
+          "signature": "class ModelMeta(type):"
+        },
+        {
+          "name": "User",
+          "kind": "class",
+          "start": 47,
+          "end": 48,
+          "signature": "class User(metaclass=ModelMeta):"
+        }
+      ],
+      "functions": [
+        {
+          "name": "same_object",
+          "kind": "function",
+          "start": 51,
+          "end": 55,
+          "signature": "def same_object() -> bool:"
+        },
+        {
+          "name": "memory_demo",
+          "kind": "function",
+          "start": 58,
+          "end": 63,
+          "signature": "def memory_demo() -> None:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 66,
+          "end": 78,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "баланс: 100\nошибка: значение должно быть >= 0\nтаблица User: users\nfirst is second: True\nпосле del alias список жив: [1, 2, 3]\nсборка мусора прошла: True\nGIL: в каждый момент байт-код исполняет один поток.",
+      "ok": true,
+      "error": ""
+    },
+    "advanced/03_testing.py": {
+      "path": "advanced/03_testing.py",
+      "lines": 50,
+      "code": "\"\"\"Тестирование чуть глубже — минимальное знакомство.\n\nВ pytest те же идеи выглядят так:\n- @pytest.mark.parametrize — много случаев без копипасты;\n- @pytest.fixture — общая подготовка данных;\n- mock.patch — подмена внешнего сервиса в тесте;\n- pytest-cov — отчёт о том, какие строки выполнились.\n\"\"\"\n\nfrom unittest.mock import patch\n\n\ndef discount(price: int, percent: int) -> int:\n    \"\"\"Скидка в целых рублях.\"\"\"\n    if not 0 <= percent <= 100:\n        raise ValueError(\"percent: от 0 до 100\")\n    return price * percent // 100\n\n\ndef final_price(price: int, rate_provider) -> int:\n    \"\"\"rate_provider — функция без аргументов.\n\n    В тесте можно передать lambda: 10 и не ходить в настоящий сервис.\n    Это и есть идея mock без сложной настройки.\n    \"\"\"\n    return price - discount(price, rate_provider())\n\n\ndef fetch_rate() -> int:\n    \"\"\"В реальном коде здесь был бы сетевой вызов.\"\"\"\n    return 15\n\n\ndef demo_mock() -> int:\n    with patch(__name__ + \".fetch_rate\", return_value=50):\n        return discount(1000, fetch_rate())\n\n\ndef main() -> None:\n    cases = [(10, 1000, 100), (25, 200, 50), (0, 500, 0)]\n    print(\"параметры:\", [discount(price, percent) for percent, price, _ in cases])\n    print(\"со своим источником скидки:\", final_price(1000, lambda: 10))\n    print(\"mock подменил сервис:\", demo_mock())\n    print(\"без mock:\", discount(1000, fetch_rate()))\n    print(\"coverage показывает, какие строки не выполнились в тестах.\")\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "discount",
+          "kind": "function",
+          "start": 13,
+          "end": 17,
+          "signature": "def discount(price: int, percent: int) -> int:"
+        },
+        {
+          "name": "final_price",
+          "kind": "function",
+          "start": 20,
+          "end": 26,
+          "signature": "def final_price(price: int, rate_provider) -> int:"
+        },
+        {
+          "name": "fetch_rate",
+          "kind": "function",
+          "start": 29,
+          "end": 31,
+          "signature": "def fetch_rate() -> int:"
+        },
+        {
+          "name": "demo_mock",
+          "kind": "function",
+          "start": 34,
+          "end": 36,
+          "signature": "def demo_mock() -> int:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 39,
+          "end": 45,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "discount",
+          "kind": "function",
+          "start": 13,
+          "end": 17,
+          "signature": "def discount(price: int, percent: int) -> int:"
+        },
+        {
+          "name": "final_price",
+          "kind": "function",
+          "start": 20,
+          "end": 26,
+          "signature": "def final_price(price: int, rate_provider) -> int:"
+        },
+        {
+          "name": "fetch_rate",
+          "kind": "function",
+          "start": 29,
+          "end": 31,
+          "signature": "def fetch_rate() -> int:"
+        },
+        {
+          "name": "demo_mock",
+          "kind": "function",
+          "start": 34,
+          "end": 36,
+          "signature": "def demo_mock() -> int:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 39,
+          "end": 45,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "параметры: [100, 50, 0]\nсо своим источником скидки: 900\nmock подменил сервис: 500\nбез mock: 150\ncoverage показывает, какие строки не выполнились в тестах.",
+      "ok": true,
+      "error": ""
+    },
+    "advanced/04_algorithms.py": {
+      "path": "advanced/04_algorithms.py",
+      "lines": 62,
+      "code": "\"\"\"Алгоритмы на пальцах: сложность, поиск и обход графа.\n\nЗапомнить главное:\n- O(1) — не зависит от размера данных;\n- O(n) — смотрим каждый элемент;\n- O(log n) — каждый шаг отбрасывает половину вариантов.\n\"\"\"\n\nfrom collections import deque\n\n\ndef linear_search(items: list[int], target: int) -> int:\n    \"\"\"O(n): в худшем случае проверяем все элементы.\"\"\"\n    for index, item in enumerate(items):\n        if item == target:\n            return index\n    return -1\n\n\ndef binary_search(items: list[int], target: int) -> int:\n    \"\"\"O(log n), но список должен быть отсортирован.\"\"\"\n    left, right = 0, len(items) - 1\n    while left <= right:\n        middle = (left + right) // 2\n        if items[middle] == target:\n            return middle\n        if items[middle] < target:\n            left = middle + 1\n        else:\n            right = middle - 1\n    return -1\n\n\ndef bfs_order(graph: dict[str, list[str]], start: str) -> list[str]:\n    \"\"\"Обход в ширину: сначала соседи, потом соседи соседей.\"\"\"\n    queue = deque([start])\n    seen = {start}\n    order: list[str] = []\n\n    while queue:\n        node = queue.popleft()\n        order.append(node)\n        for neighbor in graph.get(node, []):\n            if neighbor not in seen:\n                seen.add(neighbor)\n                queue.append(neighbor)\n    return order\n\n\ndef main() -> None:\n    numbers = [1, 3, 5, 8, 13, 21]\n    print(\"линейный поиск 13:\", linear_search(numbers, 13))\n    print(\"бинарный поиск 13:\", binary_search(numbers, 13))\n    graph = {\"A\": [\"B\", \"C\"], \"B\": [\"D\"], \"C\": [\"D\"], \"D\": []}\n    print(\"BFS от A:\", bfs_order(graph, \"A\"))\n    print(\"список: поиск O(n), словарь: доступ по ключу в среднем O(1).\")\n    print(\"для очереди берут deque: popleft выполняется быстро.\")\n\n\nif __name__ == \"__main__\":\n    main()",
+      "methods": [
+        {
+          "name": "linear_search",
+          "kind": "function",
+          "start": 12,
+          "end": 17,
+          "signature": "def linear_search(items: list[int], target: int) -> int:"
+        },
+        {
+          "name": "binary_search",
+          "kind": "function",
+          "start": 20,
+          "end": 31,
+          "signature": "def binary_search(items: list[int], target: int) -> int:"
+        },
+        {
+          "name": "bfs_order",
+          "kind": "function",
+          "start": 34,
+          "end": 47,
+          "signature": "def bfs_order(graph: dict[str, list[str]], start: str) -> list[str]:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 50,
+          "end": 57,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "classes": [],
+      "functions": [
+        {
+          "name": "linear_search",
+          "kind": "function",
+          "start": 12,
+          "end": 17,
+          "signature": "def linear_search(items: list[int], target: int) -> int:"
+        },
+        {
+          "name": "binary_search",
+          "kind": "function",
+          "start": 20,
+          "end": 31,
+          "signature": "def binary_search(items: list[int], target: int) -> int:"
+        },
+        {
+          "name": "bfs_order",
+          "kind": "function",
+          "start": 34,
+          "end": 47,
+          "signature": "def bfs_order(graph: dict[str, list[str]], start: str) -> list[str]:"
+        },
+        {
+          "name": "main",
+          "kind": "function",
+          "start": 50,
+          "end": 57,
+          "signature": "def main() -> None:"
+        }
+      ],
+      "has_main": true,
+      "output": "линейный поиск 13: 4\nбинарный поиск 13: 4\nBFS от A: ['A', 'B', 'C', 'D']\nсписок: поиск O(n), словарь: доступ по ключу в среднем O(1).\nдля очереди берут deque: popleft выполняется быстро.",
+      "ok": true,
+      "error": ""
+    },
     "basics/00_reading.py": {
       "path": "basics/00_reading.py",
       "lines": 12,
